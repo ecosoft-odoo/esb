@@ -1,0 +1,36 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="short_name"/>
+                <field name="long_name"/>
+                <field name="brand"/>
+                <field name="series"/>
+                <field name="spec1"/>
+                <field name="spec2"/>
+                <field name="spec3"/>
+            </xpath>
+            <xpath expr="//group[@name='group_standard_price']" position="inside">
+                <field name="pack_carton"/>
+                <field name="sale_ratio"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="filter_domain">['|', '|', '|', '|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self), ('short_name', 'ilike', self), ('long_name', 'ilike', self), ('series', 'ilike', self)]</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='categ_id']" position="after">
+                <filter string="Brand" name="brand" context="{'group_by':'brand'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
