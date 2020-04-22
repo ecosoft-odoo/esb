@@ -3,7 +3,7 @@
 
 {
     "name": "ESB :: Custom addons",
-    "summary": "Custom addons for only slution project",
+    "summary": "Custom addons for only esb project",
     "version": "13.0.1.0.0",
     "category": "Hidden",
     "author": "Ecosoft Co., Ltd",
