@@ -1,0 +1,49 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <!-- Scrap Order Form -->
+    <record id="stock_scrap_form_view" model="ir.ui.view">
+        <field name="name">stock.scrap.form</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="department_id" attrs="{'invisible': [('department_id', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+    <record id="stock_scrap_form_view2" model="ir.ui.view">
+        <field name="name">stock.scrap.form2</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="department_id" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Scrap Order Search -->
+    <record id="stock_scrap_search_view" model="ir.ui.view">
+        <field name="name">stock.scrap.search</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="department_id"/>
+            </xpath>
+            <xpath expr="//filter[@name='product']" position="after">
+                <filter string="Department" name="department" domain="[]" context="{'group_by': 'department_id'}"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- Scrap Order Tree -->
+    <record id="stock_scrap_tree_view" model="ir.ui.view">
+        <field name="name">stock.scrap.tree</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="department_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
