@@ -12,4 +12,5 @@ class StockScrap(models.Model):
         string="Department",
         related="production_id.department_id",
         readonly=True,
+        store=True,
     )
