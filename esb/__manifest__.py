@@ -9,9 +9,12 @@
     "author": "Ecosoft Co., Ltd",
     "license": "AGPL-3",
     "website": "https://ecosoft.co.th",
-    "depends": ["product"],
+    "depends": ["hr", "mrp", "purchase"],
     "data": [
-        "product/views/product_views.xml"
+        "product/views/product_views.xml",
+        "department/views/mrp_production_views.xml",
+        "department/views/purchase_views.xml",
+        "department/views/stock_scrap_views.xml",
     ],
     "installable": True,
 }
