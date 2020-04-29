@@ -11,5 +11,4 @@ class MrpProduction(models.Model):
         comodel_name="hr.department",
         string="Department",
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        required=True,
     )
