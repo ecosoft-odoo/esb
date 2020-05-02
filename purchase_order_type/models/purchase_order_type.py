@@ -35,3 +35,8 @@ class PurchaseOrderType(models.Model):
     )
     incoterm_id = fields.Many2one(comodel_name="account.incoterms", string="Incoterm")
     sequence = fields.Integer(default=10)
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        default=lambda self: self.env.company,
+    )
