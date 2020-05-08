@@ -16,6 +16,7 @@
         "department/views/stock_scrap_views.xml",
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
+        "purchase/views/purchase_views.xml",
     ],
     "installable": True,
 }
