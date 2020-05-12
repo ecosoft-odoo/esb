@@ -11,7 +11,7 @@ class PurchaseOrder(models.Model):
 
     def _default_order_type(self):
         return self.env["purchase.order.type"].search(
-            ["|", ("company_id", "=", False), ("company_id", "=", self.company_id.id)],
+            ["|", ("company_id", "=", False), ("company_id", "=", self.env.company.id)],
             limit=1,
         )
 
