@@ -1,7 +1,7 @@
 # Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class MrpProduction(models.Model):
@@ -23,3 +23,10 @@ class MrpProduction(models.Model):
     remark = fields.Text(string="Remark", translate=True)
     net_weight = fields.Float(string="Net Weight(kg/pcs)", default=0.00)
     gross_weight = fields.Float(string="Net Weight + Inner Box(kg/pcs)", default=0.00)
+
+    mo_created = fields.Boolean(default=False)
+
+    @api.model
+    def create(self, vals):
+        vals["mo_created"] = True
+        return super().create(vals)
