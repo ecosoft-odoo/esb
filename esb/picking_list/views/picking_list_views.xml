@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <act_window id="action_account_invoice_billing"
+        name="Create Picking List"
+        binding_model="stock.picking"
+        res_model="esb.picking.list"
+        binding_views="list"
+        view_mode="form"
+        target="current"
+        context="{'default_picking_ids': active_ids}"
+    />
+
     <record id="esb_picking_list_form" model="ir.ui.view">
         <field name="name">esb.picking.list.form</field>
         <field name="model">esb.picking.list</field>
         <field name="arch" type="xml">
-            <form string="Picking List">
+            <form string="Picking List" duplicate="false">
                 <header>
                     <button string="Done"
                             name="action_done"
@@ -14,9 +24,18 @@
                     <button string="Draft"
                             name="action_draft"
                             type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
-                    <field name="state" invisible="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pickings"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('picking_count', '=', 0)]}">
+                            <field name="picking_count" widget="statinfo" string="Pickings"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
                         <h1><field name="name"/></h1>
@@ -24,22 +43,42 @@
                     <group name="main">
                         <group name="main-left">
                             <field name="partner_id"/>
-                            <field name="picking_ids"/>
+                            <field name="picking_ids" widget="many2many_tags"/>
                         </group>
                         <group name="main-right">
                             <field name="ref"/>
                         </group>
                     </group>
-                    <group name="lines">
-                        <field name="line_ids">
-                            <tree editable="bottom">
-                                <field name="sequence"/>
-                                <field name="move_id" invisible="1"/>
-                                <field name="product_id"/>
-                                <field name="done_quantity"/>
-                            </tree>
-                        </field>
-                    </group>
+                    <button name="action_compute" string="Generate Picking Lines" type="object" class="oe_highlight"/>
+                    <notebook>
+                        <page string="Picking Lines">
+                            <field name="line_ids" widget="section_and_note_one2many">
+                                <tree editable="bottom">
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="number"/>
+                                    <field name="move_id" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="quantity_done" sum="Total"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="picking_total">
+                                    <field name="quantity_done_total" />
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -51,6 +90,9 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="partner_id"/>
+                <field name="quantity_done_total"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -59,17 +101,22 @@
         <field name="name">esb.picking.list.search</field>
         <field name="model">esb.picking.list</field>
         <field name="arch" type="xml">
-            <search string="Journal Entry Template">
+            <search string="Picking List">
                 <field name="name"/>
+                <field name="partner_id"/>
+                <field name="picking_ids"/>
+                <filter string="Draft" domain="[('state', '=', 'draft')]" name="draft"/>
+                <filter string="Done" domain="[('state', '=', 'done')]" name="draft"/>
                 <group name="groupby">
                     <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="state" string="State" context="{'group_by': 'state'}"/>
                 </group>
             </search>
         </field>
     </record>
 
     <record id="esb_picking_list_action" model="ir.actions.act_window">
-        <field name="name">Journal Entry Templates</field>
+        <field name="name">Picking List</field>
         <field name="res_model">esb.picking.list</field>
         <field name="view_mode">tree,form</field>
     </record>
