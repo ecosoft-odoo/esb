@@ -23,6 +23,9 @@
         "purchase_form/datas/report_data.xml",
         "purchase_form/reports/purchase_form.xml",
         "sale/views/sale_views.xml",
+        # Picking List
+        "picking_list/security/ir.model.access.csv",
+        "picking_list/views/picking_list_views.xml",
     ],
     "installable": True,
 }

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_esb_picking_list_user,Full access on esb.picking.list to accountant grp,model_esb_picking_list,stock.group_stock_user,1,1,1,1
+access_esb_picking_list_line_user,Full access on esb.picking.list.line to accountant grp,model_esb_picking_list_line,stock.group_stock_user,1,1,1,1
