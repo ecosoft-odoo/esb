@@ -9,7 +9,12 @@
     "author": "Ecosoft Co., Ltd",
     "license": "AGPL-3",
     "website": "https://ecosoft.co.th",
-    "depends": ["hr", "mrp", "purchase_order_secondary_unit", "stock_secondary_unit"],
+    "depends": [
+        "purchase_order_secondary_unit",
+        "purchase_order_type",
+        "sale_order_type",
+        "manufacturing_order_type",
+    ],
     "data": [
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
@@ -17,6 +22,7 @@
         "purchase_form/datas/paper_format.xml",
         "purchase_form/datas/report_data.xml",
         "purchase_form/reports/purchase_form.xml",
+        "sale/views/sale_views.xml",
     ],
     "installable": True,
 }

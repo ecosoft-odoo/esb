@@ -16,7 +16,7 @@ class ManufacturingOrderType(models.Model):
             .search([("code", "=", "mrp_operation")])
             .mapped("sequence_id")
         )
-        return ["|", ("code", "=", "mrp.production"), ("id", "in", mrp_seq)]
+        return ["|", ("code", "=", "mrp.production"), ("id", "in", mrp_seq.ids)]
 
     @api.model
     def _default_sequence_id(self):
