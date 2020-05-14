@@ -12,22 +12,20 @@
                     <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
                 </div>
                 <div class="col-4 text-right">
-                    <h2>ใบสั่งซื้อ (Purchase Order)</h2>
+                    <h3>ใบสั่งซื้อ (Purchase Order)</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-1">
                     <p>Contact:</p>
                 </div>
-                <div class="col-11">
+                <div class="col-3">
                     <span t-field="o.company_id.phone"/>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-1">
                     <p>E-mail:</p>
                 </div>
-                <div class="col-11">
+                <div class="col-7">
                     <span t-field="o.company_id.email"/>
                 </div>
             </div>
@@ -111,59 +109,86 @@
                 <tbody>
                     <t t-set="number" t-value="0"/>
                     <t t-set="total_amount" t-value="0"/>
-                    <tr t-foreach="o.order_line" t-as="line">
-                        <td>
-                            <t t-set="number" t-value="number + 1"/>
-                            <span t-esc="number"/>
-                        </td>
-                        <td>
-                            <span t-field="line.product_id.default_code"/>
-                        </td>
-                        <td>
-                            <span t-field="line.name"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-field="line.date_planned" t-options="{'widget': 'date'}"/>
-                        </td>
-                        <td>
-                            <span t-field="line.product_id.brand"/>
-                        </td>
-                        <td>
-                            <span t-field="line.product_id.spec3"/>
-                        </td>
-                        <td>
-                            <span t-field="line.mo_ref"/>
-                        </td>
-                        <td class="text-center">
-                            <t t-if="line.secondary_uom_id">
-                                <span t-field="line.secondary_uom_id.code"/>
+                    <t t-set="current_subtotal" t-value="0"/>
+                    <t t-foreach="o.order_line" t-as="line">
+                        <tr>
+                            <t t-if="not line.display_type">
+                                <td>
+                                    <t t-set="number" t-value="number + 1"/>
+                                    <span t-esc="number"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.default_code"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.name"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="line.date_planned" t-options="{'widget': 'date'}"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.brand"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.spec3"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.mo_ref"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-if="line.secondary_uom_id">
+                                        <span t-field="line.secondary_uom_id.code"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="line.product_uom.name"/>
+                                    </t>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="line.secondary_uom_qty">
+                                        <t t-set="quantity" t-value="line.secondary_uom_qty"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-set="quantity" t-value="line.product_qty"/>
+                                    </t>
+                                    <span t-esc="'{0:,.3f}'.format(quantity)"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-set="amount" t-value="line.product_qty * line.price_unit"/>
+                                    <t t-set="current_subtotal" t-value="current_subtotal + amount"/>
+                                    <t t-set="total_amount" t-value="total_amount + amount"/>
+                                    <span t-esc="'{0:,.2f}'.format(amount)"/>
+                                </td>
                             </t>
-                            <t t-else="">
-                                <span t-field="line.product_uom.name"/>
+                            <t t-if="line.display_type == 'line_section'">
+                                <td class="table-active" colspan="99" id="section">
+                                    <strong><span t-field="line.name"/></strong>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <t t-set="number" t-value="0"/>
                             </t>
-                        </td>
-                        <td class="text-right">
-                            <t t-if="line.secondary_uom_qty">
-                                <t t-set="quantity" t-value="line.secondary_uom_qty"/>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99">
+                                    <span  class="font-italic" t-field="line.name"/>
+                                </td>
                             </t>
-                            <t t-else="">
-                                <t t-set="quantity" t-value="line.product_qty"/>
-                            </t>
-                            <span t-esc="'{0:,.3f}'.format(quantity)"/>
-                        </td>
-                        <td class="text-right">
-                            <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
-                        </td>
-                        <td class="text-right">
-                            <t t-set="amount" t-value="quantity * line.price_unit"/>
-                            <span t-esc="'{0:,.2f}'.format(amount)"/>
-                        </td>
-                        <t t-set="total_amount" t-value="total_amount + amount"/>
-                    </tr>
+                        </tr>
+                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-right">
+                                <td colspan="99">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="row mt16">
+                <div class="row mt0">
                     <div class="col-8">
                         <div class="row">
                             <div class="col-2">
@@ -239,7 +264,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt64">
+            <div class="row mt32">
                 <div class="col-4">
                     <div class="row">
                         <div class="col-4">
