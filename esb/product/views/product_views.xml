@@ -1,23 +1,5 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
-    <record id="product_template_tree_view" model="ir.ui.view">
-        <field name="name">product.template.product.tree.inherit</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_tree_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='categ_id']" position="after">
-                <field name="short_name" optional="hide"/>
-                <field name="long_name" optional="hide"/>
-                <field name="brand" optional="hide"/>
-                <field name="series" optional="hide"/>
-                <field name="spec1" optional="hide"/>
-                <field name="spec2" optional="hide"/>
-                <field name="spec3" optional="hide"/>
-                <field name="pack_carton" optional="hide"/>
-                <field name="sale_ratio" optional="hide"/>
-            </xpath>
-        </field>
-    </record>
     <record id="product_template_form_view" model="ir.ui.view">
         <field name="name">product.template.common.form.inherit</field>
         <field name="model">product.template</field>
@@ -51,8 +33,44 @@
             </xpath>
         </field>
     </record>
-    <!-- Hide secondary unit -->
     <record id="product_template_tree_view" model="ir.ui.view">
+        <field name="name">product.template.tree.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_name" optional="hide"/>
+                <field name="long_name" optional="hide"/>
+                <field name="brand" optional="hide"/>
+                <field name="series" optional="hide"/>
+                <field name="spec1" optional="hide"/>
+                <field name="spec2" optional="hide"/>
+                <field name="spec3" optional="hide"/>
+                <field name="pack_carton" optional="hide"/>
+                <field name="sale_ratio" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_name" optional="hide"/>
+                <field name="long_name" optional="hide"/>
+                <field name="brand" optional="hide"/>
+                <field name="series" optional="hide"/>
+                <field name="spec1" optional="hide"/>
+                <field name="spec2" optional="hide"/>
+                <field name="spec3" optional="hide"/>
+                <field name="pack_carton" optional="hide"/>
+                <field name="sale_ratio" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- Hide secondary unit -->
+    <record id="product_template_tree_view_hide_secondary_unit" model="ir.ui.view">
         <field name="model">product.template</field>
         <field name="inherit_id" ref="stock_secondary_unit.product_template_tree_view" />
         <field name="groups_id" eval="[(4, ref('uom.group_uom'))]" />
@@ -65,7 +83,7 @@
             </xpath>
         </field>
     </record>
-    <record id="product_product_tree_view" model="ir.ui.view">
+    <record id="product_product_tree_view_hide_secondary_unit" model="ir.ui.view">
         <field name="model">product.product</field>
         <field name="inherit_id" ref="stock_secondary_unit.product_product_tree_view" />
         <field name="groups_id" eval="[(4, ref('uom.group_uom'))]" />
