@@ -41,15 +41,14 @@ class SaleOrderLine(models.Model):
         return 100 - final_discount * 100
 
     def _discount_fields(self):
-        return ["discount1", "discount2", "discount3"]
+        return ["discount", "discount2", "discount3"]
 
-    @api.depends("discount1", "discount2", "discount3", "discounting_type")
+    @api.depends("discount2", "discount3", "discounting_type")
     def _compute_amount(self):
         prev_values = self.triple_discount_preprocess()
         super()._compute_amount()
         self.triple_discount_postprocess(prev_values)
 
-    discount1 = fields.Float(string="Disc. 1 (%)", digits="Discount", default=0.0,)
     discount2 = fields.Float(string="Disc. 2 (%)", digits="Discount", default=0.0,)
     discount3 = fields.Float(string="Disc. 3 (%)", digits="Discount", default=0.0,)
     discounting_type = fields.Selection(
@@ -65,11 +64,6 @@ class SaleOrderLine(models.Model):
 
     _sql_constraints = [
         (
-            "discount1_limit",
-            "CHECK (discount1 <= 100.0)",
-            "Discount 1 must be lower than 100%.",
-        ),
-        (
             "discount2_limit",
             "CHECK (discount2 <= 100.0)",
             "Discount 2 must be lower than 100%.",
@@ -83,9 +77,9 @@ class SaleOrderLine(models.Model):
 
     def _get_triple_discount(self):
         """Get the discount that is equivalent to the subsequent application
-        of discount1, discount2 and discount3"""
+        of discount, discount2 and discount3"""
         discount_factor = 1.0
-        for discount in [self.discount1, self.discount2, self.discount3]:
+        for discount in [self.discount, self.discount2, self.discount3]:
             discount_factor *= (100.0 - discount) / 100.0
         return 100.0 - (discount_factor * 100.0)
 
@@ -93,14 +87,15 @@ class SaleOrderLine(models.Model):
         res = super()._prepare_invoice_line()
         res.update(
             {
-                "discount1": self.discount1,
+                "discount": self._get_final_discount(),
+                "discount1": self.discount,
                 "discount2": self.discount2,
                 "discount3": self.discount3,
             }
         )
         return res
 
-    @api.depends("discount1", "discount2", "discount3")
+    @api.depends("discount2", "discount3")
     def _get_price_reduce(self):
         prev_values = self.triple_discount_preprocess()
         super()._get_price_reduce()
@@ -114,18 +109,17 @@ class SaleOrderLine(models.Model):
         Updating the cache provides consistency through recomputations."""
         prev_values = dict()
         self.invalidate_cache(
-            fnames=["discount1", "discount2", "discount3"], ids=self.ids
+            fnames=["discount", "discount2", "discount3"], ids=self.ids
         )
         for line in self:
             prev_values[line] = dict(
-                discount1=line.discount1,
+                discount=line.discount,
                 discount2=line.discount2,
                 discount3=line.discount3,
             )
             line._cache.update(
                 {
                     "discount": line._get_final_discount(),
-                    "discount1": 0.0,
                     "discount2": 0.0,
                     "discount3": 0.0,
                 }
@@ -137,7 +131,7 @@ class SaleOrderLine(models.Model):
         """Restore the discounts of the lines in the dictionary prev_values.
         Updating the cache provides consistency through recomputations."""
         self.invalidate_cache(
-            fnames=["discount1", "discount2", "discount3"],
+            fnames=["discount", "discount2", "discount3"],
             ids=[l.id for l in list(prev_values.keys())],
         )
         for line, prev_vals_dict in list(prev_values.items()):

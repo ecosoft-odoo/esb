@@ -11,33 +11,16 @@
         <field name="arch" type="xml">
             <xpath
                 expr="//field[@name='order_line']//tree//field[@name='discount']"
-                position="attributes"
-            >
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='order_line']//tree//field[@name='discount']"
                 position="after"
             >
-                <field name="discount1" optional="show" />
                 <field name="discount2" optional="show" />
                 <field name="discount3" optional="show" />
                 <field name="discounting_type" optional="hide" />
             </xpath>
             <xpath
                 expr="//field[@name='order_line']//form//div[@name='discount']"
-                position="attributes"
-            >
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='order_line']//form//div[@name='discount']"
                 position="after"
             >
-                <label for="discount1" />
-                <div name="discount1">
-                    <field name="discount1" class="oe_inline" /> %
-                </div>
                 <label for="discount2" />
                 <div name="discount2">
                     <field name="discount2" class="oe_inline" /> %
