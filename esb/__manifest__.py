@@ -33,6 +33,10 @@
         "purchase_form/datas/paper_format.xml",
         "purchase_form/datas/report_data.xml",
         "purchase_form/reports/purchase_form.xml",
+        "sale_order_form/datas/paper_format.xml",
+        "sale_order_form/datas/report_data.xml",
+        "sale_order_form/reports/sale_order_form.xml",
+        "sale_order_form/reports/sale_order_performa_invoice_form.xml",
     ],
     "installable": True,
 }

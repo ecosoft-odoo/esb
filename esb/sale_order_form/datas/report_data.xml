@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <report string="Sale Order"
+            id="sale_order_form_pdf_report"
+            model="sale.order"
+            name="esb.esb_sale_order_form_pdf"
+            file="esb.esb_sale_order_form_pdf"
+            report_type="qweb-pdf"
+            print_report_name="object.display_name"
+            paperformat="esb.esb_paperformat_sale_order"/>
+
+    <report string="Sale Order (Performa Invoice)"
+            id="sale_order_form_performa_invoice_pdf_report"
+            model="sale.order"
+            name="esb.esb_sale_order_performa_invoice_form_pdf"
+            file="esb.esb_sale_order_performa_invoice_form_pdf"
+            report_type="qweb-pdf"
+            print_report_name="object.display_name"
+            paperformat="esb.esb_paperformat_sale_order_performa_invoice"/>
+
+</odoo>
