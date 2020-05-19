@@ -1,0 +1,297 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_tax_invoice_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+        <div class="header" style="font-family: Sarabun;">
+            <!-- Company Data -->
+            <div class="row">
+                <div class="col-2">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-6">
+                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                </div>
+                <div class="col-4 text-right">
+                    <h4>ใบกำกับภาษี/ใบส่งสินค้า</h4>
+                    <h5>Tax Invoice/Delivery Order</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>Contact:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.phone"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>E-mail:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.email"/>
+                </div>
+            </div>
+            <div class="row mb0">
+                <div class="col-2">
+                    <p>Tax ID:</p>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                        </t>
+                        <t t-else="">
+                            <p>Branch: <span t-field="o.partner_id.branch"/></p>
+                        </t>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
+                </div>
+            </div>
+            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+            <!-- Partner Data -->
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-2">
+                            <p>ชื่อ:</p>
+                        </div>
+                        <div class="col-10">
+                            <span t-field="o.partner_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>ที่อยู่:</p>
+                        </div>
+                        <div class="col-10">
+                            <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                            <p>
+                                เลขประจำตัวผู้เสียภาษี:&#160;
+                                <span t-field="o.partner_id.vat"/>&#160;&#160;&#160;
+                                <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                                    <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                                    <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                                </t>
+                                <t t-else="">
+                                    สาขาลำดับที่:&#160;<span t-field="o.partner_id.branch"/>
+                                </t>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <p>เลขที่เอกสาร:</p>
+                        </div>
+                        <div class="col-6">
+                            <span t-field="o.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>วันที่:</p>
+                        </div>
+                        <div class="col-6">
+                            <span t-field="o.invoice_date" t-options="{'widget': 'date'}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>อ้างอิง:</p>
+                        </div>
+                        <div class="col-6">
+                            <span t-field="o.ref"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article" style="font-family: Sarabun;">
+            <table class="table table-sm" style="border-bottom: 1px solid lightgray;">
+                <thead>
+                    <tr>
+                        <th><strong>ลำดับ<br/>No.</strong></th>
+                        <th class="text-center"><strong>รหัสสินค้า<br/>Item Number</strong></th>
+                        <th class="text-center"><strong>รายการสินค้า<br/>Name</strong></th>
+                        <th class="text-center"><strong>หน่วย<br/>Unit</strong></th>
+                        <th class="text-center"><strong>จำนวน<br/>Qty</strong></th>
+                        <th class="text-center"><strong>ราคา<br/>Price</strong></th>
+                        <th class="text-center"><strong>ส่วนลด<br/>Discount</strong></th>
+                        <th class="text-right"><strong>จำนวนเงิน<br/>Amount</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="number" t-value="0"/>
+                    <t t-set="total_discount" t-value="0"/>
+                    <t t-set="current_subtotal" t-value="0"/>
+                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <tr>
+                            <t t-if="not line.display_type">
+                                <td>
+                                    <t t-set="number" t-value="number + 1"/>
+                                    <span t-esc="number"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.default_code"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="line.product_uom_id.name"/>                                    
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="line.quantity"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-set="discount_amount" t-value="line.quantity * line.price_unit * line.discount / 100"/>
+                                    <t t-set="total_discount" t-value="total_discount + discount_amount"/>
+                                    <span t-esc="'{0:,.2f}'.format(discount_amount)"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                                    <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                </td>
+                            </t>
+                            <t t-if="line.display_type == 'line_section'">
+                                <td class="table-active" colspan="99" id="section">
+                                    <strong><span t-field="line.name"/></strong>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <t t-set="number" t-value="0"/>
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99">
+                                    <span  class="font-italic" t-field="line.name"/>
+                                </td>
+                            </t>
+                        </tr>
+                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-right">
+                                <td colspan="99">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="row">
+                    <div class="col-7">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="text-center">
+                                    <t t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td>รวมจำนวนเงิน</td>
+                                <td class="text-right">
+                                    <t t-set="total_amount" t-value="total_discount + o.amount_untaxed"/>
+                                    <span t-esc="'{0:,.2f}'.format(total_amount)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ส่วนลด</td>
+                                <td class="text-right">
+                                    <t t-if="total_discount">
+                                        <span t-esc="'{0:,.2f}'.format(total_discount)"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ราคาสินค้า/บริการ</td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ภาษีมูลค่าเพิ่ม 7%</td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>จำนวนเงินรวมทั้งสิ้น</td>
+                                <td class="text-right" style="border-bottom: double;">
+                                    <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <p>หมายเหตุ:</p>
+                    </div>
+                    <div class="col-10">
+                        <span t-field="o.narration"/>
+                    </div>
+                </div>
+                <small>* โปรดตรวจเช็คสินค้าให้เรียบร้อย มิฉะนั้นทางบริษัทฯ จะถือว่าได้รับสินค้าไว้ถูกต้อง (และจะไม่รับเปลี่ยนและรับคืน)</small><br/>
+                <small>* กรุณาสั่งจ่ายเช็คขีดคร่อมในนาม *<span t-field="o.company_id.name"/>* เท่านั้น</small><br/>
+                <small>* กรรมสิทธิ์สินค้าตามใบส่งของนี้ยังถือว่าเป็นของผู้ขายอยู่ จนกว่าผู้ซื้อจะได้ชำระเงินหรือเช็คเรียบร้อยแล้ว</small>
+            </div>
+        </div>
+        <div class="footer" style="font-family: Sarabun;">
+            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+            <div class="row">
+                <div class="col-7 text-center">
+                    <small>ข้าพเจ้าได้รับสินค้า/บริการ ดังรายการข้างต้นถูกต้องครบถ้วน และอยู่ในสภาพเรียบร้อย</small><br/>
+                    <small>RECEIVED AS PER ABOVE IN GOOD ORDER AND CONDITION</small>
+                    <div class="row mt32">
+                        <div class="col-3"/>
+                        <div class="col-6" style="border-bottom: 1px dotted black;"/>
+                        <div class="col-3"/>
+                    </div>
+                    <small>ผู้รับสินค้า/RECEIVED BY</small>
+                    <div class="row">
+                        <div class="col-3"/>
+                        <div class="col-3"><small>วันที่/Date</small></div>
+                        <div class="col-3" style="border-bottom: 1px dotted black;"/>
+                        <div class="col-3"/>
+                    </div>
+                </div>
+                <div class="col-5 text-center">
+                    <small>ในนาม บริษัท อี เอส แบตเตอรี่ (ประเทศไทย) จำกัด</small><br/>
+                    <small>For E S Battery (Thailand) Co., Ltd.</small>
+                    <div class="row mt32">
+                        <div class="col-2"/>
+                        <div class="col-8" style="border-bottom: 1px dotted black;"/>
+                        <div class="col-2"/>
+                    </div>
+                    <small>ผู้มีอำนาจลงนาม/AUTHORIZED</small>
+                    <div class="row">
+                        <div class="col-2"/>
+                        <div class="col-4"><small>วันที่/Date</small></div>
+                        <div class="col-4" style="border-bottom: 1px dotted black;"/>
+                        <div class="col-2"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="esb_tax_invoice_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="esb.esb_tax_invoice_form" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

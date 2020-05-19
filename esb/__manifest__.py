@@ -19,13 +19,20 @@
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
+        "sale/views/sale_views.xml",
+        # Packing List
+        "packing_list/datas/paper_format.xml",
+        "packing_list/datas/report_data.xml",
+        "packing_list/reports/packing_list_form.xml",
+        "packing_list/security/ir.model.access.csv",
+        "packing_list/views/packing_list_views.xml",
+        # Forms
+        "account_form/datas/paper_format.xml",
+        "account_form/datas/report_data.xml",
+        "account_form/reports/tax_invoice_form.xml",
         "purchase_form/datas/paper_format.xml",
         "purchase_form/datas/report_data.xml",
         "purchase_form/reports/purchase_form.xml",
-        "sale/views/sale_views.xml",
-        # Picking List
-        "picking_list/security/ir.model.access.csv",
-        "picking_list/views/picking_list_views.xml",
     ],
     "installable": True,
 }

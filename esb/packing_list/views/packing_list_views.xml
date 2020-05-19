@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <act_window id="action_account_invoice_billing"
-        name="Create Picking List"
+    <act_window id="action_esb_packing_list"
+        name="Create Packing List"
         binding_model="stock.picking"
-        res_model="esb.picking.list"
+        res_model="esb.packing.list"
         binding_views="list"
         view_mode="form"
         target="current"
         context="{'default_picking_ids': active_ids}"
     />
 
-    <record id="esb_picking_list_form" model="ir.ui.view">
-        <field name="name">esb.picking.list.form</field>
-        <field name="model">esb.picking.list</field>
+    <record id="esb_packing_list_form" model="ir.ui.view">
+        <field name="name">esb.packing.list.form</field>
+        <field name="model">esb.packing.list</field>
         <field name="arch" type="xml">
-            <form string="Picking List" duplicate="false">
+            <form string="Packing List" duplicate="false">
                 <header>
                     <button string="Done"
                             name="action_done"
@@ -24,7 +24,7 @@
                     <button string="Draft"
                             name="action_draft"
                             type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft, done"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -44,14 +44,19 @@
                         <group name="main-left">
                             <field name="partner_id"/>
                             <field name="picking_ids" widget="many2many_tags"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group name="main-right">
                             <field name="ref"/>
+                            <field name="date"/>
+                            <field name="origin"/>
+                            <field name="ship_from"/>
+                            <field name="ship_to"/>
                         </group>
                     </group>
-                    <button name="action_compute" string="Generate Picking Lines" type="object" class="oe_highlight"/>
+                    <button name="action_compute" string="Generate Packing Lines" type="object" class="oe_highlight"/>
                     <notebook>
-                        <page string="Picking Lines">
+                        <page string="Packing Lines">
                             <field name="line_ids" widget="section_and_note_one2many">
                                 <tree editable="bottom">
                                     <control>
@@ -65,7 +70,10 @@
                                     <field name="move_id" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="name" widget="section_and_note_text" optional="show"/>
-                                    <field name="quantity_done" sum="Total"/>
+                                    <field name="quantity" sum="Total"/>
+                                    <field name="package" sum="Total Packages"/>
+                                    <field name="net_weight" sum="Total Net Weight"/>
+                                    <field name="gross_weight" sum="Total Gross Weight"/>
                                 </tree>
                             </field>
                             <group name="note_group" col="6">
@@ -73,7 +81,10 @@
                                     <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
                                 </group>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="picking_total">
-                                    <field name="quantity_done_total" />
+                                    <field name="quantity_total"/>
+                                    <field name="package_total"/>
+                                    <field name="net_weight_total"/>
+                                    <field name="gross_weight_total"/>
                                 </group>
                                 <div class="oe_clear"/>
                             </group>
@@ -84,24 +95,27 @@
         </field>
     </record>
 
-    <record id="esb_picking_list_tree" model="ir.ui.view">
-        <field name="name">esb.picking.list.tree</field>
-        <field name="model">esb.picking.list</field>
+    <record id="esb_packing_list_tree" model="ir.ui.view">
+        <field name="name">esb.packing.list.tree</field>
+        <field name="model">esb.packing.list</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
                 <field name="partner_id"/>
-                <field name="quantity_done_total"/>
+                <field name="quantity_total"/>
+                <field name="package_total"/>
+                <field name="net_weight_total"/>
+                <field name="gross_weight_total"/>
                 <field name="state"/>
             </tree>
         </field>
     </record>
 
-    <record id="esb_picking_list_search" model="ir.ui.view">
-        <field name="name">esb.picking.list.search</field>
-        <field name="model">esb.picking.list</field>
+    <record id="esb_packing_list_search" model="ir.ui.view">
+        <field name="name">esb.packing.list.search</field>
+        <field name="model">esb.packing.list</field>
         <field name="arch" type="xml">
-            <search string="Picking List">
+            <search string="Packing List">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="picking_ids"/>
@@ -115,15 +129,15 @@
         </field>
     </record>
 
-    <record id="esb_picking_list_action" model="ir.actions.act_window">
-        <field name="name">Picking List</field>
-        <field name="res_model">esb.picking.list</field>
+    <record id="esb_packing_list_action" model="ir.actions.act_window">
+        <field name="name">Packing List</field>
+        <field name="res_model">esb.packing.list</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <menuitem
-        id="esb_picking_list_menu"
-        action="esb_picking_list_action"
+        id="esb_packing_list_menu"
+        action="esb_packing_list_action"
         parent="stock.menu_stock_warehouse_mgmt"
         sequence="300"/>
 
