@@ -186,7 +186,7 @@
                                 </td>
                             </t>
                         </tr>
-                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                        <t t-if="current_section and (line_last or o.line_ids[line_index+1].display_type == 'line_section')">
                             <tr class="is-subtotal text-right">
                                 <td colspan="5">
                                     <strong><span t-esc="'{0:,.3f}'.format(current_qty)"/></strong>

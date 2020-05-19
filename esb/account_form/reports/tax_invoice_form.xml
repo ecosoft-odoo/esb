@@ -144,7 +144,7 @@
                                     <span t-field="line.product_id.name"/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-field="line.product_uom_id.name"/>                                    
+                                    <span t-field="line.product_uom_id.name"/>
                                 </td>
                                 <td class="text-center">
                                     <span t-field="line.quantity"/>
@@ -176,7 +176,7 @@
                                 </td>
                             </t>
                         </tr>
-                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                        <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
                             <tr class="is-subtotal text-right">
                                 <td colspan="99">
                                     <strong class="mr16">Subtotal</strong>
