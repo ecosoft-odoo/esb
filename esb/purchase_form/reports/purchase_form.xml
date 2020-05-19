@@ -2,7 +2,7 @@
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_purchase_form">
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-        <div class="header">
+        <div class="header" style="font-family: Sarabun;">
             <!-- Company Data -->
             <div class="row">
                 <div class="col-1">
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <div class="article">
+        <div class="article" style="font-family: Sarabun;">
             <table class="table table-sm" style="border-bottom: 1px solid lightgray;">
                 <thead>
                     <tr>
@@ -239,7 +239,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" style="font-family: Sarabun;">
             <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
             <div class="row">
                 <div class="col-5">
