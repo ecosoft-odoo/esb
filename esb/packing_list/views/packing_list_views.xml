@@ -45,11 +45,14 @@
                             <field name="partner_id"/>
                             <field name="picking_ids" widget="many2many_tags"/>
                             <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="responsible_person"/>
+                            <field name="shipping_mark"/>
                         </group>
                         <group name="main-right">
                             <field name="ref"/>
                             <field name="date"/>
                             <field name="origin"/>
+                            <field name="incoterm_id"/>
                             <field name="ship_from"/>
                             <field name="ship_to"/>
                         </group>
@@ -123,6 +126,8 @@
                 <filter string="Done" domain="[('state', '=', 'done')]" name="draft"/>
                 <group name="groupby">
                     <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter name="incoterm_id" string="Incoterm" context="{'group_by': 'incoterm_id'}"/>
                     <filter name="state" string="State" context="{'group_by': 'state'}"/>
                 </group>
             </search>

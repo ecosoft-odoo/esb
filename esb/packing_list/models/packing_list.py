@@ -27,6 +27,11 @@ class ESBPackingList(models.Model):
         copy=False,
         states={"draft": [("readonly", False)], "done": [("readonly", True)]},
     )
+    incoterm_id = fields.Many2one(
+        comodel_name="account.incoterms",
+        string="Incoterm",
+        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+    )
     ship_from = fields.Char(
         string="Ship Form",
         states={"draft": [("readonly", False)], "done": [("readonly", True)]},
@@ -53,6 +58,14 @@ class ESBPackingList(models.Model):
         string="Company",
         default=lambda self: self.env.company,
         required=True
+    )
+    responsible_person = fields.Char(
+        string="Responsible Person",
+        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+    )
+    shipping_mark = fields.Text(
+        string="Shipping Marks",
+        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
     )
     picking_ids = fields.Many2many(
         comodel_name="stock.picking",
