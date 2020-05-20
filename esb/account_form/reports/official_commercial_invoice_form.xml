@@ -1,0 +1,157 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_official_commercial_invoice_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+        <div class="header" style="font-family: Sarabun;">
+            <!-- Company Data -->
+            <div class="row">
+                <div class="col-2">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-5">
+                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'/>
+                </div>
+                <div class="col-5 text-right">
+                    <h3>COMMERCIAL INVOICE</h3>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>Contact:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.phone"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>E-mail:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.email"/>
+                </div>
+            </div>
+            <div class="row mb0">
+                <div class="col-2">
+                    <p>Tax ID:</p>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                        </t>
+                        <t t-else="">
+                            <p>Branch: <span t-field="o.company_id.branch"/></p>
+                        </t>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
+                </div>                
+            </div>
+            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+            <!-- Partner Data -->
+            <div class="row">
+                <div class="col-7">
+                    <div class="row">
+                        <div class="col-3">
+                            <p>MESSR:</p>
+                        </div>
+                        <div class="col-9">
+                            <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "email", "phone"], "no_marker": True}'/>
+                        </div>                                            
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-4">
+                            <p>NO:</p>
+                        </div>
+                        <div class="col-8">
+                            <span t-field="o.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>DATE:</p>
+                        </div>
+                        <div class="col-8">
+                            <span t-field="o.invoice_date" t-options="{'widget': 'date'}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <p>PI NO.:</p>
+                        </div>
+                        <div class="col-8">
+                            <t t-set="orders" t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')"/>
+                            <span t-esc="', '.join(filter(lambda l: l != False and l != '', [order.client_order_ref for order in orders]))"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article" style="font-family: Sarabun;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center">NO.</th>
+                        <th class="text-center">DESCRIPTION</th>
+                        <th class="text-center">BRAND</th>
+                        <th class="text-center">QUANTITY</th>
+                        <th class="text-center">UNIT PRICE</th>
+                        <th class="text-center">AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="number" t-value="0"/>
+                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <tr>
+                            <t t-if="not line.display_type">
+                                <td>
+                                    <t t-set="number" t-value="number + 1"/>
+                                    <span t-esc="number"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.product_id.brand"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                </td>
+                            </t>
+                            <t t-if="line.display_type == 'line_section'">
+                                <td class="table-active" colspan="99" id="section">
+                                    <strong><span t-field="line.name"/></strong>
+                                </td>
+                                <t t-set="number" t-value="0"/>
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td colspan="99">
+                                    <span  class="font-italic" t-field="line.name"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+    <template id="esb_official_commercial_invoice_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="esb.esb_official_commercial_invoice_form" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>
