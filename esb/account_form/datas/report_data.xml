@@ -9,4 +9,21 @@
             print_report_name="object.display_name"
             paperformat="esb.esb_paperformat_tax_invoice"/>
 
+    <report string="Commercial Invoice (Official)"
+            id="official_commercial_invoice_form_pdf_report"
+            model="account.move"
+            name="esb.esb_official_commercial_invoice_form_pdf"
+            file="esb.esb_official_commercial_invoice_form_pdf"
+            report_type="qweb-pdf"
+            print_report_name="object.display_name"
+            paperformat="esb.esb_paperformat_commercial_invoice"/>
+
+    <report string="Commercial Invoice (Customer)"
+            id="customer_commercial_invoice_form_pdf_report"
+            model="account.move"
+            name="esb.esb_customer_commercial_invoice_form_pdf"
+            file="esb.esb_customer_commercial_invoice_form_pdf"
+            report_type="qweb-pdf"
+            print_report_name="object.display_name"
+            paperformat="esb.esb_paperformat_commercial_invoice"/>
 </odoo>
