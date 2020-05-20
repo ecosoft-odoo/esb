@@ -48,7 +48,7 @@
                     </p>
                 </div>
                 <div class="col-2">
-                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
+                    <p>Page: <span class="page"/> / <span class="topage"/></p>
                 </div>
             </div>
             <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
@@ -94,7 +94,7 @@
                             <p>Term:</p>
                         </div>
                         <div class="col-8">
-                            <!-- <span t-field="o.ref"/> -->
+                            <span t-field="o.incoterm_id.code"/>
                         </div>
                     </div>
                     <div class="row">
@@ -224,16 +224,16 @@
             </table>
         </div>
         <div class="footer" style="font-family: Sarabun;">
+            <strong>Sincerely yours,</strong>
+            <br/>
+            <br/>
+            <br/>
+            <strong><span t-field="o.responsible_person"/></strong>
             <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
             <div class="row">
                 <div class="col-6">
-                    <strong>Sincerely yours,</strong>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <strong>ARTITAYA WANNA</strong><br/>
-                    Shipping Mark:<br/>
-                    <small>Made in Thailand</small><br/>
+                    <strong>Shipping Mark:</strong><br/>
+                    <span t-field="o.shipping_mark"/>
                 </div>
                 <div class="col-6">
                     <div class="row">

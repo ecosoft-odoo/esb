@@ -13,3 +13,9 @@ class SaleOrder(models.Model):
     def create(self, vals):
         vals["so_created"] = True
         return super().create(vals)
+
+    def copy_data(self, default=None):
+        if default is None:
+            default = {}
+        default["type_id"] = self.type_id.id
+        return super().copy_data(default)

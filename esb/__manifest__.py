@@ -14,12 +14,14 @@
         "purchase_order_type",
         "sale_order_type",
         "manufacturing_order_type",
+        "report_qweb_element_page_visibility",
     ],
     "data": [
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
         "sale/views/sale_views.xml",
+        "fonts/style.xml",
         # Packing List
         "packing_list/datas/paper_format.xml",
         "packing_list/datas/report_data.xml",
