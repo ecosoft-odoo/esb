@@ -152,39 +152,39 @@
                         </tr>
                         <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
                             <tr>
-                              <td colspan="5" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-right: 0px;">
+                              <td colspan="5">
                                     <span>LESS WARRANTY DISCOUNT</span>
                                 </td>
-                                <td class="text-right" colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-left: 0px;">
+                                <td class="text-right" colspan="1">
                                     <span> XXX %</span>
                                 </td>
-                                <td class="text-right" colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px;">
+                                <td class="text-right" colspan="1">
                                     <span> XXX,XXX</span>
                                 </td>
                             </tr>
                             <tr>
-                              <td colspan="5" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-right: 0px;">
+                              <td colspan="5">
                                     <span>SPECIAL DISCOUNT FOR THIS ORDER</span>
                                 </td>
-                                <td class="text-right" colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-left: 0px;">
+                                <td class="text-right" colspan="1">
                                     <span> XXX %</span>
                                 </td>
-                                <td class="text-right" colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px;">
+                                <td class="text-right" colspan="1">
                                     <span> XXX,XXX</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-right: 0px;">
+                                <td colspan="4">
                                     <span>TOTAL AMOUNT (FOR BANGKOK)</span>
                                 </td>
-                                <td class="text-center" colspan="1" style="border-bottom: 1px solid black; border-top: 0px;">
+                                <td class="text-center" colspan="1">
                                     <span t-esc="'{0:,.0f}'.format(total_qty)"/>
                                     <t t-set="total_qty" t-value="0"/>
                                 </td>
-                                <td colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; border-left: 0px;">
+                                <td colspan="1">
                                     <span t-esc="qty_uom"/>
                                 </td>
-                                <td class="text-right" colspan="1" style="border: 1px solid black; border-top: 0px; border-bottom: 0px;">
+                                <td class="text-right" colspan="1">
                                     <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
                                 </td>
                             </tr>
