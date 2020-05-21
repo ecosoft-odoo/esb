@@ -7,12 +7,12 @@
         <field name='page_height'>0</field>
         <field name='page_width'>0</field>
         <field name='orientation'>Portrait</field>
-        <field name='margin_top'>38</field>
+        <field name='margin_top'>60</field>
         <field name='margin_bottom'>145</field>
         <field name='margin_left'>7</field>
         <field name='margin_right'>7</field>
         <field name='header_line' eval='False'/>
-        <field name='header_spacing'>30</field>
+        <field name='header_spacing'>54</field>
         <field name='dpi'>90</field>
     </record>
 
@@ -23,12 +23,12 @@
         <field name='page_height'>0</field>
         <field name='page_width'>0</field>
         <field name='orientation'>Portrait</field>
-        <field name='margin_top'>32</field>
+        <field name='margin_top'>81</field>
         <field name='margin_bottom'>30</field>
         <field name='margin_left'>7</field>
         <field name='margin_right'>7</field>
         <field name='header_line' eval='False'/>
-        <field name='header_spacing'>23</field>
+        <field name='header_spacing'>75</field>
         <field name='dpi'>90</field>
     </record>
 
