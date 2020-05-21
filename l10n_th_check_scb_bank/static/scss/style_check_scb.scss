@@ -1,0 +1,26 @@
+.o_report_check_scb_bank{
+    font-size: 24px;
+    .payee_only {
+        position: fixed;
+        left: 30mm;
+    }
+    .payment_date {
+        position: fixed;
+        right: 40mm;
+    }
+    .pay_to{
+        position: fixed;
+        top: 10mm;
+        left: 40mm;
+    }
+    .amount_word{
+        position: fixed;
+        top: 32mm;
+        left: 80mm;
+    }
+    .amount{
+        position: fixed;
+        top: 45mm;
+        right: 45mm;
+    }
+}

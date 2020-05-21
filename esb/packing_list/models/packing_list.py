@@ -177,10 +177,15 @@ class ESBPackingList(models.Model):
             rec.line_ids.unlink()
             for picking in rec.picking_ids:
                 for move in picking.move_lines:
-                    lines.append((0, 0, {"move_id": move.id,
-                                         "product_id": move.product_id.id,
-                                         "name": move.name,
-                                         "quantity": move.product_uom_qty}))
+                    lines.append((0, 0, {
+                        "move_id": move.id,
+                        "product_id": move.product_id.id,
+                        "name": move.name,
+                        "quantity": move.product_uom_qty,
+                        "package": move.product_uom_qty * move.product_id.pack_carton,
+                        "net_weight": move.product_uom_qty * move.product_id.weight,
+                        "gross_weight": move.product_uom_qty * move.product_id.gross_weight,
+                    }))
             rec.line_ids = lines
 
     def action_run_number(self):

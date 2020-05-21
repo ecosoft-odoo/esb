@@ -16,3 +16,9 @@ class ProductTemplate(models.Model):
     spec3 = fields.Char(string="Spec 3", size=100)
     pack_carton = fields.Float(string="Pack per Carton", default=1.00)
     sale_ratio = fields.Float(string="Ratio (divider)", default=1.00)
+    gross_weight = fields.Float(string="Gross Weight", digits="Stock Weight")
+    gross_weight_uom_name = fields.Char(
+        string="Weight unit of measure label",
+        related="weight_uom_name",
+        readonly=True,
+    )
