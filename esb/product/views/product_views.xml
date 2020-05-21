@@ -18,6 +18,13 @@
                 <field name="pack_carton"/>
                 <field name="sale_ratio"/>
             </xpath>
+            <xpath expr="//page[@name='inventory']//div[@name='weight']" position="after">
+                <label for="gross_weight" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"/>
+                <div class="o_row" name="gross_weight" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}">
+                    <field name="gross_weight"/>
+                    <span><field name="gross_weight_uom_name"/></span>
+                </div>
+            </xpath>
         </field>
     </record>
     <record id="product_template_search_view" model="ir.ui.view">
