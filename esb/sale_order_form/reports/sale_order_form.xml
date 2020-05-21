@@ -5,13 +5,58 @@
         <div class="header">
             <!-- Company Data -->
             <div class="row">
-                <div class="col-12 text-center">
-                    <h4 t-field="o.company_id.partner_id"/>
+                <div class="col-2">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-6">
+                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                </div>
+                <div class="col-4 text-right">
                     <h5>บันทึกความต้องการของลูกค้า</h5>
                 </div>
             </div>
             <div class="row">
-              <div class="col-7"/>
+                <div class="col-2">
+                    <p>Contact:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.phone"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>E-mail:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.email"/>
+                </div>
+            </div>
+            <div class="row mb0">
+                <div class="col-2">
+                    <p>Tax ID:</p>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                        </t>
+                        <t t-else="">
+                            <p>Branch: <span t-field="o.partner_id.branch"/></p>
+                        </t>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
+                </div>
+            </div>
+            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+            <div class="row">
+                <div class="col-7 text-left">
+                    <span>ชื่อลูกค้า : </span>
+                    <span t-field="o.partner_id.name"/>
+                </div>
                 <div class="col-3 text-left">
                     <span>เลขที่เอกสาร / No :</span>
                 </div>
@@ -21,8 +66,8 @@
             </div>
             <div class="row">
                 <div class="col-7 text-left">
-                    <span>ชื่อลูกค้า : </span>
-                    <span t-field="o.partner_id.name"/>
+                    <span>Proforma Invoice no./ ใบสั่งซื้อ เลขที่ วันที่ :</span>
+                    <span>XXX</span>
                 </div>
                 <div class="col-3 text-left">
                     <span>วันที่ / Date :</span>
@@ -32,10 +77,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-7 text-left">
-                    <span>Proforma Invoice no./ ใบสั่งซื้อ เลขที่ วันที่ :</span>
-                    <span>XXX</span>
-                </div>
+                <div class="col-7"/>
                 <div class="col-3 text-left">
                     <span>วันที่ต้องการ / Due Date :</span>
                 </div>
@@ -48,16 +90,16 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>ชื่อสินค้า</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>หน่วย</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>BRAND</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>SERIES</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>ชนิดแผ่น</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>จำนวน</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>ชนิดหูหิ้ว สีจุด, ขนาดขั้ว </strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>จำนวนสั่งซื้อ</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>จำนวนคง</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>โครงสร้างราคา</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>ชื่อสินค้า</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>หน่วย</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>BRAND</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>SERIES</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>ชนิดแผ่น</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวน</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>ชนิดหูหิ้ว สีจุด, ขนาดขั้ว </strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวนสั่งซื้อ</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวนคง</strong></th>
+                        <th class="text-center" style="vertical-align: middle;"><strong>โครงสร้างราคา</strong></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,46 +107,46 @@
                     <t t-foreach="o.order_line" t-as="line">
                         <tr>
                             <t t-if="not line.display_type">
-                                <td style="border: 1px solid black;">
+                                <td>
                                     <span t-field="line.product_id.name"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_uom.name"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_id.brand"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_id.series"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_id.spec1"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_id.spec2"/>
                                 </td>
-                                <td style="border: 1px solid black;">
+                                <td>
                                     <span t-field="line.product_id.spec3"/>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black;">
+                                <td class="text-right">
                                     <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
                                     <span t-esc="'{0:,.2f}'.format(line.product_uom_qty)"/>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black;">
+                                <td class="text-right">
                                     XXX
                                 </td>
-                                <td class="text-right" style="border: 1px solid black;">
+                                <td class="text-right">
                                     XXX
                                 </td>
                             </t>
                         </tr>
                         <t t-if="line_last">
-                            <th colspan="7" style="border: 1px solid black;"/>
-                            <th class="text-right" colspan="1" style="border: 1px solid black;">
+                            <th colspan="7"/>
+                            <th class="text-right" colspan="1">
                                 <span t-esc="'{0:,.2f}'.format(total_qty)"/>
                                 <t t-set="total_qty" t-value="0"/>
                             </th>
-                            <th colspan="2" style="border: 1px solid black;"/>
+                            <th colspan="2"/>
                         </t>
                     </t>
                 </tbody>
@@ -223,14 +265,6 @@
                   </td>
                 </tr>
             </table>
-            <div class="row">
-                <div class="col-10">
-                    <p>XXX</p>
-                </div>
-                <div class="col-2 text-right">
-                    <p>หน้าที่ <span class="page"/></p>
-                </div>
-            </div>
         </div>
     </template>
 

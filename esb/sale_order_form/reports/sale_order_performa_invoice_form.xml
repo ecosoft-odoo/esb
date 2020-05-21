@@ -5,38 +5,58 @@
         <div class="header">
             <!-- Company Data -->
             <div class="row">
-                <div class="col-12 text-center">
-                    <h2 t-field="o.company_id.partner_id.display_name"/>
+                <div class="col-2">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-6">
+                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                </div>
+                <div class="col-4 text-right">
+                    <h4>Performa Invoice</h4>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <span t-field="o.company_id.street"/>
-                    <span t-field="o.company_id.zip_id"/>
+                <div class="col-2">
+                    <p>Contact:</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <span>TEL : </span>
+                <div class="col-10">
                     <span t-field="o.company_id.phone"/>
                 </div>
-                <div class="col-3">
-                    <span>FAX : XXX</span>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <p>E-mail:</p>
+                </div>
+                <div class="col-10">
+                    <span t-field="o.company_id.email"/>
+                </div>
+            </div>
+            <div class="row mb0">
+                <div class="col-2">
+                    <p>Tax ID:</p>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                        </t>
+                        <t t-else="">
+                            <p>Branch: <span t-field="o.partner_id.branch"/></p>
+                        </t>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
                 </div>
             </div>
             <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
-        </div>
-        <div class="article" style="font-size: 16px;">
-            <div class="row" style="font-size: 20px;">
-                <div class="col-12 text-center" style="font-weight: bold;">
-                    <span>PERFORMA INVOICE</span>
-                </div>
-            </div>
-            <div class="row" style="font-size: 16px;">
-                <div class="col-2" style="font-weight: bold;">
+            <div class="row">
+                <div class="col-2">
                     <span>MESSR:</span>
                 </div>
-                <div class="col-4" style="left: -60px;">
+                <div class="col-5">
                     <span t-field="o.partner_id.company_name"/><br/>
                     <span t-field="o.partner_id.display_name"/><br/>
                     <span t-field="o.partner_id.street"/><br/>
@@ -53,22 +73,24 @@
                     <span>TERM:</span><br/>
                     <span>PAYMENT:</span><br/>
                 </div>
-                <div class="col-4" style="left: -60px;">
+                <div class="col-3">
                     <span t-esc="o.date_order.strftime('%B %d, %Y')"/><br/>
                     <span t-field="o.display_name"/><br/>
                     <span t-field="o.payment_term_id.display_name"/><br/>
                 </div>
             </div>
+        </div>
+        <div class="article" style="font-size: 16px;">
             <table class="table table-sm" style="border-bottom: 1px solid black;">
                 <thead>
                     <tr>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>NO.</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>PART NO.</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>DESCRIPTION</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>BRAND</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>QUALITY</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>Unit PRICE</strong></th>
-                        <th class="text-center" style="border: 1px solid black; vertical-align: middle;"><strong>AMOUNT</strong></th>
+                        <th class="text-center"><strong>NO.</strong></th>
+                        <th class="text-center"><strong>PART NO.</strong></th>
+                        <th class="text-center"><strong>DESCRIPTION</strong></th>
+                        <th class="text-center"><strong>BRAND</strong></th>
+                        <th class="text-center"><strong>QUALITY</strong></th>
+                        <th class="text-center"><strong>Unit PRICE</strong></th>
+                        <th class="text-center"><strong>AMOUNT</strong></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,27 +103,27 @@
                     <t t-foreach="o.order_line" t-as="line">
                         <tr >
                             <t t-if="not line.display_type">
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <t t-set="number" t-value="number + 1"/>
                                     <span t-esc="number"/>
                                 </td>
-                                <td style="border: 1px solid black;">
+                                <td>
                                     <span t-field="line.product_id.default_code"/>
                                 </td>
-                                <td style="border: 1px solid black;">
+                                <td>
                                     <span t-field="line.name"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <span t-field="line.product_id.brand"/>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black;">
+                                <td class="text-center">
                                     <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
                                     <span t-esc="'{0:,.0f}'.format(line.product_uom_qty)"/>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black;">
+                                <td class="text-right">
                                     <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black;">
+                                <td class="text-right">
                                     <t t-set="amount" t-value="line.product_uom_qty * line.price_unit"/>
                                     <t t-set="current_subtotal" t-value="current_subtotal + amount"/>
                                     <t t-set="total_amount" t-value="total_amount + amount"/>
@@ -110,17 +132,17 @@
                             </t>
                             <t t-if="line.display_type == 'line_section'">
                                 <t t-set="qty_uom" t-value="o.order_line[line_index+1].product_uom.display_name"/>
-                                <td colspan="1" style="border: 1px solid black;"/>
-                                <td colspan="3" style="border: 1px solid black;">
+                                <td colspan="1"/>
+                                <td colspan="3">
                                     <strong><span t-field="line.name"/></strong>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black; vertical-align: middle;">
+                                <td class="text-center" style="vertical-align: middle;">
                                     <strong><span t-esc="qty_uom"/></strong>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black; vertical-align: middle;">
+                                <td class="text-center" style="vertical-align: middle;">
                                     <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
                                 </td>
-                                <td class="text-center" style="border: 1px solid black; vertical-align: middle;">
+                                <td class="text-center" style="vertical-align: middle;">
                                     <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
                                 </td>
                                 <t t-set="current_section" t-value="line"/>
