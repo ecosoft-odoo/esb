@@ -19,3 +19,10 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     mo_ref = fields.Char(string="MO Reference")
+
+    account_analytic_id = fields.Many2one(
+        comodel_name="account.analytic.account",
+        string="Analytic Account",
+        required=True,
+        ondelete="cascade",
+    )
