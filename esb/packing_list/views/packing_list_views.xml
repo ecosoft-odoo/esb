@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <act_window id="action_esb_packing_list"
         name="Create Packing List"
         binding_model="stock.picking"
@@ -24,6 +24,9 @@
                     <button string="Draft"
                             name="action_draft"
                             type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button string="Cancel"
+                            name="action_cancel"
+                            type="object" attrs="{'invisible': [('state', '=', 'cancel')]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft, done"/>
                 </header>
                 <sheet>
@@ -37,16 +40,17 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <label for="name" class="oe_edit_only"/>
-                        <h1><field name="name"/></h1>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
                     </div>
                     <group name="main">
                         <group name="main-left">
                             <field name="partner_id"/>
+                            <field name="pl_type_id"/>
                             <field name="picking_ids" widget="many2many_tags"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="responsible_person"/>
-                            <field name="shipping_mark"/>
                         </group>
                         <group name="main-right">
                             <field name="ref"/>
@@ -105,10 +109,11 @@
             <tree>
                 <field name="name"/>
                 <field name="partner_id"/>
-                <field name="quantity_total"/>
-                <field name="package_total"/>
-                <field name="net_weight_total"/>
-                <field name="gross_weight_total"/>
+                <field name="pl_type_id" optional="show"/>
+                <field name="quantity_total" optional="show"/>
+                <field name="package_total" optional="show"/>
+                <field name="net_weight_total" optional="show"/>
+                <field name="gross_weight_total" optional="show"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -126,6 +131,7 @@
                 <filter string="Done" domain="[('state', '=', 'done')]" name="draft"/>
                 <group name="groupby">
                     <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="pl_type_id" string="Type" context="{'group_by': 'pl_type_id'}"/>
                     <filter name="company_id" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                     <filter name="incoterm_id" string="Incoterm" context="{'group_by': 'incoterm_id'}"/>
                     <filter name="state" string="State" context="{'group_by': 'state'}"/>

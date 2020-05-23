@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <record model="ir.ui.view" id="res_partner_packing_list_type_form_view">
+        <field name="name">res.partner.packing_list_type.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <page name="sales_purchases" position="inside">
+                <group colspan="2" col="2">
+                    <separator string="Packing List Type" colspan="2" />
+                    <field name="pl_type_id" />
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>
