@@ -194,7 +194,8 @@ class ESBPackingList(models.Model):
         if self._context.get("default_picking_ids"):
             pickings = self.env["stock.picking"].browse(self._context["default_picking_ids"])
             origins = pickings.mapped("origin")
-        return ", ".join(origin for origin in origins if origin not in (False, ""))
+            return ", ".join(origin for origin in origins if origin not in (False, ""))
+        return False
 
     def _get_default_ship_form(self):
         if self.company_id:
@@ -342,4 +343,9 @@ class ESBPackingListLine(models.Model):
     gross_weight = fields.Float(
         string="Gross Weight",
         digits="Stock Weight",
+    )
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        related="packing_list_id.company_id",
     )
