@@ -18,7 +18,15 @@ class ProductTemplate(models.Model):
     sale_ratio = fields.Float(string="Ratio (divider)", default=1.00)
     gross_weight = fields.Float(string="Gross Weight", digits="Stock Weight")
     gross_weight_uom_name = fields.Char(
-        string="Weight unit of measure label",
+        string="Gross weight unit of measure label",
         related="weight_uom_name",
         readonly=True,
+    )
+    # change Weight to Net Weight
+    weight = fields.Float(
+        string="Net Weight",
+        compute="_compute_weight",
+        digits="Stock Weight",
+        inverse="_set_weight",
+        store=True,
     )

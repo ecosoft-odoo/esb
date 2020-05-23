@@ -10,40 +10,75 @@ class ESBPackingList(models.Model):
     _description = "Printout Packing List for ESB"
 
     name = fields.Char(
-        required=True,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        readonly=True,
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     ref = fields.Char(
         string="Reference",
         copy=False,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     date = fields.Date(
         string="Date",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     origin = fields.Char(
         string="Source Document",
         copy=False,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        default=lambda self: self._get_default_origin(),
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     incoterm_id = fields.Many2one(
         comodel_name="account.incoterms",
         string="Incoterm",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     ship_from = fields.Char(
         string="Ship Form",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        default=lambda self: self._get_default_ship_form(),
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     ship_to = fields.Char(
         string="Ship To",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        default=lambda self: self._get_default_ship_to(),
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     note = fields.Text(
         string="Notes",
         copy=False,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     partner_id = fields.Many2one(
         comodel_name="res.partner",
@@ -51,21 +86,35 @@ class ESBPackingList(models.Model):
         required=True,
         copy=False,
         default=lambda self: self._get_default_partner_id(),
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
+    )
+    pl_type_id = fields.Many2one(
+        comodel_name="esb.packing.list.type",
+        string="Type",
+        required=True,
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
         default=lambda self: self.env.company,
-        required=True
+        required=True,
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     responsible_person = fields.Char(
         string="Responsible Person",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
-    )
-    shipping_mark = fields.Text(
-        string="Shipping Marks",
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     picking_ids = fields.Many2many(
         comodel_name="stock.picking",
@@ -73,7 +122,11 @@ class ESBPackingList(models.Model):
         domain="[('partner_id', '=', partner_id)]",
         required=True,
         copy=False,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     picking_count = fields.Integer(
         string="Picking Count",
@@ -85,11 +138,14 @@ class ESBPackingList(models.Model):
         inverse_name="packing_list_id",
         string="Lines",
         copy=False,
-        states={"draft": [("readonly", False)], "done": [("readonly", True)]},
+        states={
+            "draft": [("readonly", False)],
+            "done": [("readonly", True)],
+            "cancel": [("readonly", True)],
+        },
     )
     state = fields.Selection(
-        [("draft", "Draft"),
-         ("done", "Done")],
+        selection=[("draft", "Draft"), ("done", "Done"), ("cancel", "Cancelled")],
         string="Status",
         default="draft",
         required=True,
@@ -134,6 +190,22 @@ class ESBPackingList(models.Model):
                 raise ValidationError(_("Selected pickings do not belong to the same partner!"))
             return partners[0].id
 
+    def _get_default_origin(self):
+        if self._context.get("default_picking_ids"):
+            pickings = self.env["stock.picking"].browse(self._context["default_picking_ids"])
+            origins = pickings.mapped("origin")
+        return ", ".join(origin for origin in origins if origin not in (False, ""))
+
+    def _get_default_ship_form(self):
+        if self.company_id:
+            return ", ".join([self.company_id.state_id.name, self.company_id.country_id.name])
+        return False
+
+    def _get_default_ship_to(self):
+        if self.partner_id:
+            return ", ".join([self.partner_id.state_id.name, self.partner_id.country_id.name])
+        return False
+
     @api.depends("line_ids")
     def _compute_total(self):
         for rec in self:
@@ -147,12 +219,23 @@ class ESBPackingList(models.Model):
         if not self._context.get("default_picking_ids"):
             self.picking_ids = False
             self.line_ids = False
+        if self.partner_id and self.partner_id.pl_type_id:
+            self.pl_type_id = self.partner_id.pl_type_id
+
+    @api.onchange("pl_type_id")
+    def _onchange_pl_type_id(self):
+        for rec in self:
+            if rec.pl_type_id.incoterm_id:
+                rec.incoterm_id = rec.pl_type_id.incoterm_id
 
     def action_draft(self):
         self.write({"state": "draft"})
 
     def action_done(self):
         self.write({"state": "done"})
+
+    def action_cancel(self):
+        self.write({"state": "cancel"})
 
     def write(self, vals):
         res = super().write(vals)
@@ -162,14 +245,13 @@ class ESBPackingList(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super().create(vals)
+        if vals.get("name", "/") == "/" and vals.get("pl_type_id"):
+            pl_type = self.env["esb.packing.list.type"].browse(vals["pl_type_id"])
+            if pl_type.sequence_id:
+                vals["name"] = pl_type.sequence_id.next_by_id()
         if "line_ids" in vals:
             self.action_run_number()
-        if "picking_ids" in vals:
-            picking_ids = vals["picking_ids"][0][2]
-            origin = self.env["stock.picking"].browse(picking_ids).mapped("origin")
-            vals["origin"] = ", ".join(origin)
-        return res
+        return super().create(vals)
 
     def action_compute(self):
         for rec in self:
@@ -182,7 +264,7 @@ class ESBPackingList(models.Model):
                         "product_id": move.product_id.id,
                         "name": move.name,
                         "quantity": move.product_uom_qty,
-                        "package": move.product_uom_qty * move.product_id.pack_carton,
+                        "package": move.product_uom_qty / move.product_id.pack_carton,
                         "net_weight": move.product_uom_qty * move.product_id.weight,
                         "gross_weight": move.product_uom_qty * move.product_id.gross_weight,
                     }))
@@ -211,7 +293,6 @@ class ESBPackingList(models.Model):
             rec.picking_count = len(self.picking_ids)
 
 
-
 class ESBPackingListLine(models.Model):
     _name = "esb.packing.list.line"
     _description = "Printout Packing List for ESB"
@@ -224,8 +305,7 @@ class ESBPackingListLine(models.Model):
         ondelete="cascade",
     )
     display_type = fields.Selection(
-        [("line_section", "Section"),
-         ("line_note", "Note")],
+        selection=[("line_section", "Section"), ("line_note", "Note")],
         default=False,
         help="Technical field for UX purpose.",
     )

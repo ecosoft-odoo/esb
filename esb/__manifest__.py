@@ -21,13 +21,16 @@
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
         "sale/views/sale_views.xml",
-        "fonts/style.xml",
+        "fonts/style_report.xml",
         # Packing List
         "packing_list/datas/paper_format.xml",
         "packing_list/datas/report_data.xml",
         "packing_list/reports/packing_list_form.xml",
         "packing_list/security/ir.model.access.csv",
+        "packing_list/security/security.xml",
+        "packing_list/views/packing_list_type_views.xml",
         "packing_list/views/packing_list_views.xml",
+        "packing_list/views/res_partner_views.xml",
         # Forms
         "account_form/datas/paper_format.xml",
         "account_form/datas/report_data.xml",
