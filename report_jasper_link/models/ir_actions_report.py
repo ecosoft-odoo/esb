@@ -5,6 +5,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from suds.client import Client
 from xml.etree import ElementTree as ET
+import email, re
 
  
 class IrActionsReport(models.Model):
@@ -78,7 +79,13 @@ class IrActionsReport(models.Model):
             operationName="runReport",
             params=report_param,
         )
-        pdf = client.service.runReport(req)
+        res = client.service.runReport(req).decode("latin-1")
+        boundary = re.search(r'----=[^\r\n]*', res).group()
+        res = " \n" + res
+        res = "Content-Type: multipart/alternative; boundary=%s\n%s" % (boundary, res)
+        message = email.message_from_string(res)
+        attachment = message.get_payload()[1]
+        pdf = attachment.get_payload().encode("latin-1")
         return pdf
 
     def render_jasperserver_pdf(self, docids, data):
