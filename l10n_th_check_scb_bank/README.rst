@@ -63,7 +63,7 @@ on Register payment
 # Go to payment and click Print Check
 # state will change to 'Sent'
 
-Notes : if you want to print check again, you can go to Print action
+Notes : if you want to print check again, you can go to Print action 
 
 Bug Tracker
 ===========

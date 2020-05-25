@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, models
-from odoo.tools import float_repr
 
 DEFAULT_FACTURX_DATE_FORMAT = "%d/%m/%Y"
 
@@ -25,7 +24,7 @@ class ReportCheckPrintTop(models.AbstractModel):
         return str_prefix
 
     def fill_equal_number(self, amount):
-        str_prefix = " ".join(["=", str(float_repr(amount, 2)), "="])
+        str_prefix = " ".join(["=", str("{:,.2f}".format(amount)), "="])
         return str_prefix
 
     @api.model

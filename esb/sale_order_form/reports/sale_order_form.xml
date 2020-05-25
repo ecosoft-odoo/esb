@@ -1,270 +1,272 @@
 <odoo>
-
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_sale_order_form">
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-        <div class="header">
-            <!-- Company Data -->
-            <div class="row">
-                <div class="col-2">
-                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
-                </div>
-                <div class="col-6">
-                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
-                </div>
-                <div class="col-4 text-right">
-                    <h5>บันทึกความต้องการของลูกค้า</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <p>Contact:</p>
-                </div>
-                <div class="col-10">
-                    <span t-field="o.company_id.phone"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <p>E-mail:</p>
-                </div>
-                <div class="col-10">
-                    <span t-field="o.company_id.email"/>
-                </div>
-            </div>
-            <div class="row mb0">
-                <div class="col-2">
-                    <p>Tax ID:</p>
-                </div>
-                <div class="col-8">
-                    <p>
-                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
-                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
-                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
-                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
-                        </t>
-                        <t t-else="">
-                            <p>Branch: <span t-field="o.partner_id.branch"/></p>
-                        </t>
-                    </p>
-                </div>
-                <div class="col-2">
-                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
-                </div>
-            </div>
-            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
-            <div class="row">
-                <div class="col-7 text-left">
-                    <span>ชื่อลูกค้า : </span>
-                    <span t-field="o.partner_id.name"/>
-                </div>
-                <div class="col-3 text-left">
-                    <span>เลขที่เอกสาร / No :</span>
-                </div>
-                <div class="col-2 text-right">
-                    <span t-field="o.name"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-7 text-left">
-                    <span>Proforma Invoice no./ ใบสั่งซื้อ เลขที่ วันที่ :</span>
-                    <span>XXX</span>
-                </div>
-                <div class="col-3 text-left">
-                    <span>วันที่ / Date :</span>
-                </div>
-                <div class="col-2 text-right">
-                    <span t-field="o.date_order" t-options="{'widget': 'date'}"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-7"/>
-                <div class="col-3 text-left">
-                    <span>วันที่ต้องการ / Due Date :</span>
-                </div>
-                <div class="col-2 text-right">
-                    <span t-field="o.effective_date" t-options="{'widget': 'date'}"/>
-                </div>
-            </div>
-        </div>
-        <div class="article">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="vertical-align: middle;"><strong>ชื่อสินค้า</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>หน่วย</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>BRAND</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>SERIES</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>ชนิดแผ่น</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวน</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>ชนิดหูหิ้ว สีจุด, ขนาดขั้ว </strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวนสั่งซื้อ</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>จำนวนคง</strong></th>
-                        <th class="text-center" style="vertical-align: middle;"><strong>โครงสร้างราคา</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-set="total_qty" t-value="0"/>
-                    <t t-foreach="o.order_line" t-as="line">
-                        <tr>
-                            <t t-if="not line.display_type">
-                                <td>
-                                    <span t-field="line.product_id.name"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_uom.name"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_id.brand"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_id.series"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_id.spec1"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_id.spec2"/>
-                                </td>
-                                <td>
-                                    <span t-field="line.product_id.spec3"/>
-                                </td>
-                                <td class="text-right">
-                                    <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
-                                    <span t-esc="'{0:,.2f}'.format(line.product_uom_qty)"/>
-                                </td>
-                                <td class="text-right">
-                                    XXX
-                                </td>
-                                <td class="text-right">
-                                    XXX
-                                </td>
-                            </t>
-                        </tr>
-                        <t t-if="line_last">
-                            <th colspan="7"/>
-                            <th class="text-right" colspan="1">
-                                <span t-esc="'{0:,.2f}'.format(total_qty)"/>
-                                <t t-set="total_qty" t-value="0"/>
-                            </th>
-                            <th colspan="2"/>
-                        </t>
-                    </t>
-                </tbody>
-            </table>
-            <div class="clearfix">
-                <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-8">
                         <div class="row">
-                            <span>หมายเหตุ : </span>
-                            <span t-field="o.note"/>
+                            <div class="col-2">
+                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                            </div>
+                            <div class="col-10">
+                                <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Contact:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.phone"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>E-mail:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.email"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Tax ID:</p>
+                            </div>
+                            <div class="col-10">
+                                <p>
+                                    <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                                    <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                                        <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                                        <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                                    </t>
+                                    <t t-else="">
+                                        Branch: <span t-field="o.partner_id.branch"/>
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h4>บันทึกความต้องการของลูกค้า</h4>
+                        <p class="mb0">
+                          <strong t-if="o.state == 'cancel'" style="color: red;">Cancelled</strong>
+                          หน้าที่: <span class="page"/> / <span class="topage"/>
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                <div class="row">
+                    <div class="col-7">
+                        <p>ชื่อลูกค้า: <span t-field="o.partner_id.name"/></p>
+                        <p>Proforma Invoice no./ใบสั่งซื้อ เลขที่ วันที่: <span t-field="o.name"/></p>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>เลขที่เอกสาร/No.:</p>
+                            </div>
+                            <div class="col-6">
+                                <span t-field="o.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span>วันที่/Date:</span>
+                            </div>
+                            <div class="col-6">
+                                <span t-field="o.date_order" t-options="{'widget': 'date'}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span>วันที่ต้องการ/Due Date:</span>
+                            </div>
+                            <div class="col-6">
+                                <span t-field="o.effective_date" t-options="{'widget': 'date'}"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="footer">
-            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
-            <table class="table table-sm" style="width: 100%;">
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-bottom: 0px; width: 85%;">
-                      <span style="text-decoration: underline;">Checklist ในการจัดเตรียม</span>
-                      <span style="font-size: 10px;"> hint: ให้ติ๊กถูกในช่องสี่เหลี่ยมสําหรับรายการที่ต้องทํา ทําเมื่อไรให้ใส่วันที่ อาจจะวางแผนทํา โดยใส่วันที่เป็นดินสอ เมื่อทําจริงแล้วให้ใส่เป็นปากกา</span>
-                  </td>
-                  <td rowspan="2" class="text-center" style="border: 1px solid black; border-bottom: 0px; width: 15%;">
-                      <p t-field="o.user_id.name"/>
-                      <p t-field="o.date_order" t-options="{'widget': 'date'}"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] null</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] email แจ้งวันที่นัดส่งให้ลูกค้า.................................</span>
-                  </td>
-                  <td rowspan="4" class="text-center" style="border: 1px solid black; width: 85%;">
-                      ผู้จัดทำ
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] วางแผนผลิตเสร็จวันที่ .......................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] มีผลิตภัณฑ์ใหม่ วันที่นัด approve ตัวอย่าง ......................... จัดซื้อนัดของเข้าวันที่ .................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ต้องมี FORM D และยื่นต้นทุนแหล่งกําเนิดครบ online แล้ววันที่ .................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ยื่นโครงสร้างราคาสรรพสามิต แล้ววันที่ .................................</span>
-                  </td>
-                  <td rowspan="4" class="text-center" style="border: 1px solid black; width: 15%;">
-                      ผู้ตรวจสอบ
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ลูกค้าเปิด L/C และได้รับ L/C ต้นฉบับแล้ววันที่ ...............................................</span>
-                      <span> [ &#160;&#160;&#160; ] ลูกค้าโอนเงินก่อน book</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ทํา booking ให้ลูกค้าแล้ว สายเรือ ........................ ETD: .................. ETA: ........................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] email แจ้งสินค้าพร้อมส่งให้ลูกค้าล่วงหน้า 2 สัปดาห์ วันที่ ..........................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ทํา packing list ให้คลังจัดเตรียมของแล้ววันที่ ................................... นัดหัวลาก วันที่ .....................................</span>
-                  </td>
-                  <td rowspan="5" class="text-center" style="border: 1px solid black; width: 15%;">
-                      ฝ่ายผลิตรับสําเนาพร้อม loading plan
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ได้ Profroma Invoice BIVAC แล้ว และนัด BIVAC เข้าตรวจวันที่ ...................................... (แจ้งคลังแล้ว)</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ทําเอกสาร Submit L/C เรียบร้อยแล้ววันที่ .............................................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] ทํา invoice เรียกเก็บเงินลูกค้าก่อนเรือถึง 2 สัปดาห์ และให้พี่ต้นตรวจแล้ววันที่ ................................... และส่ง email ให้ MD วันที่ ..............................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว Surrender B/L และส่ง email surrender ให้ลูกค้าแล้ววันที่ ...............................</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-left" style="border: 1px solid black; border-top: 0px; width: 85%;">
-                      <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว ไม่ Surrender B/L และส่งต้นฉบับเอกสาร ให้ลูกค้าแล้ววันที่ ...........................</span>
-                  </td>
-                  <td class="text-center" style="border: 1px solid black; width: 15%;">
-                      ผู้อนุมัติ
-                  </td>
-                </tr>
-            </table>
+            <div class="article">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align: middle;">ชื่อสินค้า</th>
+                            <th class="text-center" style="vertical-align: middle;">หน่วย</th>
+                            <th class="text-center" style="vertical-align: middle;">Brand</th>
+                            <th class="text-center" style="vertical-align: middle;">Series</th>
+                            <th class="text-center" style="vertical-align: middle;">ชนิดแผ่น</th>
+                            <th class="text-center" style="vertical-align: middle;">จำนวนแผ่น</th>
+                            <th class="text-center" style="vertical-align: middle;">Specification</th>
+                            <th class="text-center" style="vertical-align: middle;">จำนวนสั่งซื้อ</th>
+                            <th class="text-center" style="vertical-align: middle;">จำนวนคงเหลือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="total_qty" t-value="0"/>
+                        <t t-foreach="o.order_line" t-as="line">
+                            <tr>
+                                <t t-if="not line.display_type">
+                                    <td>
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_uom.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.brand"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.series"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.spec1"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.spec2"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.spec3"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
+                                        <span t-esc="'{0:,.2f}'.format(line.product_uom_qty)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(line.product_id.qty_available)"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <t t-if="line_last">
+                                <th colspan="7"/>
+                                <th class="text-right" colspan="1">
+                                    <span t-esc="'{0:,.2f}'.format(total_qty)"/>
+                                    <t t-set="total_qty" t-value="0"/>
+                                </th>
+                                <th colspan="2"/>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <span>หมายเหตุ : </span>
+                                <span t-field="o.note"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                <table class="table table-sm" style="width: 100%;">
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-bottom: 0px; width: 85%;">
+                          <span style="text-decoration: underline;">Checklist ในการจัดเตรียม</span>
+                          <span style="font-size: 10px;"> hint: ให้ติ๊กถูกในช่องสี่เหลี่ยมสําหรับรายการที่ต้องทํา ทําเมื่อไรให้ใส่วันที่ อาจจะวางแผนทํา โดยใส่วันที่เป็นดินสอ เมื่อทําจริงแล้วให้ใส่เป็นปากกา</span>
+                      </td>
+                      <td rowspan="2" class="text-center" style="border: 1px solid black; border-bottom: 0px; width: 15%;">
+                          <p t-field="o.user_id.name"/>
+                          <p t-field="o.date_order" t-options="{'widget': 'date'}"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] null</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] email แจ้งวันที่นัดส่งให้ลูกค้า.................................</span>
+                      </td>
+                      <td rowspan="4" class="text-center" style="border: 1px solid black; width: 85%;">
+                          ผู้จัดทำ
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] วางแผนผลิตเสร็จวันที่ .......................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] มีผลิตภัณฑ์ใหม่ วันที่นัด approve ตัวอย่าง ......................... จัดซื้อนัดของเข้าวันที่ .................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ต้องมี FORM D และยื่นต้นทุนแหล่งกําเนิดครบ online แล้ววันที่ .................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ยื่นโครงสร้างราคาสรรพสามิต แล้ววันที่ .................................</span>
+                      </td>
+                      <td rowspan="4" class="text-center" style="border: 1px solid black; width: 15%;">
+                          ผู้ตรวจสอบ
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ลูกค้าเปิด L/C และได้รับ L/C ต้นฉบับแล้ววันที่ ...............................................</span>
+                          <span> [ &#160;&#160;&#160; ] ลูกค้าโอนเงินก่อน book</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ทํา booking ให้ลูกค้าแล้ว สายเรือ ........................ ETD: .................. ETA: ........................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] email แจ้งสินค้าพร้อมส่งให้ลูกค้าล่วงหน้า 2 สัปดาห์ วันที่ ..........................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ทํา packing list ให้คลังจัดเตรียมของแล้ววันที่ ................................... นัดหัวลาก วันที่ .....................................</span>
+                      </td>
+                      <td rowspan="5" class="text-center" style="border: 1px solid black; width: 15%;">
+                          ฝ่ายผลิตรับสําเนาพร้อม loading plan
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ได้ Profroma Invoice BIVAC แล้ว และนัด BIVAC เข้าตรวจวันที่ ...................................... (แจ้งคลังแล้ว)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ทําเอกสาร Submit L/C เรียบร้อยแล้ววันที่ .............................................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] ทํา invoice เรียกเก็บเงินลูกค้าก่อนเรือถึง 2 สัปดาห์ และให้พี่ต้นตรวจแล้ววันที่ ................................... และส่ง email ให้ MD วันที่ ..............................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว Surrender B/L และส่ง email surrender ให้ลูกค้าแล้ววันที่ ...............................</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left" style="border: 1px solid black; border-top: 0px; width: 85%;">
+                          <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว ไม่ Surrender B/L และส่งต้นฉบับเอกสาร ให้ลูกค้าแล้ววันที่ ...........................</span>
+                      </td>
+                      <td class="text-center" style="border: 1px solid black; width: 15%;">
+                          ผู้อนุมัติ
+                      </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </template>
 

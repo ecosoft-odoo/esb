@@ -7,12 +7,27 @@
         <field name="page_height">0</field>
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">78</field>
+        <field name="margin_top">79</field>
         <field name="margin_bottom">48</field>
         <field name="margin_left">7</field>
         <field name="margin_right">7</field>
         <field name="header_line" eval="False" />
-        <field name="header_spacing">72</field>
+        <field name="header_spacing">73</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="esb_paperformat_delivery_order" model="report.paperformat">
+        <field name="name">Delivery Order A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">60</field>
+        <field name="margin_bottom">111</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">54</field>
         <field name="dpi">90</field>
     </record>
 </odoo>

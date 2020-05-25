@@ -3,3 +3,4 @@ access_esb_packing_list_type,esb.packing.list.type,model_esb_packing_list_type,s
 access_esb_packing_list_type_manager,esb.packing.list.type manager,model_esb_packing_list_type,stock.group_stock_manager,1,1,1,1
 access_esb_packing_list_user,Full access on esb.packing.list to accountant grp,model_esb_packing_list,stock.group_stock_user,1,1,1,1
 access_esb_packing_list_line_user,Full access on esb.packing.list.line to accountant grp,model_esb_packing_list_line,stock.group_stock_user,1,1,1,1
+access_esb_packing_list_line_detail_user,Full access on esb.packing.list.line.detail to accountant grp,model_esb_packing_list_line_detail,stock.group_stock_user,1,1,1,1

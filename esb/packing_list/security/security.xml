@@ -22,8 +22,19 @@
         <field name="perm_unlink" eval="1" />
     </record>
     <record id="esb_packing_list_line_comp_rule" model="ir.rule">
-        <field name="name">Packing List Line multi-company</field>
+        <field name="name">Packing Line multi-company</field>
         <field name="model_id" ref="esb.model_esb_packing_list_line" />
+        <field name="domain_force">
+            ['|',('company_id','=',False),('company_id','in',company_ids)]
+        </field>
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+    <record id="esb_packing_list_line_detail_comp_rule" model="ir.rule">
+        <field name="name">Detailed Packing Line multi-company</field>
+        <field name="model_id" ref="esb.model_esb_packing_list_line_detail" />
         <field name="domain_force">
             ['|',('company_id','=',False),('company_id','in',company_ids)]
         </field>

@@ -1,6 +1,6 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
-    <report string="ใบกำกับภาษี"
+    <report string="Tax Invoice"
             id="tax_invoice_form_pdf_report"
             model="account.move"
             name="esb.esb_tax_invoice_form_pdf"
