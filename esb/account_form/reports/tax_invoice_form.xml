@@ -211,7 +211,7 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td class="text-center">
-                                    <t t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                                    <t t-esc="o.with_context({'lang': 'th_TH'}).currency_id.amount_to_text(o.amount_total)"/>
                                 </td>
                             </tr>
                         </table>
