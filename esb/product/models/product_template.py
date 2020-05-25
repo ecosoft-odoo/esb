@@ -7,6 +7,7 @@ from odoo import models, fields
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    short_code = fields.Char(string="Short Code", size=30)
     short_name = fields.Char(string="Short Name", size=30)
     long_name = fields.Char(string="Long Name", size=100)
     brand = fields.Char(string="Brand", size=30)

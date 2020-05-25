@@ -1,256 +1,263 @@
 <odoo>
-
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_sale_order_performa_invoice_form">
         <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
-        <div class="header">
-            <!-- Company Data -->
-            <div class="row">
-                <div class="col-2">
-                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                            </div>
+                            <div class="col-10">
+                                <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Contact:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.phone"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>E-mail:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.email"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Tax ID:</p>
+                            </div>
+                            <div class="col-10">
+                                <p>
+                                    <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
+                                    <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
+                                        <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
+                                        <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                                    </t>
+                                    <t t-else="">
+                                        Branch: <span t-field="o.partner_id.branch"/>
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h3>Performa Invoice</h3>
+                        <p class="mb0">
+                          <strong t-if="o.state == 'cancel'" style="color: red;">Cancelled</strong>
+                          Page: <span class="page"/> / <span class="topage"/>
+                        </p>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
-                </div>
-                <div class="col-4 text-right">
-                    <h4>Performa Invoice</h4>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                <div class="row">
+                    <div class="col-2">
+                        <span>MESSR:</span>
+                    </div>
+                    <div class="col-5">
+                        <span t-field="o.partner_id.company_name"/><br/>
+                        <span t-field="o.partner_id.display_name"/><br/>
+                        <span t-field="o.partner_id.street"/><br/>
+                        <span t-field="o.partner_id.street2"/><br/>
+                        <span>TEL : 038-564-934-6</span>
+                        <span t-field="o.partner_id.phone"/><br/>
+                        <span>FAX : XXXX</span><br/>
+                        <span>EMAIL : </span>
+                        <span t-field="o.partner_id.email"/><br/>
+                    </div>
+                    <div class="col-2" style="font-weight: bold;">
+                        <span>Date:</span><br/>
+                        <span>No.:</span><br/>
+                        <span>TERM:</span><br/>
+                        <span>PAYMENT:</span><br/>
+                    </div>
+                    <div class="col-3">
+                        <span t-esc="o.date_order.strftime('%B %d, %Y')"/><br/>
+                        <span t-field="o.display_name"/><br/>
+                        <span t-field="o.payment_term_id.display_name"/><br/>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-2">
-                    <p>Contact:</p>
-                </div>
-                <div class="col-10">
-                    <span t-field="o.company_id.phone"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <p>E-mail:</p>
-                </div>
-                <div class="col-10">
-                    <span t-field="o.company_id.email"/>
-                </div>
-            </div>
-            <div class="row mb0">
-                <div class="col-2">
-                    <p>Tax ID:</p>
-                </div>
-                <div class="col-8">
-                    <p>
-                        <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
-                        <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
-                            <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
-                            <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
-                        </t>
-                        <t t-else="">
-                            <p>Branch: <span t-field="o.partner_id.branch"/></p>
-                        </t>
-                    </p>
-                </div>
-                <div class="col-2">
-                    <p>หน้าที่: <span class="page"/> / <span class="topage"/></p>
-                </div>
-            </div>
-            <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
-            <div class="row">
-                <div class="col-2">
-                    <span>MESSR:</span>
-                </div>
-                <div class="col-5">
-                    <span t-field="o.partner_id.company_name"/><br/>
-                    <span t-field="o.partner_id.display_name"/><br/>
-                    <span t-field="o.partner_id.street"/><br/>
-                    <span t-field="o.partner_id.street2"/><br/>
-                    <span>TEL : 038-564-934-6</span>
-                    <span t-field="o.partner_id.phone"/><br/>
-                    <span>FAX : XXXX</span><br/>
-                    <span>EMAIL : </span>
-                    <span t-field="o.partner_id.email"/><br/>
-                </div>
-                <div class="col-2" style="font-weight: bold;">
-                    <span>Date:</span><br/>
-                    <span>No.:</span><br/>
-                    <span>TERM:</span><br/>
-                    <span>PAYMENT:</span><br/>
-                </div>
-                <div class="col-3">
-                    <span t-esc="o.date_order.strftime('%B %d, %Y')"/><br/>
-                    <span t-field="o.display_name"/><br/>
-                    <span t-field="o.payment_term_id.display_name"/><br/>
-                </div>
-            </div>
-        </div>
-        <div class="article" style="font-size: 16px;">
-            <table class="table table-sm" style="border-bottom: 1px solid black;">
-                <thead>
-                    <tr>
-                        <th class="text-center"><strong>NO.</strong></th>
-                        <th class="text-center"><strong>PART NO.</strong></th>
-                        <th class="text-center"><strong>DESCRIPTION</strong></th>
-                        <th class="text-center"><strong>BRAND</strong></th>
-                        <th class="text-center"><strong>QUALITY</strong></th>
-                        <th class="text-center"><strong>Unit PRICE</strong></th>
-                        <th class="text-center"><strong>AMOUNT</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-set="number" t-value="0"/>
-                    <t t-set="sec_num" t-value="0"/>
-                    <t t-set="total_qty" t-value="0"/>
-                    <t t-set="qty_uom" t-value=""/>
-                    <t t-set="total_amount" t-value="0"/>
-                    <t t-set="current_subtotal" t-value="0"/>
-                    <t t-foreach="o.order_line" t-as="line">
-                        <tr >
-                            <t t-if="not line.display_type">
-                                <td class="text-center">
-                                    <t t-set="number" t-value="number + 1"/>
-                                    <span t-esc="number"/>
-                                </td>
-                                <td>
-                                    <span t-field="line.product_id.default_code"/>
-                                </td>
-                                <td>
-                                    <span t-field="line.name"/>
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="line.product_id.brand"/>
-                                </td>
-                                <td class="text-center">
-                                    <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
-                                    <span t-esc="'{0:,.0f}'.format(line.product_uom_qty)"/>
-                                </td>
-                                <td class="text-right">
-                                    <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
-                                </td>
-                                <td class="text-right">
-                                    <t t-set="amount" t-value="line.product_uom_qty * line.price_unit"/>
-                                    <t t-set="current_subtotal" t-value="current_subtotal + amount"/>
-                                    <t t-set="total_amount" t-value="total_amount + amount"/>
-                                    <span t-esc="'{0:,.2f}'.format(amount)"/>
-                                </td>
-                            </t>
-                            <t t-if="line.display_type == 'line_section'">
-                                <t t-set="qty_uom" t-value="o.order_line[line_index+1].product_uom.display_name"/>
-                                <td colspan="1"/>
-                                <td colspan="3">
-                                    <strong><span t-field="line.name"/></strong>
-                                </td>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <strong><span t-esc="qty_uom"/></strong>
-                                </td>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
-                                </td>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
-                                </td>
-                                <t t-set="current_section" t-value="line"/>
-                                <t t-set="current_subtotal" t-value="0"/>
-                                <t t-set="number" t-value="0"/>
-                            </t>
+            <div class="article">
+                <table class="table table-sm" style="border-bottom: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><strong>NO.</strong></th>
+                            <th class="text-center"><strong>PART NO.</strong></th>
+                            <th class="text-center"><strong>DESCRIPTION</strong></th>
+                            <th class="text-center"><strong>BRAND</strong></th>
+                            <th class="text-center"><strong>QUALITY</strong></th>
+                            <th class="text-center"><strong>Unit PRICE</strong></th>
+                            <th class="text-center"><strong>AMOUNT</strong></th>
                         </tr>
-                        <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
-                            <tr>
-                              <td colspan="5">
-                                    <span>LESS WARRANTY DISCOUNT</span>
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <span> XXX %</span>
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <span> XXX,XXX</span>
-                                </td>
+                    </thead>
+                    <tbody>
+                        <t t-set="number" t-value="0"/>
+                        <t t-set="sec_num" t-value="0"/>
+                        <t t-set="total_qty" t-value="0"/>
+                        <t t-set="qty_uom" t-value=""/>
+                        <t t-set="total_amount" t-value="0"/>
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-foreach="o.order_line" t-as="line">
+                            <tr >
+                                <t t-if="not line.display_type">
+                                    <td class="text-center">
+                                        <t t-set="number" t-value="number + 1"/>
+                                        <span t-esc="number"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.brand"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
+                                        <span t-esc="'{0:,.0f}'.format(line.product_uom_qty)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-set="amount" t-value="line.product_uom_qty * line.price_unit"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + amount"/>
+                                        <t t-set="total_amount" t-value="total_amount + amount"/>
+                                        <span t-esc="'{0:,.2f}'.format(amount)"/>
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <t t-set="qty_uom" t-value="o.order_line[line_index+1].product_uom.display_name"/>
+                                    <td colspan="1"/>
+                                    <td colspan="3">
+                                        <strong><span t-field="line.name"/></strong>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <strong><span t-esc="qty_uom"/></strong>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <strong><span t-field="o.company_id.currency_id.display_name"/></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                    <t t-set="number" t-value="0"/>
+                                </t>
                             </tr>
-                            <tr>
-                              <td colspan="5">
-                                    <span>SPECIAL DISCOUNT FOR THIS ORDER</span>
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <span> XXX %</span>
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <span> XXX,XXX</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <span>TOTAL AMOUNT (FOR BANGKOK)</span>
-                                </td>
-                                <td class="text-center" colspan="1">
-                                    <span t-esc="'{0:,.0f}'.format(total_qty)"/>
-                                    <t t-set="total_qty" t-value="0"/>
-                                </td>
-                                <td colspan="1">
-                                    <span t-esc="qty_uom"/>
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
-                                </td>
-                            </tr>
+                            <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                <tr>
+                                  <td colspan="5">
+                                        <span>LESS WARRANTY DISCOUNT</span>
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <span> XXX %</span>
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <span> XXX,XXX</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5">
+                                        <span>SPECIAL DISCOUNT FOR THIS ORDER</span>
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <span> XXX %</span>
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <span> XXX,XXX</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <span>TOTAL AMOUNT (FOR BANGKOK)</span>
+                                    </td>
+                                    <td class="text-center" colspan="1">
+                                        <span t-esc="'{0:,.0f}'.format(total_qty)"/>
+                                        <t t-set="total_qty" t-value="0"/>
+                                    </td>
+                                    <td colspan="1">
+                                        <span t-esc="qty_uom"/>
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                    </td>
+                                </tr>
+                            </t>
                         </t>
-                    </t>
-                </tbody>
-            </table>
-            <div class="clearfix" style="font-size: 16px;">
-                <div class="row">
-                    <div class="col-12">
-                      <span>REMARK 1. BUYER HAS TO ACCEPT THE GOODS WITHIN 7 DAYS AFTER PRODUCTION IS FINISH.</span>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="row">
+                        <div class="col-12">
+                          <span>REMARK 1. BUYER HAS TO ACCEPT THE GOODS WITHIN 7 DAYS AFTER PRODUCTION IS FINISH.</span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12" style="left: 70px;">
-                        <span>2. LATE OF PAYMENT WILL BE CHARGED AT THE RATE 2% PER MONTH.</span>
+                    <div class="row">
+                        <div class="col-12" style="left: 70px;">
+                            <span>2. LATE OF PAYMENT WILL BE CHARGED AT THE RATE 2% PER MONTH.</span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12" style="font-weight: bold; text-decoration: underline;">
-                        <span>BANK INFORMATION</span>
+                    <div class="row">
+                        <div class="col-12" style="font-weight: bold; text-decoration: underline;">
+                            <span>BANK INFORMATION</span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-3" style="font-weight: bold;">
-                        <span>ACCOUNT NO.:</span><br/>
-                        <span>ACCOUNT NAME:</span><br/>
-                        <span>BANK NAME:</span><br/>
-                        <span>BANK BRANCH:</span><br/>
+                    <div class="row">
+                        <div class="col-3" style="font-weight: bold;">
+                            <span>ACCOUNT NO.:</span><br/>
+                            <span>ACCOUNT NAME:</span><br/>
+                            <span>BANK NAME:</span><br/>
+                            <span>BANK BRANCH:</span><br/>
+                        </div>
+                        <div class="col-9" style="left: -60px;">
+                            <span>XXXXX</span><br/>
+                            <span>XXXXX</span><br/>
+                            <span>XXXXX</span><br/>
+                            <span>XXXXX</span><br/>
+                        </div>
                     </div>
-                    <div class="col-9" style="left: -60px;">
-                        <span>XXXXX</span><br/>
-                        <span>XXXXX</span><br/>
-                        <span>XXXXX</span><br/>
-                        <span>XXXXX</span><br/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span>IMPORTANT: Phone call is a must wher changing bank information</span><br/>
-                        <span>1. If we change bank information, we will send you email and call to reconfirm.</span><br/>
-                        <span>2. If you receive any email about change of our bank information,
-                          kindly must call us to reconfirm, because the email may be from a cheater or virus,
-                          which will lead to your losses.</span><br/>
-                        <span>3. Be careful about any email about change of supplier's bank information, to avoid your losses.</span><br/><br/>
+                    <div class="row">
+                        <div class="col-12">
+                            <span>IMPORTANT: Phone call is a must wher changing bank information</span><br/>
+                            <span>1. If we change bank information, we will send you email and call to reconfirm.</span><br/>
+                            <span>2. If you receive any email about change of our bank information,
+                              kindly must call us to reconfirm, because the email may be from a cheater or virus,
+                              which will lead to your losses.</span><br/>
+                            <span>3. Be careful about any email about change of supplier's bank information, to avoid your losses.</span><br/><br/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="footer last-page">
-            <div class="row">
-                <div class="col-6 text-center">
-                    <span>FOR CUSTOMER CONFIRMATION</span>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div class="mt8 mb8" style="margin-left: 35px; border-bottom: 1px solid black; width: 85%"/>
-                    <span>Please sign and return by fax no. XXXXX</span>
-                </div>
-                <div class="col-6 text-center">
-                    <span t-field="o.company_id.partner_id.display_name"/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div class="mt8 mb8" style="margin-left: 35px; border-bottom: 1px solid black; width: 85%"/>
-                    <span>XXXXX XXXXX</span>
+            <div class="footer last-page">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <span>FOR CUSTOMER CONFIRMATION</span>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="mt8 mb8" style="margin-left: 35px; border-bottom: 1px solid black; width: 85%"/>
+                        <span>Please sign and return by fax no. XXXXX</span>
+                    </div>
+                    <div class="col-6 text-center">
+                        <span t-field="o.company_id.partner_id.display_name"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="mt8 mb8" style="margin-left: 35px; border-bottom: 1px solid black; width: 85%"/>
+                        <span>XXXXX XXXXX</span>
+                    </div>
                 </div>
             </div>
         </div>

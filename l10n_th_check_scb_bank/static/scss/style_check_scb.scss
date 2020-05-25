@@ -10,17 +10,30 @@
     }
     .pay_to{
         position: fixed;
-        top: 10mm;
+        top: 15mm;
         left: 40mm;
+        box-sizing: content-box;
+        width: 185mm;
+        height: 10mm;
+        padding: 1px;
+    }
+    .bearer{
+        position: fixed;
+        top: 15mm;
+        right: 25mm;
     }
     .amount_word{
         position: fixed;
-        top: 32mm;
-        left: 80mm;
+        top: 31mm;
+        left: 70mm;
+        box-sizing: content-box;
+        width: 170mm;
+        height: 10mm;
+        padding: 1px;
     }
     .amount{
         position: fixed;
-        top: 45mm;
+        top: 43mm;
         right: 45mm;
     }
 }

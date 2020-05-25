@@ -57,7 +57,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <!-- Partner Data -->
                 <div class="row">
                     <div class="col-7">
@@ -100,7 +100,7 @@
                                 <p>Term:</p>
                             </div>
                             <div class="col-8">
-                                <span t-field="o.incoterm_id.code"/>
+                                <span t-field="o.incoterm_id.name"/>
                             </div>
                         </div>
                         <div class="row">
@@ -238,7 +238,7 @@
                 <br/>
                 <br/>
                 <strong><span t-field="o.responsible_person"/></strong>
-                <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <div class="row">
                     <div class="col-6">
                         <strong>Shipping Mark:</strong>

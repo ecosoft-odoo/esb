@@ -47,7 +47,8 @@
                     <group name="main">
                         <group name="main-left">
                             <field name="partner_id"/>
-                            <field name="pl_type_id"/>
+                            <field name="pl_created" invisible="1"/>
+                            <field name="pl_type_id" attrs="{'readonly': [('pl_created', '=', True)]}"/>
                             <field name="picking_ids" widget="many2many_tags"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="responsible_person"/>
@@ -63,7 +64,36 @@
                     </group>
                     <button name="action_compute" string="Generate Packing Lines" type="object" class="oe_highlight"/>
                     <notebook>
-                        <page string="Packing Lines">
+                        <page string="Detailed Packing Lines" name="detailed_packing_lines">
+                            <field name="detail_line_ids" widget="section_and_note_one2many">
+                                <tree editable="bottom">
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="move_line_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="name" widget="section_and_note_text" optional="show"/>
+                                    <field name="origin" optional="show"/>
+                                    <field name="lot_id" optional="show"/>
+                                    <field name="quantity" sum="Total"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="picking_total">
+                                    <field name="detail_quantity_total"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                        <page string="Packing Lines" name="packing_lines">
                             <field name="line_ids" widget="section_and_note_one2many">
                                 <tree editable="bottom">
                                     <control>
@@ -75,6 +105,7 @@
                                     <field name="sequence" widget="handle"/>
                                     <field name="number"/>
                                     <field name="move_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="name" widget="section_and_note_text" optional="show"/>
                                     <field name="quantity" sum="Total"/>
@@ -115,6 +146,7 @@
                 <field name="net_weight_total" optional="show"/>
                 <field name="gross_weight_total" optional="show"/>
                 <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </tree>
         </field>
     </record>

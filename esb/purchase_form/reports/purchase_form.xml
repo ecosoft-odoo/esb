@@ -37,7 +37,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <!-- Vendor Data -->
                 <div class="row">
                     <div class="col-8">
@@ -237,7 +237,7 @@
                 </div>
             </div>
             <div class="footer last-page">
-                <div class="row mt8 mb8" style="border-bottom: 1px solid black;"/>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <div class="row">
                     <div class="col-5">
                         <p>

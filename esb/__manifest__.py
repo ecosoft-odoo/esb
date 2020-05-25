@@ -15,8 +15,11 @@
         "sale_order_type",
         "manufacturing_order_type",
         "report_qweb_element_page_visibility",
+        "purchase_triple_discount",
+        "sale_triple_discount",
     ],
     "data": [
+        "account/views/account_move_views.xml",
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
@@ -25,6 +28,7 @@
         # Packing List
         "packing_list/datas/paper_format.xml",
         "packing_list/datas/report_data.xml",
+        "packing_list/reports/delivery_order_form.xml",
         "packing_list/reports/packing_list_form.xml",
         "packing_list/security/ir.model.access.csv",
         "packing_list/security/security.xml",

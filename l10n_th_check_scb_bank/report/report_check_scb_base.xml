@@ -18,6 +18,7 @@
                             <span class="payee_only">A/C PAYEE ONLY</span>
                             <span class="payment_date" t-esc="format_date(o.payment_date)"/>
                             <span class="pay_to" t-esc="o.partner_id.name"/>
+                            <span class="bearer">\\\\\</span>
                             <span class="amount_word" t-esc="fill_bracket_amount_text(o.amount, currency_id)"/>
                             <span class="amount" t-esc="fill_equal_number(o.amount)"/>
                         </div>
