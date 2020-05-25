@@ -6,6 +6,7 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="short_code"/>
                 <field name="short_name"/>
                 <field name="long_name"/>
                 <field name="brand"/>
@@ -33,7 +34,7 @@
         <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="attributes">
-                <attribute name="filter_domain">['|', '|', '|', '|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self), ('short_name', 'ilike', self), ('long_name', 'ilike', self), ('series', 'ilike', self)]</attribute>
+                <attribute name="filter_domain">['|', '|', '|', '|', '|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self), ('short_code', 'ilike', self), ('short_name', 'ilike', self), ('long_name', 'ilike', self), ('series', 'ilike', self)]</attribute>
             </xpath>
             <xpath expr="//filter[@name='categ_id']" position="after">
                 <filter string="Brand" name="brand" context="{'group_by':'brand'}"/>
@@ -46,6 +47,7 @@
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_code" optional="hide"/>
                 <field name="short_name" optional="hide"/>
                 <field name="long_name" optional="hide"/>
                 <field name="brand" optional="hide"/>
@@ -64,6 +66,7 @@
         <field name="inherit_id" ref="product.product_product_tree_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_code" optional="hide"/>
                 <field name="short_name" optional="hide"/>
                 <field name="long_name" optional="hide"/>
                 <field name="brand" optional="hide"/>
