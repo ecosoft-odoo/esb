@@ -29,7 +29,7 @@
                 <attribute name="groups">base.group_no_one</attribute>
             </xpath>
             <!-- Add bank account -->
-            <xpath expr="//field[@name='invoice_status']" position="after">
+            <xpath expr="//group[@name='sale_info']//field[@name='invoice_status']" position="after">
                 <field name="partner_bank_id"/>
             </xpath>
         </field>
