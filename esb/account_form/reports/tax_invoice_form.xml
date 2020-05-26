@@ -1,7 +1,7 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_tax_invoice_form">
-        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+        <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
         <div class="o_sarabun">
             <div class="header">
                 <!-- Company Data -->
@@ -225,7 +225,7 @@
                                 <td style="border: 1px solid black; width: 55%;">
                                     รวมจำนวนเงิน/<br/><small>Subtotal</small>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black; width: 45%;">
+                                <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
                                     <t t-set="total_amount" t-value="total_discount + o.amount_untaxed"/>
                                     <span t-esc="'{0:,.2f}'.format(total_amount)"/>
                                 </td>
@@ -234,7 +234,7 @@
                                 <td style="border: 1px solid black; width: 55%;">
                                     ส่วนลด/<br/><small>Discount</small>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black; width: 45%;">
+                                <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
                                     <t t-if="total_discount">
                                         <span t-esc="'{0:,.2f}'.format(total_discount)"/>
                                     </t>
@@ -244,7 +244,7 @@
                                 <td style="border: 1px solid black; width: 55%;">
                                     ราคาสินค้าและบริการ/<br/><small>Goods, Service Value</small>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black; width: 45%;">
+                                <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
                                     <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
                                 </td>
                             </tr>
@@ -252,7 +252,7 @@
                                 <td style="border: 1px solid black; width: 55%;">
                                     ภาษีมูลค่าเพิ่ม 7%/<br/><small>VAT 7%</small>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black; width: 45%;">
+                                <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
                                     <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
                                 </td>
                             </tr>
@@ -260,7 +260,7 @@
                                 <td style="border: 1px solid black; width: 55%;">
                                     จำนวนเงินรวมทั้งสิ้น/<br/><small>Grand Total</small>
                                 </td>
-                                <td class="text-right" style="border: 1px solid black; width: 45%;">
+                                <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
                                     <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
                                 </td>
                             </tr>
@@ -314,7 +314,7 @@
     <template id="esb_tax_invoice_form_pdf">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esb.esb_tax_invoice_form" t-lang="o.partner_id.lang"/>
+                <t t-call="esb.esb_tax_invoice_form" t-lang="o.company_id.partner_id.lang"/>
             </t>
         </t>
     </template>

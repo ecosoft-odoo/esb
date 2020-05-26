@@ -1,7 +1,7 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_official_commercial_invoice_form">
-        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+        <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
         <div class="o_sarabun">
             <div class="header">
                 <!-- Company Data -->
@@ -62,10 +62,10 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <p>MESSR:</p>
                             </div>
-                            <div class="col-9">
+                            <div class="col-10">
                                 <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "email", "phone"], "no_marker": True}'/>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                             <tr>
                                 <t t-if="not line.display_type">
                                     <td>
-                                        <t t-set="number" t-value="number + 1"/>
+                                        <t t-set="number" t-value="number+1"/>
                                         <span t-esc="number"/>
                                     </td>
                                     <td>
@@ -137,7 +137,8 @@
                                         <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        <t t-set="price_after_disc" t-value="line.price_unit * ((100 - line.discount) / 100)"/>
+                                        <span t-esc="'{0:,.2f}'.format(price_after_disc)"/>
                                     </td>
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
@@ -251,7 +252,7 @@
     <template id="esb_official_commercial_invoice_form_pdf">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esb.esb_official_commercial_invoice_form" t-lang="o.partner_id.lang"/>
+                <t t-call="esb.esb_official_commercial_invoice_form" t-lang="o.company_id.partner_id.lang"/>
             </t>
         </t>
     </template>

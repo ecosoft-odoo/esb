@@ -5,8 +5,26 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
+            <!-- Add packing_list_id on account.move view -->
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="packing_list_id"/>
+            </xpath>
+            <!-- Add discount fields -->
+            <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="discount_last" attrs="{'readonly': [('state', '!=' , 'draft')]}"/>
+                <field name="discount_special" attrs="{'readonly': [('state', '!=' , 'draft')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="before">
+                <field name="subtotal_no_disc" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//kanban//field[@name='price_subtotal']" position="before">
+                <field name="subtotal_no_disc" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//kanban//field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
             </xpath>
         </field>
     </record>
