@@ -1,7 +1,7 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_sale_order_form">
-        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+        <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
         <div class="o_sarabun">
             <div class="header">
                 <!-- Company Data -->
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="col-4 text-right">
-                        <h4>บันทึกความต้องการของลูกค้า</h4>
+                        <h5>บันทึกความต้องการของลูกค้า</h5>
                         <p class="mb0">
                           <strong t-if="o.state == 'cancel'" style="color: red;">Cancelled</strong>
                           หน้าที่: <span class="page"/> / <span class="topage"/>
@@ -60,31 +60,45 @@
                 <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <div class="row">
                     <div class="col-7">
-                        <p>ชื่อลูกค้า: <span t-field="o.partner_id.name"/></p>
-                        <p>Proforma Invoice no./ใบสั่งซื้อ เลขที่ วันที่: <span t-field="o.name"/></p>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>ชื่อลูกค้า:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.partner_id.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <p>Proforma Invoice no./ใบสั่งซื้อ เลขที่ วันที่:</p>
+                            </div>
+                            <div class="col-4">
+                                <span t-field="o.client_order_ref"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-5">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-7">
                                 <p>เลขที่เอกสาร/No.:</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                                 <span t-field="o.name"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-7">
                                 <span>วันที่/Date:</span>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                                 <span t-field="o.date_order" t-options="{'widget': 'date'}"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-7">
                                 <span>วันที่ต้องการ/Due Date:</span>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                                 <span t-field="o.effective_date" t-options="{'widget': 'date'}"/>
                             </div>
                         </div>
@@ -95,6 +109,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
+                            <th class="text-center" style="vertical-align: middle;">#</th>
                             <th class="text-center" style="vertical-align: middle;">ชื่อสินค้า</th>
                             <th class="text-center" style="vertical-align: middle;">หน่วย</th>
                             <th class="text-center" style="vertical-align: middle;">Brand</th>
@@ -107,10 +122,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <t t-set="number" t-value="0"/>
+                        <t t-set="current_subtotal" t-value="0"/>
                         <t t-set="total_qty" t-value="0"/>
                         <t t-foreach="o.order_line" t-as="line">
                             <tr>
                                 <t t-if="not line.display_type">
+                                    <td>
+                                        <t t-set="number" t-value="number + 1"/>
+                                        <span t-esc="number"/>
+                                    </td>
                                     <td>
                                         <span t-field="line.product_id.name"/>
                                     </td>
@@ -134,22 +155,45 @@
                                     </td>
                                     <td class="text-right">
                                         <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + line.product_uom_qty"/>
                                         <span t-esc="'{0:,.2f}'.format(line.product_uom_qty)"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="'{0:,.2f}'.format(line.product_id.qty_available)"/>
                                     </td>
                                 </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td class="table-active" colspan="99" id="section">
+                                        <strong><span t-field="line.name"/></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                    <t t-set="number" t-value="0"/>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span  class="font-italic" t-field="line.name"/>
+                                    </td>
+                                </t>
                             </tr>
-                            <t t-if="line_last">
-                                <th colspan="7"/>
-                                <th class="text-right" colspan="1">
-                                    <span t-esc="'{0:,.2f}'.format(total_qty)"/>
-                                    <t t-set="total_qty" t-value="0"/>
-                                </th>
-                                <th colspan="2"/>
+                            <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="8" class="text-right">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                    </td>
+                                    <td/>
+                                </tr>
                             </t>
                         </t>
+                        <tr>
+                            <th class="text-right" colspan="9">
+                                <span t-esc="'{0:,.2f}'.format(total_qty)"/>
+                            </th>
+                            <th/>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="clearfix">
@@ -273,7 +317,7 @@
     <template id="esb_sale_order_form_pdf">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esb.esb_sale_order_form" t-lang="o.partner_id.lang"/>
+                <t t-call="esb.esb_sale_order_form" t-lang="o.company_id.partner_id.lang"/>
             </t>
         </t>
     </template>

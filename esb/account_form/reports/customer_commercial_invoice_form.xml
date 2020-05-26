@@ -62,10 +62,10 @@
                 <div class="row">
                     <div class="col-7">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <p>MESSR:</p>
                             </div>
-                            <div class="col-9">
+                            <div class="col-10">
                                 <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "email", "phone"], "no_marker": True}'/>
                             </div>
                         </div>
@@ -107,8 +107,8 @@
                     </div>
                 </div>
             </div>
-            <div class="article" style="font-family: Sarabun;">
-                <table class="table table-sm">
+            <div class="article">
+                <table class="table table-sm" style="border-bottom: 1px solid lightgray;">
                     <thead>
                         <tr>
                             <th class="text-center" style="vertical-align: middle;">No.</th>
@@ -125,10 +125,11 @@
                         <t t-set="current_qty" t-value="0"/>
                         <t t-set="current_subtotal" t-value="0"/>
                         <t t-set="qty_total" t-value="0"/>
+                        <t t-set="discount_total" t-value="0"/>
                         <t t-set="amount_total" t-value="0"/>
                         <t t-foreach="o.invoice_line_ids" t-as="line">
                             <tr>
-                                <t t-if="not line.display_type">
+                                <t t-if="not line.display_type and line.product_id.type in ('product', 'consu')">
                                     <td>
                                         <t t-set="number" t-value="number + 1"/>
                                         <span t-esc="number"/>
@@ -151,9 +152,10 @@
                                         <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
-                                        <t t-set="amount_total" t-value="amount_total + line.price_subtotal"/>
-                                        <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + line.subtotal_no_disc"/>
+                                        <t t-set="amount_total" t-value="amount_total + line.subtotal_no_disc"/>
+                                        <t t-set="discount_total" t-value="discount_total + line.subtotal_no_disc - line.price_subtotal"/>
+                                        <span t-esc="'{0:,.2f}'.format(line.subtotal_no_disc)"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
@@ -174,7 +176,7 @@
                             <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td colspan="4">
-                                        <strong>Subtotal Amount</strong>
+                                        <strong>Subtotal</strong>
                                     </td>
                                     <td class="text-right">
                                         <strong t-esc="'{0:,.2f}'.format(current_qty)"/>
@@ -186,46 +188,81 @@
                                 </tr>
                             </t>
                         </t>
-                        <tr class="text-right">
+                        <tr>
                             <td colspan="4">
-                                <strong>Total Amount</strong>
+                                Total Amount
                             </td>
                             <td class="text-right">
-                                <strong t-esc="'{0:,.2f}'.format(qty_total)"/>
+                                <span t-esc="'{0:,.2f}'.format(qty_total)"/>
                             </td>
                             <td></td>
                             <td class="text-right">
-                                <strong t-esc="'{0:,.2f}'.format(amount_total)"/>
+                                <span t-esc="'{0:,.2f}'.format(amount_total)"/>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="1">
-                                <strong>Less</strong>
+                            <td>
+                                <span style="text-decoration: underline;">Less</span>
                             </td>
                             <td colspan="5">
-                                <strong>Waranty Discount</strong>
+                                Waranty Discount
                             </td>
-                            <td><strong>0.00</strong></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7">
-                                <strong>Total Amount After Discount</strong>
+                            <td class="text-right">
+                                <span t-esc="'{0:,.2f}'.format(discount_total)"/>
                             </td>
                         </tr>
+                        <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                            <tr>
+                                <td colspan="3">
+                                    Total Amount After Discount
+                                </td>
+                                <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                    <td><span class="text-nowrap" t-esc="amount_by_group[0]"/>:</td>
+                                    <td class="text-right">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3][:-1]" />
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td>
+                                        <span t-esc="amount_by_group[0]"/>
+                                        <span class="text-nowrap"> on
+                                            <t t-esc="amount_by_group[4]"/>:
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3][:-1]"/>
+                                    </td>
+                                </t>
+                                <td colspan="2" class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-set="number" t-value="1"/>
+                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                            <t t-if="not line.display_type and line.product_id.type == 'service'">
+                                <tr>
+                                    <td>
+                                        <t t-if="number == 1">
+                                            <span style="text-decoration: underline;">Plus</span>
+                                            <t t-set="number" t-value="number+1"/>
+                                        </t>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(abs(line.price_subtotal))"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
                         <tr>
-                            <td colspan="1">
-                                <strong>Plus</strong>
-                            </td>
-                            <td colspan="5">
-                                <strong>Freight</strong><br/>
-                                <strong>Insurance</strong><br/>
-                                <strong>Others</strong>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td colspan="7">
+                            <td colspan="6">
                                 <strong>Total Amount</strong>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
                             </td>
                         </tr>
                     </tbody>
@@ -247,36 +284,40 @@
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            Account No.:
+                            <p>Account No.:</p>
                         </div>
                         <div class="col-10">
-                            331-3-02523-4
+                            <span t-field="o.invoice_partner_bank_id.acc_number"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            Account Name:
+                            <p>Account Name:</p>
                         </div>
                         <div class="col-10">
-                            THAI GLOBAL IMPORT EXPORT CO., LTD
+                            <span t-field="o.invoice_partner_bank_id.acc_holder_name"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            Bank Name:
+                            <p>Bank Name:</p>
                         </div>
                         <div class="col-10">
-                            THE SIAM COMMERCIAL BANK PUBLIC CO., LTD.<br/>
-                            9 Ratchadaphisek Road, SCB Park, Chatuchak, BANGKOK, THAILAND
+                            <p>
+                                The Siam Commercial Bank Public Co., Ltd.<br/>
+                                9 Ratchadaphisek Road, SCB Park, Chatuchak, Bangkok, Thailand
+                            </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            Bank Branch:
+                            <p>Bank Branch:</p>
                         </div>
                         <div class="col-10">
-                            BANGNA-TRAD BRANCH<br/>
-                            SWIFT: SICOTHBK / TELEX: 82876
+                            <p>
+                                Bangna-Trad Branch<br/>
+                                SWIFT: SICOTHBK / TELEX: 82876
+                            </p>
                         </div>
                     </div>
                     <div class="row">
