@@ -234,7 +234,7 @@ class ESBPackingList(models.Model):
             return ", ".join([self.partner_id.state_id.name, self.partner_id.country_id.name])
         return False
 
-    @api.depends("line_ids")
+    @api.depends("line_ids", "detail_line_ids")
     def _compute_total(self):
         for rec in self:
             rec.detail_quantity_total = sum(rec.detail_line_ids.mapped("quantity"))
@@ -267,7 +267,7 @@ class ESBPackingList(models.Model):
             raise ValidationError(
                 _(
                     "Total quantity of detailed packing lines and "
-                    "packing lines are different"
+                    "packing lines are different."
                 )
             )
         detail_lines = {}
