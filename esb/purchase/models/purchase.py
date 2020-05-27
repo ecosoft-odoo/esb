@@ -65,6 +65,13 @@ class PurchaseOrderLine(models.Model):
         for record in self:
             record.subtotal_no_disc = record.product_qty * record.price_unit
 
+    def _prepare_stock_moves(self, picking):
+        self.ensure_one()
+        res = super()._prepare_stock_moves(picking)
+        for line in res:
+            line["analytic_account_id"] = self.account_analytic_id.id
+        return res
+
 
 class PurchaseReport(models.Model):
     _inherit = "purchase.report"

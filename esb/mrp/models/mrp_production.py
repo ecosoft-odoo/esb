@@ -24,6 +24,11 @@ class MrpProduction(models.Model):
     net_weight = fields.Float(string="Net Weight(kg/pcs)", default=0.00)
     gross_weight = fields.Float(string="Net Weight + Inner Box(kg/pcs)", default=0.00)
 
+    analytic_account_id = fields.Many2one(
+        comodel_name="account.analytic.account",
+        string="Department",
+    )
+
     mo_created = fields.Boolean(default=False)
 
     @api.model
