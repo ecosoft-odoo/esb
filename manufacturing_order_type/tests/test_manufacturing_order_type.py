@@ -30,7 +30,7 @@ class TestManufacturingOrderType(common.SavepointCase):
     def test_manufacturing_order_type(self):
         mo = self.env["mrp.production"].create(
             {
-                "order_type": self.type1.id,
+                "mo_type_id": self.type1.id,
                 "product_id": self.product.id,
                 "bom_id": self.bom.id,
                 "location_src_id": self.loc_stock.id,
@@ -39,8 +39,8 @@ class TestManufacturingOrderType(common.SavepointCase):
                 "product_uom_id": self.product.uom_id.id,
             }
         )
-        self.assertEquals(mo.order_type, self.type1)
+        self.assertEquals(mo.mo_type_id, self.type1)
         mo.onchange_product_id()
-        self.assertEquals(mo.order_type, self.type2)
-        mo.onchange_order_type()
+        self.assertEquals(mo.mo_type_id, self.type2)
+        mo.onchange_mo_type_id()
         self.assertEquals(mo.picking_type_id, self.type2.picking_type_id)

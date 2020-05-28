@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <group name="first" position="after">
                 <group name="mo_type" string="Manufacturing Order Type">
-                    <field name="mo_type" />
+                    <field name="mo_type_id" />
                 </group>
             </group>
         </field>
@@ -19,7 +19,7 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='inventory']" position="inside">
                 <group name="mo_type" string="Manufacturing Order Type">
-                    <field name="mo_type" />
+                    <field name="mo_type_id" />
                 </group>
             </xpath>
         </field>

@@ -6,10 +6,10 @@
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="manufacturing_order_type.mrp_production_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_type']" position="before">
+            <xpath expr="//field[@name='mo_type_id']" position="before">
                 <field name="mo_created" invisible="1"/>
             </xpath>
-            <xpath expr="//field[@name='order_type']" position="attributes">
+            <xpath expr="//field[@name='mo_type_id']" position="attributes">
                 <attribute name="attrs">{'readonly': [('mo_created', '=', True)]}</attribute>
             </xpath>
             <xpath expr="/form/sheet/group//field[@name='bom_id']" position="after">

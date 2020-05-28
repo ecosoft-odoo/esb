@@ -7,7 +7,7 @@ from odoo import fields, models
 class ProductCategory(models.Model):
     _inherit = "product.category"
 
-    mo_type = fields.Many2one(
+    mo_type_id = fields.Many2one(
         comodel_name="manufacturing.order.type", string="Manufacturing Order Type",
     )
 
@@ -15,6 +15,6 @@ class ProductCategory(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    mo_type = fields.Many2one(
+    mo_type_id = fields.Many2one(
         comodel_name="manufacturing.order.type", string="Manufacturing Order Type",
     )

@@ -7,37 +7,37 @@ from odoo import api, fields, models
 class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
-    def _default_order_type(self):
+    def _default_mo_type_id(self):
         return self.env["manufacturing.order.type"].search(
             ["|", ("company_id", "=", False), ("company_id", "=", self.company_id.id)],
             limit=1,
         )
 
-    order_type = fields.Many2one(
+    mo_type_id = fields.Many2one(
         comodel_name="manufacturing.order.type",
         string="Type",
         ondelete="restrict",
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        default=_default_order_type,
+        default=_default_mo_type_id,
     )
 
     @api.onchange("product_id")
     def onchange_product_id(self):
         super().onchange_product_id()
-        mo_type = self.product_id.mo_type or self.product_id.categ_id.mo_type
-        if mo_type:
-            self.order_type = mo_type
+        mo_type_id = self.product_id.mo_type_id or self.product_id.categ_id.mo_type_id
+        if mo_type_id:
+            self.mo_type_id = mo_type_id
 
-    @api.onchange("order_type")
-    def onchange_order_type(self):
+    @api.onchange("mo_type_id")
+    def _onchange_mo_type_id(self):
         for order in self:
-            if order.order_type.picking_type_id:
-                order.picking_type_id = order.order_type.picking_type_id
+            if order.mo_type_id.picking_type_id:
+                order.picking_type_id = order.mo_type_id.picking_type_id
 
     @api.model
     def create(self, vals):
-        if vals.get("name", "/") == "/" and vals.get("order_type"):
-            mo_type = self.env["manufacturing.order.type"].browse(vals["order_type"])
+        if vals.get("name", "/") == "/" and vals.get("mo_type_id"):
+            mo_type = self.env["manufacturing.order.type"].browse(vals["mo_type_id"])
             if mo_type.sequence_id:
                 vals["name"] = mo_type.sequence_id.next_by_id()
         return super().create(vals)
