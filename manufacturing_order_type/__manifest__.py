@@ -11,6 +11,7 @@
     "website": "https://github.com/OCA/manufacture",
     "data": [
         "security/ir.model.access.csv",
+        "security/security.xml",
         "views/manufacturing_order_type_views.xml",
         "views/mrp_production_views.xml",
         "views/product_views.xml",

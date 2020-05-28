@@ -25,6 +25,9 @@
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
         "sale/views/sale_views.xml",
+        "stock/reports/report_deliveryslip.xml",
+        "stock/views/stock_move_views.xml",
+        "stock/views/stock_picking_views.xml",
         "fonts/style_report.xml",
         # Packing List
         "packing_list/datas/paper_format.xml",
