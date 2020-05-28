@@ -10,6 +10,7 @@ class AccountMove(models.Model):
     packing_list_id = fields.Many2one(
         comodel_name="esb.packing.list",
         string="Packing List",
+        ondelete="cascade",
     )
     discount_last = fields.Float(
         string="Discount (%)",

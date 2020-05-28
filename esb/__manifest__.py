@@ -10,6 +10,7 @@
     "license": "AGPL-3",
     "website": "https://ecosoft.co.th",
     "depends": [
+        "stock_secondary_unit",
         "purchase_order_secondary_unit",
         "purchase_order_type",
         "sale_order_type",
