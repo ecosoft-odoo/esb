@@ -30,10 +30,10 @@ $psql -c "delete from account_partial_reconcile";
 $psql -c "delete from account_move_line";
 $psql -c "delete from account_move";
 $psql -c "delete from tax_adjustments_wizard";
+$psql -c "delete from withholding_tax_cert";
 $psql -c "delete from account_payment";
 $psql -c "delete from account_bank_statement";
 $psql -c "delete from account_analytic_line";
-# $psql -c "delete from account_analytic_account";
 
 # Miscellaneous
 $psql -c "delete from mail_mail";
