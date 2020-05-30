@@ -17,7 +17,7 @@ class PurchaseReport(models.Model):
 
     def _select(self):
         res = super()._select()
-        res += ", l.date_planned AS date_planned"
+        res += ", l.date_planned"
         return res
 
     def _group_by(self):

@@ -40,6 +40,16 @@ class PurchaseOrder(models.Model):
         result['context']['default_discount_last'] = self.discount_last
         return result
 
+    def _prepare_sale_order_data(
+        self, name, partner, dest_company, direct_delivery_address
+    ):
+        res = super()._prepare_sale_order_data(
+            name, partner, dest_company, direct_delivery_address
+        )
+        if partner.sale_type:
+            res["type_id"] = partner.sale_type.id
+        return res
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
