@@ -71,13 +71,3 @@ class PurchaseOrderLine(models.Model):
         for line in res:
             line["analytic_account_id"] = self.account_analytic_id.id
         return res
-
-
-class PurchaseReport(models.Model):
-    _inherit = "purchase.report"
-
-    account_analytic_id = fields.Many2one(
-        comodel_name="account.analytic.account",
-        string="Department",
-        readonly=True,
-    )
