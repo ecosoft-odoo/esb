@@ -187,7 +187,7 @@
                             </td>
                             <td style="border-top: 1px solid black;"></td>
                             <td class="text-right" style="border-top: 1px solid black;">
-                                <t t-set="waranty_discount" t-value="total_amount * ((100 - o.discount_last) / 100)"/>
+                                <t t-set="waranty_discount" t-value="total_amount * (o.discount_last / 100)"/>
                                 <span t-esc="'{0:,.2f}'.format(waranty_discount)"/>
                             </td>
                         </tr>
@@ -200,7 +200,7 @@
                             </td>
                             <td></td>
                             <td class="text-right">
-                                <t t-set="special_discount" t-value="total_amount * ((100 - o.discount_special) / 100)"/>
+                                <t t-set="special_discount" t-value="(total_amount - waranty_discount) * (o.discount_special / 100)"/>
                                 <span t-esc="'{0:,.2f}'.format(special_discount)"/>
                             </td>
                         </tr>
@@ -215,7 +215,7 @@
                                 PCS
                             </td>
                             <td class="text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
                             </td>
                         </tr>
                     </tbody>
