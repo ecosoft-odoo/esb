@@ -17,22 +17,6 @@
             <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
                 <field name="mo_ref"/>
             </xpath>
-            <!-- Add discount fields -->
-            <xpath expr="//field[@name='amount_untaxed']" position="before">
-                <field name="discount_last" attrs="{'readonly': [('state', 'in' , ('done', 'cancel'))]}"/>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
-                <field name="subtotal_no_disc" optional="show"/>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="attributes">
-                <attribute name="groups">base.group_no_one</attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//kanban//field[@name='price_subtotal']" position="before">
-                <field name="subtotal_no_disc" optional="show"/>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//kanban//field[@name='price_subtotal']" position="attributes">
-                <attribute name="groups">base.group_no_one</attribute>
-            </xpath>
         </field>
     </record>
     <record id="purchase_order_line_tree" model="ir.ui.view">
@@ -82,6 +66,42 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/tree//field[@name='secondary_uom_id']" position="attributes">
                 <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- ESB Discount -->
+    <record id="purchase_order_form_hide_discount" model="ir.ui.view">
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_triple_discount.purchase_order_triple_discount_form_view" />
+        <field name="arch" type="xml">
+            <!-- Hide discount 2, 3 -->
+            <xpath expr="//field[@name='order_line']//tree//field[@name='discount2']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='discount3']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='discount2']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='discount3']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <!-- Add discount fields -->
+            <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="discount_last" attrs="{'readonly': [('state', 'in' , ('done', 'cancel'))]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
+                <field name="subtotal_no_disc" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//kanban//field[@name='price_subtotal']" position="before">
+                <field name="subtotal_no_disc" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//kanban//field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
             </xpath>
         </field>
     </record>
