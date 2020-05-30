@@ -1,3 +1,4 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 
+from . import purchase_report
 from . import purchase
