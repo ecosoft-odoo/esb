@@ -6,8 +6,11 @@ from odoo.exceptions import UserError
 from suds.client import Client
 from xml.etree import ElementTree as ET
 import email, re
+import logging
 
- 
+_logger = logging.getLogger(__name__)
+
+
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
 
@@ -80,6 +83,8 @@ class IrActionsReport(models.Model):
             params=report_param,
         )
         res = client.service.runReport(req).decode("latin-1")
+        _logger.debug("======= Return PDF Result =======")
+        _logger.debug(res)
         boundary = re.search(r'----=[^\r\n]*', res).group()
         res = " \n" + res
         res = "Content-Type: multipart/alternative; boundary=%s\n%s" % (boundary, res)
