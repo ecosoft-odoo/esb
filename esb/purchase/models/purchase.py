@@ -59,7 +59,6 @@ class PurchaseOrderLine(models.Model):
     account_analytic_id = fields.Many2one(
         comodel_name="account.analytic.account",
         string="Department",
-        required=True,
     )
 
     subtotal_no_disc = fields.Monetary(
