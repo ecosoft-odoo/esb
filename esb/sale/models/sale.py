@@ -7,6 +7,7 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    name = fields.Char(readonly=False)
     so_created = fields.Boolean(default=False)
 
     discount_last = fields.Float(
