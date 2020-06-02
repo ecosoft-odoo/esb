@@ -99,7 +99,7 @@
                                 <span>วันที่ต้องการ/Due Date:</span>
                             </div>
                             <div class="col-5">
-                                <span t-field="o.effective_date" t-options="{'widget': 'date'}"/>
+                                <span t-esc="o.order_line and o.order_line.sorted(lambda line: line.commitment_date)[0].commitment_date" t-options='{"widget": "date"}'/>
                             </div>
                         </div>
                     </div>
