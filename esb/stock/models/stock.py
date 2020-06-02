@@ -20,9 +20,3 @@ class StockMoveLine(models.Model):
         comodel_name="account.analytic.account",
         string="Department",
     )
-
-
-class StockPicking(models.Model):
-    _inherit = "stock.picking"
-
-    name = fields.Char(readonly=False)
