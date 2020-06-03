@@ -1,7 +1,3 @@
-stock-logistics-workflow:
-    - account_check_printing_report_base
-account-financial-tools:
-    - account_check_deposit
 account-analytic:
     - mrp_analytic
     - scrap_analytic
