@@ -72,4 +72,4 @@ stock-logistics-workflow:
     - stock_no_negative
 web:
     - web_environment_ribbon
-    - web_m2x_option
+    - web_m2x_options
