@@ -25,6 +25,9 @@ class IrActionsReport(models.Model):
     jasper_parameter_name = fields.Char(
         string="Report Parameter IDS",
     )
+    jasper_criteria_field = fields.Char(
+        string="SQL Primary Key",
+    )
     jasper_parameter_ids = fields.One2many(
         comodel_name="jasper.parameter",
         inverse_name="report_id",
@@ -71,8 +74,8 @@ class IrActionsReport(models.Model):
     def generate_pdf(self, docids):
         client = self.jasper_server_config_id.connect_jasperserver()
         report_param = {}
-        if self.jasper_parameter_name:
-            report_param[self.jasper_parameter_name] = 'id in %s' % str(tuple(docids)).replace(",)", ")")
+        if self.jasper_parameter_name and self.jasper_criteria_field:
+            report_param[self.jasper_parameter_name] = "%s in %s" % (self.jasper_criteria_field, str(tuple(docids)).replace(",)", ")"))
         for param in self.jasper_parameter_ids:
             report_param[param["name"]] = param["value"]
         req = self.create_request(
@@ -83,8 +86,8 @@ class IrActionsReport(models.Model):
             params=report_param,
         )
         res = client.service.runReport(req).decode("latin-1")
-        _logger.debug("======= Return PDF Result =======")
-        _logger.debug(res)
+        _logger.info("======= Return PDF Result =======")
+        _logger.info(res)
         boundary = re.search(r'----=[^\r\n]*', res).group()
         res = " \n" + res
         res = "Content-Type: multipart/alternative; boundary=%s\n%s" % (boundary, res)
