@@ -23,7 +23,7 @@ class PurchaseOrder(models.Model):
         ),
     ]
 
-    @api.onchange("discount_last")
+    @api.onchange("discount_last", "order_line")
     def _onchange_discount_last(self):
         # Change discount_last to discount3
         for record in self:

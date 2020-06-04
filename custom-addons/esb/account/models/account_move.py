@@ -36,7 +36,7 @@ class AccountMove(models.Model):
         ),
     ]
 
-    @api.onchange("discount_last", "discount_special")
+    @api.onchange("discount_last", "discount_special", "invoice_line_ids")
     def _onchange_discount_last(self):
         # Change discount_last to discount3
         # Change discount_special to discount2
