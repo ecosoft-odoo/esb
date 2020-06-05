@@ -44,7 +44,6 @@ class AccountMove(models.Model):
             for line in record.invoice_line_ids:
                 line.discount3 = record.discount_last
                 line.discount2 = record.discount_special
-                line._onchange_triple_discount()
                 line._onchange_price_subtotal()
                 line._onchange_balance()
 
