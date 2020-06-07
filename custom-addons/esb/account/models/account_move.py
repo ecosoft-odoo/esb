@@ -42,10 +42,11 @@ class AccountMove(models.Model):
         # Change discount_special to discount2
         for record in self:
             for line in record.invoice_line_ids:
-                line.discount3 = record.discount_last
-                line.discount2 = record.discount_special
-                line._onchange_price_subtotal()
-                line._onchange_balance()
+                if line.product_id.type in ('product', 'consu'):
+                    line.discount3 = record.discount_last
+                    line.discount2 = record.discount_special
+                    line._onchange_price_subtotal()
+                    line._onchange_balance()
 
     @api.depends("partner_id", "company_id")
     def _compute_sale_type_id(self):

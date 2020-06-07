@@ -28,7 +28,8 @@ class PurchaseOrder(models.Model):
         # Change discount_last to discount3
         for record in self:
             for line in record.order_line:
-                line.discount3 = record.discount_last
+                if line.product_id.type in ('product', 'consu'):
+                    line.discount3 = record.discount_last
 
     @api.model
     def create(self, vals):

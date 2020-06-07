@@ -44,8 +44,9 @@ class SaleOrder(models.Model):
         # Change discount_special to discount2
         for record in self:
             for line in record.order_line:
-                line.discount3 = record.discount_last
-                line.discount2 = record.discount_special
+                if line.product_id.type in ('product', 'consu'):
+                    line.discount3 = record.discount_last
+                    line.discount2 = record.discount_special
 
     @api.model
     def create(self, vals):

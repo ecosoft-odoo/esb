@@ -1,7 +1,7 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_delivery_order_form">
-        <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
         <div class="o_sarabun">
             <div class="header">
                 <!-- Company Data -->
@@ -12,7 +12,7 @@
                                 <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
                             </div>
                             <div class="col-10">
-                                <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                                <address t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
                             </div>
                         </div>
                         <div class="row">
@@ -25,10 +25,10 @@
                         </div>
                         <div class="row">
                             <div class="col-2">
-                                <p>E-mail:</p>
+                                <p>Website:</p>
                             </div>
                             <div class="col-10">
-                                <span t-field="o.company_id.email"/>
+                                <span t-field="o.company_id.website"/>
                             </div>
                         </div>
                         <div class="row">
@@ -309,7 +309,7 @@
     <template id="esb_delivery_order_form_pdf">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esb.esb_delivery_order_form" t-lang="o.company_id.partner_id.lang"/>
+                <t t-call="esb.esb_delivery_order_form" t-lang="o.partner_id.lang"/>
             </t>
         </t>
     </template>
