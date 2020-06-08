@@ -159,7 +159,7 @@
                                         <span t-esc="'{0:,.2f}'.format(quantity)"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        <span t-esc="'{0:,.3f}'.format(line.price_unit)"/>
                                     </td>
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.subtotal_no_disc"/>

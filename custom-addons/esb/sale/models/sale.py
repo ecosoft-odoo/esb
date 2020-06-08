@@ -10,14 +10,24 @@ class SaleOrder(models.Model):
     so_created = fields.Boolean(default=False)
 
     discount_last = fields.Float(
-        string="Discount (%)",
+        string="Discount",
         digits="Discount",
         default=0.0,
     )
+    discount_last_amount = fields.Monetary(
+        string="Amount Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
     discount_special = fields.Float(
-        string="Special Discount (%)",
+        string="Special Discount",
         digits="Discount",
         default=0.0,
+    )
+    discount_special_amount = fields.Monetary(
+        string="Amount Special Discount",
+        digits="Discount",
+        compute="_compute_discount",
     )
     partner_bank_id = fields.Many2one(
         comodel_name="res.partner.bank",
@@ -47,6 +57,13 @@ class SaleOrder(models.Model):
                 if line.product_id.type in ('product', 'consu'):
                     line.discount3 = record.discount_last
                     line.discount2 = record.discount_special
+
+    @api.depends("discount_last", "discount_special", "order_line")
+    def _compute_discount(self):
+        for record in self:
+            total = sum(record.order_line.mapped("subtotal_no_disc"))
+            record.discount_last_amount = total * record.discount_last / 100
+            record.discount_special_amount = (total - record.discount_last_amount) * record.discount_special / 100
 
     @api.model
     def create(self, vals):
