@@ -13,14 +13,24 @@ class AccountMove(models.Model):
         ondelete="cascade",
     )
     discount_last = fields.Float(
-        string="Discount (%)",
+        string="Discount",
         digits="Discount",
         default=0.0,
     )
+    discount_last_amount = fields.Monetary(
+        string="Amount Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
     discount_special = fields.Float(
-        string="Special Discount (%)",
+        string="Special Discount",
         digits="Discount",
         default=0.0,
+    )
+    discount_special_amount = fields.Monetary(
+        string="Amount Special Discount",
+        digits="Discount",
+        compute="_compute_discount",
     )
 
     _sql_constraints = [
@@ -47,6 +57,13 @@ class AccountMove(models.Model):
                     line.discount2 = record.discount_special
                     line._onchange_price_subtotal()
                     line._onchange_balance()
+
+    @api.depends("discount_last", "discount_special", "invoice_line_ids")
+    def _compute_discount(self):
+        for record in self:
+            total = sum(record.invoice_line_ids.mapped("subtotal_no_disc"))
+            record.discount_last_amount = total * record.discount_last / 100
+            record.discount_special_amount = (total - record.discount_last_amount) * record.discount_special / 100
 
     @api.depends("partner_id", "company_id")
     def _compute_sale_type_id(self):

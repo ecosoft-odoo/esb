@@ -14,6 +14,11 @@ class PurchaseOrder(models.Model):
         digits="Discount",
         default=0.0,
     )
+    discount_last_amount = fields.Monetary(
+        string="Amount Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
 
     _sql_constraints = [
         (
@@ -30,6 +35,12 @@ class PurchaseOrder(models.Model):
             for line in record.order_line:
                 if line.product_id.type in ('product', 'consu'):
                     line.discount3 = record.discount_last
+
+    @api.depends("discount_last", "order_line")
+    def _compute_discount(self):
+        for record in self:
+            total = sum(record.order_line.mapped("subtotal_no_disc"))
+            record.discount_last_amount = total * record.discount_last / 100
 
     @api.model
     def create(self, vals):

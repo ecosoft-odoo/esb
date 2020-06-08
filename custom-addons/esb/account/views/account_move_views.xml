@@ -11,8 +11,16 @@
             </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">
-                <field name="discount_last" attrs="{'readonly': [('state', '!=' , 'draft')]}"/>
-                <field name="discount_special" attrs="{'readonly': [('state', '!=' , 'draft')]}"/>
+                <label for="discount_last"/>
+                <div class="oe_inline">
+                    <field name="discount_last" class="oe_inline" attrs="{'readonly': [('state', '!=' , 'draft')]}"/> %
+                    <field name="discount_last_amount" nolabel="1" class="oe_inline oe_right"/>
+                </div>
+                <label for="discount_special"/>
+                <div class="oe_inline">
+                    <field name="discount_special" class="oe_inline" attrs="{'readonly': [('state', '!=' , 'draft')]}"/> %
+                    <field name="discount_special_amount" nolabel="1" class="oe_inline oe_right"/>
+                </div>
             </xpath>
             <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="before">
                 <field name="subtotal_no_disc" optional="show"/>

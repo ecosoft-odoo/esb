@@ -89,7 +89,11 @@
             </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">
-                <field name="discount_last" attrs="{'readonly': [('state', 'in' , ('done', 'cancel'))]}"/>
+                <label for="discount_last"/>
+                <div class="oe_inline">
+                    <field name="discount_last" class="oe_inline" attrs="{'readonly': [('state', 'in' , ('done', 'cancel'))]}"/> %
+                    <field name="discount_last_amount" nolabel="1" class="oe_inline oe_right"/>
+                </div>
             </xpath>
             <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="before">
                 <field name="subtotal_no_disc" optional="show"/>
