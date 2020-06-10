@@ -28,6 +28,7 @@
     merges:
         - oca 13.0
         - oca refs/pull/329/head # account_check_printing_report_base
+        - oca refs/pull/335/head # account_check_date
     target: ecosoft 13.0-esb
 ./l10n-thailand:
     remotes:
