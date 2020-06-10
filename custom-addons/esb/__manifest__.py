@@ -21,6 +21,7 @@
     ],
     "data": [
         "account/views/account_move_views.xml",
+        "mrp/reports/mrp_report_bom_structure.xml",
         "mrp/views/mrp_production_views.xml",
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
