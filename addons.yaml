@@ -8,6 +8,7 @@ account-invoicing:
     - account_invoice_triple_discount
 account-payment:
     - account_check_printing_report_base
+    - account_check_date
 l10n-thailand:
     - l10n_th_amount_to_text
     - l10n_th_base_location
