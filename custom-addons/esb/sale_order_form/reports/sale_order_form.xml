@@ -1,7 +1,7 @@
 <odoo>
     <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
     <template id="esb_sale_order_form">
-        <t t-set="o" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
         <div class="o_sarabun">
             <div class="header">
                 <!-- Company Data -->
@@ -12,7 +12,7 @@
                                 <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
                             </div>
                             <div class="col-10">
-                                <address t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
+                                <address t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
                             </div>
                         </div>
                         <div class="row">
@@ -39,11 +39,11 @@
                                 <p>
                                     <span t-field="o.company_id.vat"/> &#160;&#160;&#160;
                                     <t t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'">
-                                        <t t-if="o.partner_id.lang == 'en_US'">Head Office</t>
-                                        <t t-if="o.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
+                                        <t t-if="o.company_id.partner_id.lang == 'en_US'">Head Office</t>
+                                        <t t-if="o.company_id.partner_id.lang == 'th_TH'">สำนักงานใหญ่</t>
                                     </t>
                                     <t t-else="">
-                                        Branch: <span t-field="o.partner_id.branch"/>
+                                        Branch: <span t-field="o.company_id.branch"/>
                                     </t>
                                 </p>
                             </div>
