@@ -146,7 +146,6 @@
         ecosoft: https://github.com/ecosoft-odoo/stock-logistics-workflow.git
     merges:
         - oca 13.0
-        - oca refs/pull/597/head # stock_no_negative
     target: ecosoft 13.0-esb
 ./web:
     remotes:
