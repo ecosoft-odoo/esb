@@ -99,7 +99,10 @@
                                 <span>วันที่ต้องการ/Due Date:</span>
                             </div>
                             <div class="col-5">
-                                <span t-esc="o.order_line and o.order_line.sorted(lambda line: line.commitment_date)[0].commitment_date" t-options='{"widget": "date"}'/>
+                                <t t-set="no_commitment_date" t-value="o.order_line.filtered(lambda line: not line.commitment_date)"/>
+                                <t t-if="not no_commitment_date">
+                                    <span t-esc="o.order_line and o.order_line.filtered(lambda line: line.commitment_date).sorted(lambda line: line.commitment_date)[0].commitment_date" t-options='{"widget": "date"}'/>
+                                </t>
                             </div>
                         </div>
                     </div>
