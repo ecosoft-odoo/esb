@@ -231,6 +231,14 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="row text-left">
+                    <div class="col-2">
+                        <strong>Remarks</strong>
+                    </div>
+                    <div class="col-10">
+                        <span t-field="o.note"/>
+                    </div>
+                </div>
             </div>
             <div class="footer last-page">
                 <strong>Sincerely yours,</strong>
