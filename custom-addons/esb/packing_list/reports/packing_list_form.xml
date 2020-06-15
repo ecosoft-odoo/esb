@@ -229,6 +229,16 @@
                                 <strong><span t-esc="'{0:,.2f}'.format(o.gross_weight_total)"/></strong>
                             </td>
                         </tr>
+                        <tr class="text-left">
+                            <div class="row">
+                                <td colspan="1">
+                                    <strong>Remarks</strong>
+                                </td>
+                                <td colspan="11">
+                                    <span t-esc="o.note"/>
+                                </td>
+                            </div>
+                        </tr>
                     </tbody>
                 </table>
             </div>
