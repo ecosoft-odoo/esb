@@ -210,10 +210,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="footer">
-                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
-                <table class="table table-sm" style="width: 100%;">
+
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;  page-break-inside: avoid;"/>
+                <table class="table table-sm" style="width: 100%; page-break-inside: avoid;">
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-bottom: 0px; width: 85%;">
                           <span style="text-decoration: underline;">Checklist ในการจัดเตรียม</span>
