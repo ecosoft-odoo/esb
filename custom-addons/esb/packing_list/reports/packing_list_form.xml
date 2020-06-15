@@ -231,16 +231,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <tr class="text-left">
-                    <div class="row">
-                        <div class="col-2">
-                            <strong>Remarks</strong>
-                        </div>
-                        <div class="col-10">
-                            <span t-esc="o.note"/>
-                        </div>
+                <div class="row text-left">
+                    <div class="col-2">
+                        <strong>Remarks</strong>
                     </div>
-                </tr>
+                    <div class="col-10">
+                        <span t-field="o.note"/>
+                    </div>
+                </div>
             </div>
             <div class="footer last-page">
                 <strong>Sincerely yours,</strong>
