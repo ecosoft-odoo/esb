@@ -47,7 +47,6 @@ purchase-workflow:
     - purchase_triple_discount
 reporting-engine:
     - report_csv
-    # - report_jasper_link
     - report_wkhtmltopdf_param
     - report_qweb_element_page_visibility
     - report_xlsx
@@ -66,6 +65,7 @@ server-tools:
 server-ux:
     - date_range
 stock-logistics-warehouse:
+    - stock_available_unreserved
     - scrap_reason_code
     - stock_secondary_unit
     - stock_warehouse_calendar

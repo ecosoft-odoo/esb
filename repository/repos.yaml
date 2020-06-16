@@ -99,7 +99,6 @@
     merges:
         - oca 13.0
         - oca refs/pull/402/head # report_wkhtmltopdf_param
-        # - oca refs/pull/404/head report_jasper_link
         - oca refs/pull/406/head # report_qweb_element_page_visibility
     target: ecosoft 13.0-esb
 ./sale-workflow:
