@@ -5,6 +5,10 @@
         inherit_id="stock_secondary_unit.report_delivery_document"
         priority="8"
     >
+        <!-- Add state of document -->
+        <xpath expr="//h2" position="inside">
+            <small>(<span t-field="o.state"/>)</small>
+        </xpath>
         <!-- Hide Secondary on Delivery Slip -->
         <xpath expr="//table[1]/thead/tr/th[2]" position="replace"/>
         <xpath expr="//table[1]/tbody/tr/td[2]" position="replace"/>
