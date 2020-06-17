@@ -215,100 +215,100 @@
                 <table class="table table-sm" style="width: 100%; page-break-inside: avoid;">
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-bottom: 0px; width: 85%;">
-                          <span style="text-decoration: underline;">Checklist ในการจัดเตรียม</span>
+                          <span style="font-size: 14px; text-decoration: underline;">Checklist ในการจัดเตรียม</span>
                           <span style="font-size: 10px;"> hint: ให้ติ๊กถูกในช่องสี่เหลี่ยมสําหรับรายการที่ต้องทํา ทําเมื่อไรให้ใส่วันที่ อาจจะวางแผนทํา โดยใส่วันที่เป็นดินสอ เมื่อทําจริงแล้วให้ใส่เป็นปากกา</span>
                       </td>
                       <td rowspan="2" class="text-center" style="border: 1px solid black; border-bottom: 0px; width: 15%;">
-                          <p t-field="o.user_id.name"/>
-                          <p t-field="o.date_order" t-options="{'widget': 'date'}"/>
+                          <p style = "font-size: 14px;" t-field="o.user_id.name"/>
+                          <p style = "font-size: 14px;" t-field="o.date_order" t-options="{'widget': 'date'}"/>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] null</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] null</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] email แจ้งวันที่นัดส่งให้ลูกค้า.................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] email แจ้งวันที่นัดส่งให้ลูกค้า.................................</span>
                       </td>
                       <td rowspan="4" class="text-center" style="border: 1px solid black; width: 85%;">
-                          ผู้จัดทำ
+                          <span style = "font-size: 14px;">ผู้จัดทำ</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] วางแผนผลิตเสร็จวันที่ .......................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] วางแผนผลิตเสร็จวันที่ .......................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] มีผลิตภัณฑ์ใหม่ วันที่นัด approve ตัวอย่าง ......................... จัดซื้อนัดของเข้าวันที่ .................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] มีผลิตภัณฑ์ใหม่ วันที่นัด approve ตัวอย่าง ......................... จัดซื้อนัดของเข้าวันที่ .................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ต้องมี FORM D และยื่นต้นทุนแหล่งกําเนิดครบ online แล้ววันที่ .................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ต้องมี FORM D และยื่นต้นทุนแหล่งกําเนิดครบ online แล้ววันที่ .................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ยื่นโครงสร้างราคาสรรพสามิต แล้ววันที่ .................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ยื่นโครงสร้างราคาสรรพสามิต แล้ววันที่ .................................</span>
                       </td>
                       <td rowspan="4" class="text-center" style="border: 1px solid black; width: 15%;">
-                          ผู้ตรวจสอบ
+                           <span style = "font-size: 14px;">ผู้ตรวจสอบ</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ลูกค้าเปิด L/C และได้รับ L/C ต้นฉบับแล้ววันที่ ...............................................</span>
-                          <span> [ &#160;&#160;&#160; ] ลูกค้าโอนเงินก่อน book</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ลูกค้าเปิด L/C และได้รับ L/C ต้นฉบับแล้ววันที่ ...............................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ลูกค้าโอนเงินก่อน book</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ทํา booking ให้ลูกค้าแล้ว สายเรือ ........................ ETD: .................. ETA: ........................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ทํา booking ให้ลูกค้าแล้ว สายเรือ ........................ ETD: .................. ETA: ........................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] email แจ้งสินค้าพร้อมส่งให้ลูกค้าล่วงหน้า 2 สัปดาห์ วันที่ ..........................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] email แจ้งสินค้าพร้อมส่งให้ลูกค้าล่วงหน้า 2 สัปดาห์ วันที่ ..........................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ทํา packing list ให้คลังจัดเตรียมของแล้ววันที่ ................................... นัดหัวลาก วันที่ .....................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ทํา packing list ให้คลังจัดเตรียมของแล้ววันที่ ................................... นัดหัวลาก วันที่ .....................................</span>
                       </td>
                       <td rowspan="5" class="text-center" style="border: 1px solid black; width: 15%;">
-                          ฝ่ายผลิตรับสําเนาพร้อม loading plan
+                           <span style = "font-size: 14px;">ฝ่ายผลิตรับสําเนาพร้อม loading plan</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ได้ Profroma Invoice BIVAC แล้ว และนัด BIVAC เข้าตรวจวันที่ ...................................... (แจ้งคลังแล้ว)</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ได้ Profroma Invoice BIVAC แล้ว และนัด BIVAC เข้าตรวจวันที่ ...................................... (แจ้งคลังแล้ว)</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ทําเอกสาร Submit L/C เรียบร้อยแล้ววันที่ .............................................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ทําเอกสาร Submit L/C เรียบร้อยแล้ววันที่ .............................................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] ทํา invoice เรียกเก็บเงินลูกค้าก่อนเรือถึง 2 สัปดาห์ และให้พี่ต้นตรวจแล้ววันที่ ................................... และส่ง email ให้ MD วันที่ ..............................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] ทํา invoice เรียกเก็บเงินลูกค้าก่อนเรือถึง 2 สัปดาห์ และให้พี่ต้นตรวจแล้ววันที่ ................................... และส่ง email ให้ MD วันที่ ..............................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; border-bottom: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว Surrender B/L และส่ง email surrender ให้ลูกค้าแล้ววันที่ ...............................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว Surrender B/L และส่ง email surrender ให้ลูกค้าแล้ววันที่ ...............................</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="text-left" style="border: 1px solid black; border-top: 0px; width: 85%;">
-                          <span> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว ไม่ Surrender B/L และส่งต้นฉบับเอกสาร ให้ลูกค้าแล้ววันที่ ...........................</span>
+                          <span style = "font-size: 14px;"> [ &#160;&#160;&#160; ] รับชําระเงินจากลูกค้าแล้ว ไม่ Surrender B/L และส่งต้นฉบับเอกสาร ให้ลูกค้าแล้ววันที่ ...........................</span>
                       </td>
                       <td class="text-center" style="border: 1px solid black; width: 15%;">
-                          ผู้อนุมัติ
+                          <span style = "font-size: 14px;"> ผู้อนุมัติ </span>
                       </td>
                     </tr>
                 </table>
