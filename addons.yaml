@@ -72,6 +72,7 @@ stock-logistics-warehouse:
     - stock_warehouse_calendar
 stock-logistics-workflow:
     - stock_no_negative
+    - stock_picking_filter_lot
 web:
     - web_environment_ribbon
     - web_m2x_options
