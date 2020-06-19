@@ -56,6 +56,15 @@
                           <strong t-if="o.state == 'cancel'" style="color: red;">Cancelled</strong>
                           หน้าที่: <span class="page"/> / <span class="topage"/>
                         </p>
+                        <h5 class="text-right">
+                            <t t-if="i == 0">
+                                ต้นฉบับ
+                            </t>
+                            <t t-else="">
+                                สำเนา
+                            </t>
+                        </h5>
+
                     </div>
                 </div>
                 <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
@@ -129,7 +138,6 @@
                             <th class="text-center">หน่วย<br/>Unit</th>
                             <th class="text-center">จำนวน<br/>Qty</th>
                             <th class="text-center">ราคา<br/>Price</th>
-                            <th class="text-center">ส่วนลด<br/>Discount</th>
                             <th class="text-center">จำนวนเงิน<br/>Amount</th>
                         </tr>
                     </thead>
@@ -145,10 +153,10 @@
                                         <span t-esc="number"/>
                                     </td>
                                     <td>
-                                        <span t-field="line.product_id.default_code"/>
+                                        <span t-field="line.product_id.series"/>
                                     </td>
                                     <td>
-                                        <span t-field="line.product_id.name"/>
+                                        <span t-field="line.product_id.long_name"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="line.product_uom_id.name"/>
@@ -158,11 +166,6 @@
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
-                                    </td>
-                                    <td class="text-right">
-                                        <t t-set="discount_amount" t-value="line.quantity * line.price_unit * line.discount / 100"/>
-                                        <t t-set="total_discount" t-value="total_discount + discount_amount"/>
-                                        <span t-esc="'{0:,.2f}'.format(discount_amount)"/>
                                     </td>
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
@@ -311,11 +314,16 @@
             </div>
         </div>
     </template>
+
     <template id="esb_tax_invoice_form_pdf">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="esb.esb_tax_invoice_form" t-lang="o.company_id.partner_id.lang"/>
+                <t t-set="ncopies" t-value="2"/>
+                <t t-foreach="range(ncopies)" t-as="i">
+                    <t t-call="esb.esb_tax_invoice_form" t-lang="o.company_id.partner_id.lang"/>
+                </t>
             </t>
         </t>
     </template>
+
 </odoo>
