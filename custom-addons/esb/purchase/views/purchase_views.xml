@@ -17,6 +17,9 @@
             <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
                 <field name="mo_ref"/>
             </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="so_reference"/>
+            </xpath>
         </field>
     </record>
     <record id="purchase_order_line_tree" model="ir.ui.view">
@@ -109,4 +112,6 @@
             </xpath>
         </field>
     </record>
+
+
 </odoo>

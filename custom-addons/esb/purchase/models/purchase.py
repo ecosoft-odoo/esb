@@ -9,6 +9,8 @@ class PurchaseOrder(models.Model):
 
     po_created = fields.Boolean(default=False)
 
+    so_reference = fields.Char(string="SO Reference")
+
     discount_last = fields.Float(
         string="Discount (%)",
         digits="Discount",
