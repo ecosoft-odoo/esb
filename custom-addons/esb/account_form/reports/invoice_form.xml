@@ -1,0 +1,41 @@
+<odoo>
+    <template
+        id="report_invoice"
+        inherit_id="account.report_invoice_document"
+        priority="8"
+    >
+    <xpath expr="//div[@id='total']" position="after">
+        <br/><table class="table table-sm mt8">
+            <thead>
+                <tr class="border-black text-center">
+                    <th>Account</th>
+                    <th>Label</th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="o.line_ids" t-as="line">
+                    <tr class="text-left">
+                        <td>
+                            <span t-field="line.account_id"/>
+                        </td>
+                        <td>
+                            <span t-field="line.name"/>
+                        </td>
+                        <td>
+                            <span t-field="line.debit"/>
+                        </td>
+                        <td>
+                            <span t-field="line.credit"/>
+                        </td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </xpath>
+
+</template>
+
+
+</odoo>
