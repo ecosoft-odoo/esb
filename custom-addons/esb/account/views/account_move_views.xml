@@ -11,6 +11,10 @@
             </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="discount_waranty"/>
+                <field name="discount_special"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='amount_untaxed']" position="before">
                 <label for="discount_last"/>
                 <div class="oe_inline">
                     <field name="discount_last" class="oe_inline" attrs="{'readonly': [('state', '!=' , 'draft')]}"/> %
@@ -21,29 +25,23 @@
                     <field name="discount_special" class="oe_inline" attrs="{'readonly': [('state', '!=' , 'draft')]}"/> %
                     <field name="discount_special_amount" nolabel="1" class="oe_inline oe_right"/>
                 </div>
-            </xpath>
+            </xpath> -->
             <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="before">
                 <field name="subtotal_no_disc" optional="show"/>
-            </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="attributes">
-                <attribute name="groups">base.group_no_one</attribute>
             </xpath>
             <xpath expr="//field[@name='invoice_line_ids']//kanban//field[@name='price_subtotal']" position="before">
                 <field name="subtotal_no_disc" optional="show"/>
             </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']//kanban//field[@name='price_subtotal']" position="attributes">
+            <!-- Hide discount 3 -->
+            <!-- <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount2']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
-            </xpath>
-            <!-- Hide discount 2, 3 -->
-            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount2']" position="attributes">
-                <attribute name="groups">base.group_no_one</attribute>
-            </xpath>
+            </xpath> -->
             <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount3']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
             </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount2']" position="attributes">
+            <!-- <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount2']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
-            </xpath>
+            </xpath> -->
             <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount3']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
             </xpath>

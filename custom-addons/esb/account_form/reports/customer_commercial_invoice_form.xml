@@ -125,7 +125,7 @@
                         <t t-set="current_qty" t-value="0"/>
                         <t t-set="current_subtotal" t-value="0"/>
                         <t t-set="qty_total" t-value="0"/>
-                        <t t-set="discount_total" t-value="0"/>
+                        <!-- <t t-set="discount_total" t-value="0"/> -->
                         <t t-set="amount_total" t-value="0"/>
                         <t t-foreach="o.invoice_line_ids" t-as="line">
                             <tr>
@@ -154,7 +154,7 @@
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.subtotal_no_disc"/>
                                         <t t-set="amount_total" t-value="amount_total + line.subtotal_no_disc"/>
-                                        <t t-set="discount_total" t-value="discount_total + line.subtotal_no_disc - line.price_subtotal"/>
+                                        <!-- <t t-set="discount_total" t-value="discount_total + line.subtotal_no_disc - line.price_subtotal"/> -->
                                         <span t-esc="'{0:,.2f}'.format(line.subtotal_no_disc)"/>
                                     </td>
                                 </t>
@@ -208,7 +208,7 @@
                                 Waranty Discount
                             </td>
                             <td class="text-right">
-                                <span t-esc="'{0:,.2f}'.format(discount_total)"/>
+                                <span t-esc="'{0:,.2f}'.format(o.discount_waranty)"/>
                             </td>
                         </tr>
                         <t t-foreach="o.amount_by_group" t-as="amount_by_group">

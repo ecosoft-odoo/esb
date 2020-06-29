@@ -143,7 +143,7 @@
                     </thead>
                     <tbody>
                         <t t-set="number" t-value="0"/>
-                        <t t-set="total_discount" t-value="0"/>
+                        <!-- <t t-set="total_discount" t-value="0"/> -->
                         <t t-set="current_subtotal" t-value="0"/>
                         <t t-foreach="o.invoice_line_ids" t-as="line">
                             <tr>
@@ -229,8 +229,8 @@
                                     รวมจำนวนเงิน/<br/><small>Subtotal</small>
                                 </td>
                                 <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
-                                    <t t-set="total_amount" t-value="total_discount + o.amount_untaxed"/>
-                                    <span t-esc="'{0:,.2f}'.format(total_amount)"/>
+                                    <!-- <t t-set="total_amount" t-value="total_discount + o.amount_untaxed"/> -->
+                                    <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -238,9 +238,9 @@
                                     ส่วนลด/<br/><small>Discount</small>
                                 </td>
                                 <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
-                                    <t t-if="total_discount">
+                                    <!-- <t t-if="total_discount">
                                         <span t-esc="'{0:,.2f}'.format(total_discount)"/>
-                                    </t>
+                                    </t> -->
                                 </td>
                             </tr>
                             <tr>

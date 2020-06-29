@@ -11,48 +11,66 @@ class PurchaseOrder(models.Model):
 
     so_reference = fields.Char(string="SO Reference")
 
-    discount_last = fields.Float(
-        string="Discount (%)",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_last_amount = fields.Monetary(
-        string="Amount Discount",
+    discount_waranty = fields.Monetary(
+        string="Waranty Discount",
         digits="Discount",
         compute="_compute_discount",
     )
+    discount_special = fields.Monetary(
+        string="Special Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
+    # discount_last = fields.Float(
+    #     string="Discount (%)",
+    #     digits="Discount",
+    #     default=0.0,
+    # )
+    # discount_last_amount = fields.Monetary(
+    #     string="Amount Discount",
+    #     digits="Discount",
+    #     compute="_compute_discount",
+    # )
 
-    _sql_constraints = [
-        (
-            "discount_last_limit",
-            "CHECK (discount_last <= 100.0)",
-            "Discount must be lower than 100%.",
-        ),
-    ]
+    # _sql_constraints = [
+    #     (
+    #         "discount_last_limit",
+    #         "CHECK (discount_last <= 100.0)",
+    #         "Discount must be lower than 100%.",
+    #     ),
+    # ]
 
-    @api.onchange("discount_last", "order_line")
-    def _onchange_discount_last(self):
-        # Change discount_last to discount3
-        for record in self:
-            for line in record.order_line:
-                if line.product_id.type in ('product', 'consu'):
-                    line.discount3 = record.discount_last
+    # @api.onchange("discount_last", "order_line")
+    # def _onchange_discount_last(self):
+    #     # Change discount_last to discount3
+    #     for record in self:
+    #         for line in record.order_line:
+    #             if line.product_id.type in ('product', 'consu'):
+    #                 line.discount3 = record.discount_last
 
-    @api.depends("discount_last", "order_line")
+    @api.depends("order_line")
     def _compute_discount(self):
         for record in self:
-            total = sum(record.order_line.mapped("subtotal_no_disc"))
-            record.discount_last_amount = total * record.discount_last / 100
+            discount_waranty = 0.00
+            discount_special = 0.00
+            for line in record.order_line:
+                discount_waranty += line.subtotal_no_disc * line.discount / 100
+                discount_special += line.subtotal_no_disc * line.discount2 / 100
+            record.discount_waranty = discount_waranty
+            record.discount_special = discount_special
+
+            # total = sum(record.order_line.mapped("subtotal_no_disc"))
+            # record.discount_last_amount = total * record.discount_last / 100
 
     @api.model
     def create(self, vals):
         vals["po_created"] = True
         return super().create(vals)
 
-    def action_view_invoice(self):
-        result = super().action_view_invoice()
-        result['context']['default_discount_last'] = self.discount_last
-        return result
+    # def action_view_invoice(self):
+    #     result = super().action_view_invoice()
+    #     result['context']['default_discount_last'] = self.discount_last
+    #     return result
 
     def _prepare_sale_order_data(
         self, name, partner, dest_company, direct_delivery_address
@@ -76,7 +94,7 @@ class PurchaseOrderLine(models.Model):
     )
 
     subtotal_no_disc = fields.Monetary(
-        string="Subtotal",
+        string="Subtotal Before Discount",
         store=True,
         compute="_compute_subtotal_no_disc",
         currency_field="currency_id",

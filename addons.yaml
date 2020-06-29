@@ -4,8 +4,8 @@ account-analytic:
     - stock_analytic
 account-financial-reporting:
     - account_financial_report
-account-invoicing:
-    - account_invoice_triple_discount
+# account-invoicing:
+#     - account_invoice_triple_discount
 account-payment:
     - account_check_printing_report_base
     - account_check_date
@@ -45,7 +45,7 @@ purchase-workflow:
     - purchase_discount
     - purchase_order_secondary_unit
     - purchase_order_type
-    - purchase_triple_discount
+    # - purchase_triple_discount
 reporting-engine:
     - report_csv
     - report_wkhtmltopdf_param
@@ -57,7 +57,7 @@ sale-workflow:
     - sale_order_line_date
     - sale_procurement_group_by_line
     - sale_procurement_group_by_commitment_date
-    - sale_triple_discount
+    # - sale_triple_discount
 server-backend:
     - base_user_role
 server-tools:
