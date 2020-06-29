@@ -19,26 +19,26 @@ class SaleOrder(models.Model):
         digits="Discount",
         compute="_compute_discount",
     )
-    # discount_last = fields.Float(
-    #     string="Discount",
-    #     digits="Discount",
-    #     default=0.0,
-    # )
-    # discount_last_amount = fields.Monetary(
-    #     string="Amount Discount",
-    #     digits="Discount",
-    #     compute="_compute_discount",
-    # )
-    # discount_special = fields.Float(
-    #     string="Special Discount",
-    #     digits="Discount",
-    #     default=0.0,
-    # )
-    # discount_special_amount = fields.Monetary(
-    #     string="Amount Special Discount",
-    #     digits="Discount",
-    #     compute="_compute_discount",
-    # )
+    discount_last = fields.Float(
+        string="Discount",
+        digits="Discount",
+        default=0.0,
+    )
+    discount_last_amount = fields.Monetary(
+        string="Amount Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
+    discount_special = fields.Float(
+        string="Special Discount",
+        digits="Discount",
+        default=0.0,
+    )
+    discount_special_amount = fields.Monetary(
+        string="Amount Special Discount",
+        digits="Discount",
+        compute="_compute_discount",
+    )
     partner_bank_id = fields.Many2one(
         comodel_name="res.partner.bank",
         string="Bank Account",
@@ -57,16 +57,6 @@ class SaleOrder(models.Model):
     #         "Discount must be lower than 100%.",
     #     ),
     # ]
-
-    # @api.onchange("discount_last", "discount_special", "order_line")
-    # def _onchange_discount_last(self):
-    #     # Change discount_last to discount3
-    #     # Change discount_special to discount2
-    #     for record in self:
-    #         for line in record.order_line:
-    #             if line.product_id.type in ('product', 'consu'):
-    #                 line.discount3 = record.discount_last
-    #                 line.discount2 = record.discount_special
 
     @api.depends("order_line")
     def _compute_discount(self):
