@@ -19,44 +19,11 @@ class SaleOrder(models.Model):
         digits="Discount",
         compute="_compute_discount",
     )
-    discount_last = fields.Float(
-        string="Discount",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_last_amount = fields.Monetary(
-        string="Amount Discount",
-        digits="Discount",
-        compute="_compute_discount",
-    )
-    discount_special = fields.Float(
-        string="Special Discount",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_special_amount = fields.Monetary(
-        string="Amount Special Discount",
-        digits="Discount",
-        compute="_compute_discount",
-    )
     partner_bank_id = fields.Many2one(
         comodel_name="res.partner.bank",
         string="Bank Account",
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
     )
-
-    # _sql_constraints = [
-    #     (
-    #         "discount_last_limit",
-    #         "CHECK (discount_last <= 100.0)",
-    #         "Discount must be lower than 100%.",
-    #     ),
-    #     (
-    #         "discount_special_limit",
-    #         "CHECK (discount_special <= 100.0)",
-    #         "Discount must be lower than 100%.",
-    #     ),
-    # ]
 
     @api.depends("order_line")
     def _compute_discount(self):
@@ -68,10 +35,6 @@ class SaleOrder(models.Model):
                 discount_special += line.subtotal_no_disc * line.discount2 / 100
             record.discount_waranty = discount_waranty
             record.discount_special = discount_special
-
-            # total = sum(record.order_line.mapped("subtotal_no_disc"))
-            # record.discount_last_amount = total * record.discount_last / 100
-            # record.discount_special_amount = (total - record.discount_last_amount) * record.discount_special / 100
 
     @api.model
     def create(self, vals):
