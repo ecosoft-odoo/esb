@@ -13,14 +13,14 @@
     merges:
         - oca 13.0
     target: ecosoft 13.0-esb
-./account-invoicing:
-    remotes:
-        oca: https://github.com/OCA/account-invoicing.git
-        ecosoft: https://github.com/ecosoft-odoo/account-invoicing.git
-    merges:
-        - oca 13.0
-        - oca refs/pull/661/head # account_invoice_triple_discount
-    target: ecosoft 13.0-esb
+# ./account-invoicing:
+#     remotes:
+#         oca: https://github.com/OCA/account-invoicing.git
+#         ecosoft: https://github.com/ecosoft-odoo/account-invoicing.git
+#     merges:
+#         - oca 13.0
+#         - oca refs/pull/661/head # account_invoice_triple_discount
+#     target: ecosoft 13.0-esb
 ./account-payment:
     remotes:
         oca: https://github.com/OCA/account-payment.git
@@ -36,9 +36,9 @@
         ecosoft: https://github.com/ecosoft-odoo/l10n-thailand.git
     merges:
         - oca 13.0
-        - oca refs/pull/139/head # l10n_th_amount_to_text
         - oca refs/pull/138/head # l10n_th_check_scb_bank
         - oca refs/pull/142/head # l10n_th_withholding_tax_report
+        - oca refs/pull/144/head # l10n_th_base_location
     target: ecosoft 13.0-esb
 ./maintenance:
     remotes:
@@ -68,6 +68,7 @@
         ecosoft: https://github.com/ecosoft-odoo/multi-company.git
     merges:
         - oca 13.0
+        - oca refs/pull/225/head # fix purchase_sale_inter_company
     target: ecosoft 13.0-esb
 ./partner-contact:
     remotes:
@@ -90,7 +91,7 @@
     merges:
         - oca 13.0
         - oca refs/pull/898/head # purchase_order_type
-        - oca refs/pull/912/head # purchase_triple_discount
+        # - oca refs/pull/912/head # purchase_triple_discount
     target: ecosoft 13.0-esb
 ./reporting-engine:
     remotes:
@@ -108,7 +109,7 @@
     merges:
         - oca 13.0
         - oca refs/pull/1129/head # sale_procurement_group_by_commitment_date
-        - oca refs/pull/1138/head # sale_triple_discount
+        # - oca refs/pull/1138/head # sale_triple_discount
     target: ecosoft 13.0-esb
 ./server-backend:
     remotes:
