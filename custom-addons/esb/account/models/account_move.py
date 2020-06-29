@@ -22,39 +22,6 @@ class AccountMove(models.Model):
         digits="Discount",
         compute="_compute_discount",
     )
-    discount_last = fields.Float(
-        string="Discount",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_last_amount = fields.Monetary(
-        string="Amount Discount",
-        digits="Discount",
-        compute="_compute_discount",
-    )
-    discount_special = fields.Float(
-        string="Special Discount",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_special_amount = fields.Monetary(
-        string="Amount Special Discount",
-        digits="Discount",
-        compute="_compute_discount",
-    )
-
-    # _sql_constraints = [
-    #     (
-    #         "discount_last_limit",
-    #         "CHECK (discount_last <= 100.0)",
-    #         "Discount must be lower than 100%.",
-    #     ),
-    #     (
-    #         "discount_special_limit",
-    #         "CHECK (discount_special <= 100.0)",
-    #         "Discount must be lower than 100%.",
-    #     ),
-    # ]
 
     @api.depends("invoice_line_ids")
     def _compute_discount(self):

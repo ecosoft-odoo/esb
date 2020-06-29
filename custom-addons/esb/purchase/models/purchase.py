@@ -21,24 +21,6 @@ class PurchaseOrder(models.Model):
         digits="Discount",
         compute="_compute_discount",
     )
-    discount_last = fields.Float(
-        string="Discount (%)",
-        digits="Discount",
-        default=0.0,
-    )
-    discount_last_amount = fields.Monetary(
-        string="Amount Discount",
-        digits="Discount",
-        compute="_compute_discount",
-    )
-
-    # _sql_constraints = [
-    #     (
-    #         "discount_last_limit",
-    #         "CHECK (discount_last <= 100.0)",
-    #         "Discount must be lower than 100%.",
-    #     ),
-    # ]
 
     @api.depends("order_line")
     def _compute_discount(self):
@@ -55,11 +37,6 @@ class PurchaseOrder(models.Model):
     def create(self, vals):
         vals["po_created"] = True
         return super().create(vals)
-
-    # def action_view_invoice(self):
-    #     result = super().action_view_invoice()
-    #     result['context']['default_discount_last'] = self.discount_last
-    #     return result
 
     def _prepare_sale_order_data(
         self, name, partner, dest_company, direct_delivery_address
