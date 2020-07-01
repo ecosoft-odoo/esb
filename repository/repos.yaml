@@ -13,14 +13,6 @@
     merges:
         - oca 13.0
     target: ecosoft 13.0-esb
-# ./account-invoicing:
-#     remotes:
-#         oca: https://github.com/OCA/account-invoicing.git
-#         ecosoft: https://github.com/ecosoft-odoo/account-invoicing.git
-#     merges:
-#         - oca 13.0
-#         - oca refs/pull/661/head # account_invoice_triple_discount
-#     target: ecosoft 13.0-esb
 ./account-payment:
     remotes:
         oca: https://github.com/OCA/account-payment.git

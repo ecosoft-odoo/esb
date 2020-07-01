@@ -32,7 +32,7 @@ class SaleOrder(models.Model):
             discount_special = 0.00
             for line in record.order_line:
                 discount_waranty += line.subtotal_no_disc * line.discount / 100
-                discount_special += line.subtotal_no_disc * line.discount2 / 100
+                discount_special += line.subtotal_no_disc * line.discount2 / 100 * (100 - line.discount) / 100
             record.discount_waranty = discount_waranty
             record.discount_special = discount_special
 
@@ -50,8 +50,6 @@ class SaleOrder(models.Model):
     def _prepare_invoice(self):
         self.ensure_one()
         invoice_vals = super()._prepare_invoice()
-        # invoice_vals["discount_last"] = self.discount_last
-        # invoice_vals["discount_special"] = self.discount_special
         invoice_vals["invoice_partner_bank_id"] = self.partner_bank_id.id
         return invoice_vals
 
