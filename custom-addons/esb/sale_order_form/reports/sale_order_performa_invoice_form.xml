@@ -120,7 +120,6 @@
                     </thead>
                     <tbody>
                         <t t-set="number" t-value="0"/>
-                        <!-- <t t-set="total_discount" t-value="0"/> -->
                         <t t-set="total_qty" t-value="0"/>
                         <t t-set="total_amount" t-value="0"/>
                         <t t-set="current_qty" t-value="0"/>
@@ -150,7 +149,6 @@
                                         <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
                                     </td>
                                     <td class="text-right">
-                                        <!-- <t t-set="total_discount" t-value="total_discount + (line.subtotal_no_disc * line.discount / 100)"/> -->
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.subtotal_no_disc"/>
                                         <t t-set="total_amount" t-value="total_amount + line.subtotal_no_disc"/>
                                         <span t-field="line.subtotal_no_disc" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
@@ -181,32 +179,6 @@
                                 </tr>
                             </t>
                         </t>
-                        <!-- <t t-if="o.discount_last == 0.00 and o.discount_special == 0.00">
-                            <tr>
-                                <td colspan="5" style="border-top: 1px solid black;">
-                                    Less Waranty Discount
-                                </td>
-                                <td style="border-top: 1px solid black;"></td>
-                                <td class="text-right" style="border-top: 1px solid black;">
-                                    <span t-esc="total_discount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
-                                </td>
-                            </tr>
-                        </t>
-                        <t t-if="o.discount_last != 0.00">
-                            <tr>
-                                <td colspan="4" style="border-top: 1px solid black;">
-                                    Less Waranty Discount
-                                </td>
-                                <td class="text-right" style="border-top: 1px solid black;">
-                                    <span t-esc="'{0:,.2f}'.format(o.discount_last)"/> %
-                                </td>
-                                <td style="border-top: 1px solid black;"></td>
-                                <td class="text-right" style="border-top: 1px solid black;">
-                                    <t t-set="waranty_discount" t-value="total_amount * (o.discount_last / 100)"/>
-                                    <span t-esc="waranty_discount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
-                                </td>
-                            </tr>
-                        </t> -->
                         <t t-if="o.discount_waranty != 0.00">
                             <tr>
                                 <td colspan="6" style="border-top: 1px solid black;">

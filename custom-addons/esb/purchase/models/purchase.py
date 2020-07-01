@@ -29,7 +29,7 @@ class PurchaseOrder(models.Model):
             discount_special = 0.00
             for line in record.order_line:
                 discount_waranty += line.subtotal_no_disc * line.discount / 100
-                discount_special += line.subtotal_no_disc * line.discount2 / 100
+                discount_special += line.subtotal_no_disc * line.discount2 / 100 * (100 - line.discount) / 100
             record.discount_waranty = discount_waranty
             record.discount_special = discount_special
 
