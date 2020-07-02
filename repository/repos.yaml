@@ -124,6 +124,7 @@
         ecosoft: https://github.com/ecosoft-odoo/server-ux.git
     merges:
         - oca 13.0
+        - oca refs/pull/176/head # sequence_reset_period
     target: ecosoft 13.0-esb
 ./stock-logistics-warehouse:
     remotes:
