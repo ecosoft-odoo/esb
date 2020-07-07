@@ -120,7 +120,7 @@ class ESBPackingList(models.Model):
     picking_ids = fields.Many2many(
         comodel_name="stock.picking",
         string="Packing List",
-        domain="[('partner_id', '=', partner_id)]",
+        domain="[('partner_id','=',partner_id),('location_dest_id', '=', 5)] ",
         required=True,
         copy=False,
         states={
