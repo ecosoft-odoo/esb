@@ -1,7 +1,6 @@
 # Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
-
-from odoo import api, fields, models
+from odoo import api, fields, models, exceptions
 
 
 class SaleOrder(models.Model):
@@ -22,6 +21,10 @@ class SaleOrder(models.Model):
     partner_bank_id = fields.Many2one(
         comodel_name="res.partner.bank",
         string="Bank Account",
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+    )
+    type_id = fields.Many2one(
+        comodel_name="sale.order.type",
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
     )
 
@@ -53,6 +56,16 @@ class SaleOrder(models.Model):
         invoice_vals["invoice_partner_bank_id"] = self.partner_bank_id.id
         return invoice_vals
 
+    @api.constrains('company_id', 'type_id.company_id')
+    def _constrains_company(self):
+        if self.company_id not in self.type_id.company_id:
+            raise exceptions.ValidationError("Error : Company and Type No Matching !!!")
+
+    @api.onchange('company_id', 'type_id.company_id')
+    def check_company(self):
+        if self.company_id:
+            self.type_id = False
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -64,6 +77,8 @@ class SaleOrderLine(models.Model):
         currency_field="currency_id",
         help="Subtotal not including discount",
     )
+    # company_id = fields.Char('company_id'),
+    # company_ids = fields.Char('sale_order_type.company_id')
 
     @api.depends("product_uom_qty", "price_unit")
     def _compute_subtotal_no_disc(self):
