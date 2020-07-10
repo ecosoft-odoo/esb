@@ -27,7 +27,7 @@
             print_report_name="object.display_name"
             paperformat="esb.esb_paperformat_commercial_invoice"/>
 
-    <report string="ใบสำคัญจ่าย"
+    <report string="ใบสำคัญรับ/จ่าย"
             id="payment_receipt_form_pdf_report"
             model="account.payment"
             name="esb.esb_payment_receipt_form_pdf"
