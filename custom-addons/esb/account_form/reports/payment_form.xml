@@ -8,7 +8,7 @@
                         <address t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id" t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}' />
                             <div class="row">
                                 <div class="col-4">
-                                    <p>สมุดรายวันจ่าย :</p>
+                                    <p>สมุดรายวัน<t t-if="o.partner_type == 'customer'">รับ</t><t t-if="o.partner_type == 'supplier'">จ่าย</t> :</p>
                                 </div>
                                 <div class="col-8">
                                     <span t-field="o.journal_id"/>
@@ -19,7 +19,7 @@
                                     <p>รายละเอียด :</p>
                                 </div>
                                 <div class="col-3">
-                                    <p>จ่ายชำระหนี้ :</p>
+                                    <p><t t-if="o.partner_type == 'customer'">รับ</t><t t-if="o.partner_type == 'supplier'">จ่าย</t>ชำระหนี้ :</p>
                                 </div>
                                 <div class="col-5">
                                     <span t-field="o.partner_id"/>
@@ -31,8 +31,8 @@
                             <p class="mb0">
                                 หน้าที่ : <span class="page"/> / <span class="topage"/>
                             </p><br/>
-                            <h4>ใบสำคัญจ่าย</h4>
-                            <h5>PAYMENT</h5><br/>
+                            <h4>ใบสำคัญ<t t-if="o.partner_type == 'customer'">รับ</t><t t-if="o.partner_type == 'supplier'">จ่าย</t></h4>
+                            <h5><t t-if="o.partner_type == 'customer'">RECEIPT</t><t t-if="o.partner_type == 'supplier'">PAYMENT</t></h5><br/>
                         </div>
                         <div class="row">
                             <div class="col-4">
