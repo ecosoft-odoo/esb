@@ -197,8 +197,8 @@ class ESBPackingList(models.Model):
     pl_created = fields.Boolean(default=False)
 
     _sql_constraints = [(
-        "name_company_unique",
-        "unique(name,company_id)",
+        "name_unique",
+        "unique(name)",
         "This name is already used by another packing list!"
     )]
 
