@@ -101,6 +101,7 @@
     merges:
         - oca 13.0
         - oca refs/pull/1129/head # sale_procurement_group_by_commitment_date
+        - oca refs/pull/1188/head
         # - oca refs/pull/1138/head # sale_triple_discount
     target: ecosoft 13.0-esb
 ./server-backend:
