@@ -127,7 +127,7 @@
                         <t t-set="qty_total" t-value="0"/>
                         <!-- <t t-set="discount_total" t-value="0"/> -->
                         <t t-set="amount_total" t-value="0"/>
-                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
                             <tr>
                                 <t t-if="not line.display_type and line.product_id.type in ('product', 'consu')">
                                     <td>
@@ -135,7 +135,7 @@
                                         <span t-esc="number"/>
                                     </td>
                                     <td>
-                                        <span t-field="line.product_id.default_code"/>
+                                        <span t-field="line.product_id.series"/>
                                     </td>
                                     <td>
                                         <span t-field="line.name"/>
@@ -239,7 +239,7 @@
                             </tr>
                         </t>
                         <t t-set="number" t-value="1"/>
-                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
                             <t t-if="not line.display_type and line.product_id.type == 'service'">
                                 <tr>
                                     <td>
