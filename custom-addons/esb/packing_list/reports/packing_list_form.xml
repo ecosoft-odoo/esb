@@ -193,7 +193,7 @@
                                 </t>
                             </tr>
                             <t t-if="current_section and (line_last or o.line_ids[line_index+1].display_type == 'line_section')">
-                                <tr class="is-subtotal text-right">
+                                <tr class="is-subtotal text-right" t-if="current_qty or current_package or current_net_weight or current_gross_weight">
                                     <td colspan="4">
                                         <strong>Subtotal</strong>
                                     </td>
