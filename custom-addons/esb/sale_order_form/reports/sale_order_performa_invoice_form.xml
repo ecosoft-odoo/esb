@@ -113,6 +113,8 @@
                             <th class="text-center" style="vertical-align: middle;">Part No.</th>
                             <th class="text-center" style="vertical-align: middle;">Description</th>
                             <th class="text-center" style="vertical-align: middle;">Brand</th>
+                            <th class="text-center" style="vertical-align: middle;"></th>
+                            <th class="text-center" style="vertical-align: middle;"></th>
                             <th class="text-center" style="vertical-align: middle;">Quantity</th>
                             <th class="text-center" style="vertical-align: middle;">Unit Price</th>
                             <th class="text-center" style="vertical-align: middle;">Amount</th>
@@ -140,6 +142,12 @@
                                     <td class="text-center">
                                         <span t-field="line.product_id.brand"/>
                                     </td>
+                                    <td>
+                                        <span t-field="line.product_id.spec1"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.spec2"/>
+                                    </td>
                                     <td class="text-right">
                                         <t t-set="current_qty" t-value="current_qty + line.product_uom_qty"/>
                                         <t t-set="total_qty" t-value="total_qty + line.product_uom_qty"/>
@@ -166,7 +174,7 @@
                             </tr>
                             <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
-                                    <td colspan="4">
+                                    <td colspan="6">
                                         <strong>Subtotal</strong>
                                     </td>
                                     <td class="text-right">
@@ -181,7 +189,7 @@
                         </t>
                         <t t-if="o.discount_waranty != 0.00">
                             <tr>
-                                <td colspan="6" style="border-top: 1px solid black;">
+                                <td colspan="8" style="border-top: 1px solid black;">
                                     Less Waranty Discount
                                 </td>
                                 <td class="text-right" style="border-top: 1px solid black;">
@@ -191,7 +199,7 @@
                         </t>
                         <t t-if="o.discount_special != 0.00">
                             <tr>
-                                <td colspan="6">
+                                <td colspan="8">
                                     Special discount for this order
                                 </td>
                                 <td class="text-right">
@@ -207,7 +215,7 @@
                                         <t t-set="number" t-value="number+1"/>
                                         <span t-esc="number"/>
                                     </td>
-                                    <td colspan="5">
+                                    <td colspan="7">
                                         <span t-field="line.name"/>
                                     </td>
                                     <td class="text-right">
@@ -217,7 +225,7 @@
                             </t>
                         </t>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 Total Amount (<span t-field="o.incoterm.name"/>)
                             </td>
                             <td class="text-right">
