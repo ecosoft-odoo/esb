@@ -142,10 +142,10 @@
                                     <td class="text-center">
                                         <span t-field="line.product_id.brand"/>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span t-field="line.product_id.spec1"/>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span t-field="line.product_id.spec2"/>
                                     </td>
                                     <td class="text-right">
