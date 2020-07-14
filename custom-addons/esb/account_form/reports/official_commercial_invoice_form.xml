@@ -118,7 +118,7 @@
                         <t t-set="current_subtotal" t-value="0"/>
                         <t t-set="qty_total" t-value="0"/>
                         <t t-set="amount_total" t-value="0"/>
-                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
                             <tr>
                                 <t t-if="not line.display_type">
                                     <td>
@@ -161,7 +161,7 @@
                                     </td>
                                 </t>
                             </tr>
-                            <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
+                            <t t-if="current_section and (line_last or o.invoice_line_ids.sorted('sequence')[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td colspan="3" class="text-right">
                                         <strong>Subtotal</strong>
