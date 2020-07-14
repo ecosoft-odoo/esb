@@ -173,7 +173,7 @@
                                     </td>
                                 </t>
                             </tr>
-                            <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
+                            <t t-if="current_section and (line_last or o.invoice_line_ids.sorted('sequence')[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td colspan="4">
                                         <strong>Subtotal</strong>
