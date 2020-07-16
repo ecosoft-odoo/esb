@@ -275,13 +275,17 @@
                             <div class="col-4">
                                 <p>จัดทำโดย:</p>
                             </div>
-                            <div class="col-8" style="border-bottom: 1px solid black;"/>
+                            <div class="col-8" style="border-bottom: 1px solid black;">
+                                <span t-esc="user.name"/>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-4">
                                 <p>วันที่:</p>
                             </div>
-                            <div class="col-8" style="border-bottom: 1px solid black;"/>
+                            <div class="col-8" style="border-bottom: 1px solid black;">
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-4">
