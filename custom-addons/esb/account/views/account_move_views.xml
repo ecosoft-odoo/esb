@@ -27,6 +27,20 @@
             <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount3']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
             </xpath>
+            <!-- Show discount 1 -->
+            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount1']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount1']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+            <!-- Show discount 2 -->
+            <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount2']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//form//field[@name='discount2']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>            
         </field>
     </record>
 
