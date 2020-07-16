@@ -289,11 +289,11 @@
                         </div>
                     </div>
                     <div class="col-5 text-center">
-                        <t t-if="o.company_id.name == 'บริษัท อี เอส แบตเตอรี่ (ประเทศไทย) จำกัด' or o.company_id.name == 'E S Battery (Thailand) Co., Ltd.'">
+                        <t t-if="o.company_id.name == 'บริษัท อี เอส แบตเตอรี่ (ประเทศไทย) จำกัด' or o.company_id.name == 'E S Battery (Thailand) Co., Ltd.' or o.company_id.name == 'E S BATTERY (THAILAND) CO., LTD.'">
                             <small>ในนาม บริษัท อี เอส แบตเตอรี่ (ประเทศไทย) จำกัด</small><br/>
                             <small>For E S Battery (Thailand) Co., Ltd.</small>
                         </t>
-                        <t t-if="o.company_id.name == 'บริษัท ไทย โกลบอล อิมพอร์ต เอ็กซ์พอร์ต จำกัด' or o.company_id.name == 'Thai Global Import Export Co., Ltd.'">
+                        <t t-if="o.company_id.name == 'บริษัท ไทย โกลบอล อิมพอร์ต เอ็กซ์พอร์ต จำกัด' or o.company_id.name == 'Thai Global Import Export Co., Ltd.' or o.company_id.name == 'THAI GLOBAL IMPORT EXPORT CO., LTD.'">
                             <small>ในนาม บริษัท ไทย โกลบอล อิมพอร์ต เอ็กซ์พอร์ต จำกัด</small><br/>
                             <small>For Thai Global Import Export Co., Ltd.</small>
                         </t>
