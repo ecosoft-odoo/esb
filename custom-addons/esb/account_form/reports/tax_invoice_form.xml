@@ -70,20 +70,20 @@
                 <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <!-- Partner Data -->
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-7">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <p>ชื่อ/<small>Name</small>:</p>
                             </div>
-                            <div class="col-10">
+                            <div class="col-9">
                                 <span t-field="o.partner_id.name"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <p>ที่อยู่/<br/><small>Address</small>:</p>
                             </div>
-                            <div class="col-10">
+                            <div class="col-9">
                                 <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
                                 <p>
                                     เลขประจำตัวผู้เสียภาษี:&#160;
@@ -99,29 +99,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4" style="padding-right: 0px;">
                                 <p>เลขที่เอกสาร/<br/><small>No.</small>:</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-8">
                                 <t t-set="invoices" t-value="o.tax_invoice_ids.mapped('tax_invoice_number')"/>
                                 <span t-esc="', '.join(filter(lambda l: l != False and l != '', [invoice for invoice in invoices]))"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <p>วันที่/<small>Date</small>:</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-8">
                                 <span t-field="o.invoice_date" t-options="{'widget': 'date'}"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <p>อ้างอิง/<small>Ref.</small>:</p>
                             </div>
-                            <div class="col-6">
+                            <div class="col-8">
                                 <span t-field="o.ref"/>
                             </div>
                         </div>
