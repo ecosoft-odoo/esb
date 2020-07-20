@@ -76,6 +76,14 @@
                                 <span t-field="o.client_order_ref"/>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>SO Reference</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.sudo().auto_purchase_order_id.so_reference"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-5">
                         <div class="row">
