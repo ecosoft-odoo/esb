@@ -134,6 +134,7 @@
                             <th class="text-center" style="vertical-align: middle;">Packages</th>
                             <th class="text-center" style="vertical-align: middle;">Total Net Weight</th>
                             <th class="text-center" style="vertical-align: middle;">Total Gross Weight</th>
+                            <th class="text-center" style="vertical-align: middle;"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -173,6 +174,9 @@
                                     <td class="text-right">
                                         <t t-set="current_gross_weight" t-value="current_gross_weight + line.gross_weight"/>
                                         <span t-esc="'{0:,.2f}'.format(line.gross_weight)"/>
+                                    </td>
+                                    <td>
+                                        <span t-if="line.move_id.state == 'done'" t-esc="'.'"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
