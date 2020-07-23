@@ -249,7 +249,7 @@
                 <div class="row">
                     <div class="col-5">
                         <p>
-                            กรุณาส่งของวันที่: &#160; <span t-esc="delivery_date" t-options="{'widget': 'date'}"/><br/>
+                            กรุณาส่งของวันที่: &#160; <span t-esc="context_timestamp(delivery_date).strftime('%d/%m/%Y')"/><br/>
                             กรุณาลงชื่อยืนยันวันที่จัดส่ง และแฟกซ์กลับภายใน 3 วัน
                         </p>
                     </div>
