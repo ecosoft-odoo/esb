@@ -106,6 +106,7 @@
                             <th class="text-center" style="vertical-align: middle;">Unit</th>
                             <th class="text-center" style="vertical-align: middle;">GE</th>
                             <th class="text-center" style="vertical-align: middle;">Lot</th>
+                            <th class="text-center" style="vertical-align: middle;"></th>
                             <th class="text-center" style="vertical-align: middle;">Quantity</th>
                         </tr>
                     </thead>
@@ -136,6 +137,9 @@
                                     <td>
                                         <span t-field="line.lot_id.name"/>
                                     </td>
+                                    <td>
+                                        <span t-if="line.move_line_id.state == 'done'" t-esc="'.'"/>
+                                    </td>
                                     <td class="text-right">
                                         <t t-set="current_qty" t-value="current_qty + line.quantity"/>
                                         <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
@@ -157,7 +161,7 @@
                             </tr>
                             <t t-if="current_section and (line_last or o.line_ids[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <strong>Subtotal</strong>
                                     </td>
                                     <td>
