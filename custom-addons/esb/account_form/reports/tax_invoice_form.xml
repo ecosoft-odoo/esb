@@ -143,9 +143,11 @@
                     </thead>
                     <tbody>
                         <t t-set="number" t-value="0"/>
-                        <!-- <t t-set="total_discount" t-value="0"/> -->
+                        <t t-set="total_discount" t-value="0"/>
+                        <t t-set="total_amount" t-value="0"/>
                         <t t-set="current_subtotal" t-value="0"/>
-                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
+                            <t t-set="amount" t-value="line._get_price_total_and_subtotal_in_tax()"/>
                             <tr>
                                 <t t-if="not line.display_type">
                                     <td>
@@ -165,11 +167,13 @@
                                         <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        <t t-set="price" t-value="amount['price_subtotal'] / line.quantity"/>
+                                        <span t-esc="'{0:,.2f}'.format(price)"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
-                                        <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                        <t t-set="total_amount" t-value="total_amount + amount['price_subtotal']"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + amount['price_subtotal']"/>
+                                        <span t-esc="'{0:,.2f}'.format(amount['price_subtotal'])"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
@@ -186,7 +190,7 @@
                                     </td>
                                 </t>
                             </tr>
-                            <t t-if="current_section and (line_last or o.invoice_line_ids[line_index+1].display_type == 'line_section')">
+                            <t t-if="current_section and (line_last or o.invoice_line_ids.sorted('sequence')[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
                                     <td colspan="99">
                                         <strong class="mr16">Subtotal</strong>
@@ -197,7 +201,6 @@
                         </t>
                     </tbody>
                 </table>
-
             </div>
             <div class="footer last-page">
                 <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
@@ -229,8 +232,7 @@
                                     รวมจำนวนเงิน/<br/><small>Subtotal</small>
                                 </td>
                                 <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
-                                    <!-- <t t-set="total_amount" t-value="total_discount + o.amount_untaxed"/> -->
-                                    <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                                    <span t-esc="'{0:,.2f}'.format(total_amount)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -238,9 +240,8 @@
                                     ส่วนลด/<br/><small>Discount</small>
                                 </td>
                                 <td class="text-right" style="vertical-align: middle; border: 1px solid black; width: 45%;">
-                                    <!-- <t t-if="total_discount">
+                                    <t t-set="total_discount" t-value="total_amount - o.amount_untaxed"/>
                                         <span t-esc="'{0:,.2f}'.format(total_discount)"/>
-                                    </t> -->
                                 </td>
                             </tr>
                             <tr>

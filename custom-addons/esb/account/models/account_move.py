@@ -58,3 +58,16 @@ class AccountMoveLine(models.Model):
     def _compute_subtotal_no_disc(self):
         for record in self:
             record.subtotal_no_disc = record.quantity * record.price_unit
+
+    def _get_price_total_and_subtotal_in_tax(self):
+        price_subtotal = self._get_price_total_and_subtotal_model(
+            price_unit=self.price_unit,
+            quantity=self.quantity,
+            discount=0,
+            currency=self.currency_id,
+            product=self.product_id,
+            partner=self.partner_id,
+            taxes=self.tax_ids,
+            move_type=self.move_id.type,
+        )
+        return price_subtotal
