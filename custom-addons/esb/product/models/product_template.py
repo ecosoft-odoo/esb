@@ -31,3 +31,8 @@ class ProductTemplate(models.Model):
         inverse="_set_weight",
         store=True,
     )
+    # sale unit
+    uom_so_id = fields.Many2one(
+        comodel_name='uom.uom',
+        string='Sale Unit of Measure',
+    )
