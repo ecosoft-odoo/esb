@@ -1,0 +1,46 @@
+<!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_picking">
+        <xpath expr="//table[1]" position="inside">
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-auto">
+                                <strong>จำนวนรายการ :</strong>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-auto">
+                                <strong>จำนวนรวมทั้งสิ้น :</strong><br/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <t t-foreach="o.move_ids_without_package.sorted(key=lambda m: m.product_id.id)" t-as="move">
+                    <tr class="last-child">
+                        <td>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <span t-field="move.product_id"/>
+                                    <span t-esc="len(move.move_line_nosuggest_ids)"/>
+                                    <span>รายการ</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <span t-field="move.product_uom_qty"/>
+                                    <span t-field="move.product_uom"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </t>
+            </tfoot>
+        </xpath>
+    </template>
+</odoo>
