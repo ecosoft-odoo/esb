@@ -36,3 +36,10 @@ class ProductTemplate(models.Model):
         comodel_name='uom.uom',
         string='Sale Unit of Measure',
     )
+    # Excise
+    excise_product_code = fields.Char(
+        string="Excise Product Code"
+    )
+    excise_price = fields.Char(
+        string="Excise Price ID"
+    )
