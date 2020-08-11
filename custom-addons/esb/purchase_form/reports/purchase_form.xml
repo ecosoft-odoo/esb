@@ -112,7 +112,7 @@
                         <t t-set="number" t-value="0"/>
                         <t t-set="total_amount" t-value="0"/>
                         <t t-set="current_subtotal" t-value="0"/>
-                        <t t-set="delivery_date" t-value="o.order_line[0].date_planned"/>
+                        <t t-set="delivery_date" t-value="o.order_line.filtered(lambda line: line.date_planned).sorted(lambda line: line.date_planned)[0].date_planned"/>
                         <t t-foreach="o.order_line" t-as="line">
                             <tr>
                                 <t t-if="not line.display_type">
