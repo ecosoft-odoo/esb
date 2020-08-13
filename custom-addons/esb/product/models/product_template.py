@@ -43,3 +43,6 @@ class ProductTemplate(models.Model):
     excise_price = fields.Char(
         string="Excise Price ID"
     )
+    retail_price = fields.Float(
+        string="Recommended Retail Price"
+    )
