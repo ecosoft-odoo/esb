@@ -20,6 +20,7 @@
                 <field name="sale_ratio"/>
                 <field name="excise_product_code"/>
                 <field name="excise_price"/>
+                <field name="retail_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
             </xpath>
             <xpath expr="//page[@name='inventory']//div[@name='weight']" position="after">
                 <label for="gross_weight" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"/>
