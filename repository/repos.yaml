@@ -29,7 +29,6 @@
     merges:
         - oca 13.0
         - oca refs/pull/138/head # l10n_th_check_scb_bank
-        - oca refs/pull/159/head # multi company l10n_th_withholding_tax_report
     target: ecosoft 13.0-esb
 ./maintenance:
     remotes:
