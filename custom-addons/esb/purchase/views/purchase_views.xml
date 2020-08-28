@@ -22,6 +22,16 @@
             </xpath>
         </field>
     </record>
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='planning']//field[@name='date_planned']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ('draft', 'sent', 'purchase'))]}</attribute>
+            </xpath>
+        </field>
+    </record>
     <record id="purchase_order_line_tree" model="ir.ui.view">
         <field name="name">purchase.order.line.tree</field>
         <field name="model">purchase.order.line</field>
