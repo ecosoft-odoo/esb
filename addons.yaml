@@ -65,6 +65,7 @@ server-tools:
     - onchange_helper
 server-ux:
     - date_range
+    - sequence_reset_period
 stock-logistics-warehouse:
     - stock_available_unreserved
     - scrap_reason_code
