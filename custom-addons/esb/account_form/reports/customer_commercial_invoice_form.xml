@@ -149,13 +149,13 @@
                                         <span t-esc="'{0:,.2f}'.format(line.quantity)"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="'{0:,.2f}'.format(line.price_unit)"/>
+                                        <span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.subtotal_no_disc"/>
                                         <t t-set="amount_total" t-value="amount_total + line.subtotal_no_disc"/>
                                         <!-- <t t-set="discount_total" t-value="discount_total + line.subtotal_no_disc - line.price_subtotal"/> -->
-                                        <span t-esc="'{0:,.2f}'.format(line.subtotal_no_disc)"/>
+                                        <span t-field="line.subtotal_no_disc" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
@@ -183,7 +183,7 @@
                                     </td>
                                     <td></td>
                                     <td class="text-right">
-                                        <strong t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                        <strong t-esc="current_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </tr>
                             </t>
@@ -197,7 +197,7 @@
                             </td>
                             <td></td>
                             <td class="text-right">
-                                <span t-esc="'{0:,.2f}'.format(amount_total)"/>
+                                <span t-esc="amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                         <tr>
@@ -208,7 +208,7 @@
                                 Waranty Discount
                             </td>
                             <td class="text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.discount_waranty)"/>
+                                <span t-esc="o.discount_waranty" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                         <t t-foreach="o.amount_by_group" t-as="amount_by_group">
@@ -234,7 +234,7 @@
                                     </td>
                                 </t>
                                 <td colspan="2" class="text-right">
-                                    <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                    <span t-field="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                 </td>
                             </tr>
                         </t>
@@ -252,7 +252,7 @@
                                         <span t-field="line.name"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-esc="'{0:,.2f}'.format(abs(line.price_subtotal))"/>
+                                        <span t-esc="abs(line.price_subtotal)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </tr>
                             </t>
@@ -262,7 +262,7 @@
                                 <strong>Total Amount</strong>
                             </td>
                             <td class="text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                <span t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                     </tbody>
