@@ -30,6 +30,10 @@ class MrpProduction(models.Model):
     )
 
     mo_created = fields.Boolean(default=False)
+    planned_quantity = fields.Float(
+        string="Planned Quantity",
+        readonly=False,
+    )
 
     @api.model
     def create(self, vals):
