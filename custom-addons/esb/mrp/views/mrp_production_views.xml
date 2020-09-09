@@ -26,6 +26,9 @@
             <xpath expr="//field[@name='move_raw_ids']" position="after">
                 <field name="remark" class="oe_inline" placeholder="Remark ..."/>
             </xpath>
+            <xpath expr="//field[@name='bom_id']" position="before">
+                <field name="planned_quantity"/>
+            </xpath>
         </field>
     </record>
     <!-- Manufacturing Order Search -->
