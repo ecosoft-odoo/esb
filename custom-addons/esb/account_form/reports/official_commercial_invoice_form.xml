@@ -138,12 +138,12 @@
                                     </td>
                                     <td class="text-right">
                                         <t t-set="price_after_disc" t-value="line.price_unit * ((100 - line.discount) / 100)"/>
-                                        <span t-esc="'{0:,.2f}'.format(price_after_disc)"/>
+                                        <span t-esc="price_after_disc" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                     <td class="text-right">
                                         <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
                                         <t t-set="amount_total" t-value="amount_total + line.price_subtotal"/>
-                                        <span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/>
+                                        <span t-field="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
@@ -171,7 +171,7 @@
                                     </td>
                                     <td></td>
                                     <td class="text-right">
-                                        <strong t-esc="'{0:,.2f}'.format(current_subtotal)"/>
+                                        <strong t-esc="current_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </tr>
                             </t>
@@ -185,7 +185,7 @@
                             </td>
                             <td></td>
                             <td class="text-right">
-                                <strong t-esc="'{0:,.2f}'.format(amount_total)"/>
+                                <strong t-esc="amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                         <tr>
