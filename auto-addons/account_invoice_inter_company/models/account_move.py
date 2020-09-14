@@ -26,7 +26,7 @@ class AccountMove(models.Model):
         company = (
             self.env["res.company"]
             .sudo()
-            .search([("partner_id", "=", self.partner_id.id)], limit=1)
+            .search([("partner_id", "=", self.commercial_partner_id.id)], limit=1)
         )
         return company or False
 
@@ -83,13 +83,12 @@ class AccountMove(models.Model):
         )
         force_number = False
         if inter_invoice and inter_invoice.state in ["draft", "cancel"]:
-            force_number = inter_invoice.move_name
-            inter_invoice.move_name = False
-            inter_invoice.unlink()
+            force_number = inter_invoice.name
+            inter_invoice.with_context(force_delete=True).unlink()
         # create invoice
         dest_invoice_data = self._prepare_invoice_data(dest_company)
         if force_number:
-            dest_invoice_data["move_name"] = force_number
+            dest_invoice_data["name"] = force_number
         dest_invoice = self.create(dest_invoice_data)
         # create invoice lines
         dest_move_line_data = []
