@@ -209,8 +209,23 @@
                             </td>
                             <td class="text-right">
                                 <span t-esc="o.discount_waranty" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                <t t-set="amount_total" t-value="amount_total - o.discount_waranty"/>
                             </td>
                         </tr>
+                        <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
+                            <t t-if="not line.display_type and line.product_id.type == 'service' and line.debit">
+                                <tr>
+                                    <td/>
+                                    <td colspan="5">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-set="amount_total" t-value="amount_total + line.price_subtotal"/>
+                                        <span t-esc="abs(line.price_subtotal)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
                         <t t-foreach="o.amount_by_group" t-as="amount_by_group">
                             <tr>
                                 <td colspan="3">
@@ -240,7 +255,7 @@
                         </t>
                         <t t-set="number" t-value="1"/>
                         <t t-foreach="o.invoice_line_ids.sorted('sequence')" t-as="line">
-                            <t t-if="not line.display_type and line.product_id.type == 'service'">
+                            <t t-if="not line.display_type and line.product_id.type == 'service' and line.credit">
                                 <tr>
                                     <td>
                                         <t t-if="number == 1">
@@ -252,6 +267,7 @@
                                         <span t-field="line.name"/>
                                     </td>
                                     <td class="text-right">
+                                        <t t-set="amount_total" t-value="amount_total + abs(line.price_subtotal)"/>
                                         <span t-esc="abs(line.price_subtotal)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </tr>
@@ -262,7 +278,7 @@
                                 <strong>Total Amount</strong>
                             </td>
                             <td class="text-right">
-                                <span t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                <span t-esc="amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                     </tbody>
