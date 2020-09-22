@@ -1,0 +1,17 @@
+<odoo>
+    <template
+        id="report_payment_receipt"
+        inherit_id="account.report_payment_receipt_document"
+    >
+        <xpath expr="//table/tbody" position="inside">
+            <tr>
+                <td class="text-right" colspan="3">
+                    รวม
+                </td>
+                <td class="text-right">
+                    <span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>
