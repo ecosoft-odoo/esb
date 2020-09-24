@@ -187,126 +187,136 @@
                     </div>
                 </div>
             </div>
-            <div class="footer last-page">
-                <small>** กรณีจำนวนที่ได้รับไม่ตรงเอกสาร กรุณาติดต่อกลับมาที่บริษัทฯทันที ห้ามแก้ไขเอกสารกับคนขับรถ มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ **</small>
-                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="row">
-                            <div class="col-3">
-                                <p>หมายเหตุ:</p>
+            <div class="footer">
+                <div class="last-page">
+                    <small>** กรณีจำนวนที่ได้รับไม่ตรงเอกสาร กรุณาติดต่อกลับมาที่บริษัทฯทันที ห้ามแก้ไขเอกสารกับคนขับรถ มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ **</small>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p>หมายเหตุ:</p>
+                                </div>
+                                <div class="col-9">
+                                    <span t-field="o.note"/>
+                                </div>
                             </div>
-                            <div class="col-9">
-                                <span t-field="o.note"/>
+                            <div class="row">
+                                <div class="col-5">
+                                    <p>น้ำหนักสินค้าไม่รวมพาเลท:</p>
+                                </div>
+                                <div class="col-3">
+                                    <span t-esc="'{0:,.2f}'.format(o.net_weight_total)"/>
+                                </div>
+                                <div class="col-4">
+                                    <p>กก.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-5">
-                                <p>น้ำหนักสินค้าไม่รวมพาเลท:</p>
-                            </div>
-                            <div class="col-3">
-                                <span t-esc="'{0:,.2f}'.format(o.net_weight_total)"/>
-                            </div>
-                            <div class="col-4">
-                                <p>กก.</p>
-                            </div>
+                        <div class="col-4">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <br/>
+                                        <br/>
+                                        ผู้รับของ (........./........./.........)
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <table class="table table-sm">
-                            <tr>
-                                <td class="text-center" style="border: 1px solid black;">
-                                    <br/>
-                                    <br/>
-                                    ผู้รับของ (........./........./.........)
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                    <div class="row">
+                        <div class="col-4">
+                            <table class="table table-sm mb0" style="width: 100%;">
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        ส่งพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        รับคืนพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;"/>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        ยอดค้างพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;"/>
+                                </tr>
+                            </table>
+                            <table class="table table-sm mt0">
+                                <tr>
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <br/>
+                                        <small>ผู้มีอำนาจปล่อยรถ (........./........./.........)</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-8">
+                            <small>
+                                * ห้ามนำกล่องกระดาษ ถังพลาสติก หรือรายการอื่น นอกเหนือจากที่ระบุข้างต้น ออกนอกบริษัทฯ<br/>
+                                มิฉะนั้นจะถือเป็นการลักขโมยทรัพย์สิน มีความผิดอาญา ทั้งจำทั้งปรับ<br/>
+                                * กรณีพบบานลูกกรงไม่ได้ล็อคแม่กุญแจ หรือมีสภาพถูกงัดแงะ กระโปรงท้ายถูกเปิด ขอให้ติดต่อกลับมาที่บริษัทฯ ห้ามนำสินค้าออกจากรถเด็ดขาด มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ<br/>
+                                * กรณีไม่มีลายเซ็นต์ผู้มีอำนาจปล่อยรถ ขอความร่วมมือให้ลูกค้าส่งสินค้าคืนบริษัทฯ
+                            </small>
+                            <br/>
+                            <p class="text-right"><small>เอกสารฉบับนี้จัดทำโดยแผนกบัญชีเท่านั้น</small></p>
+                        </div>
                     </div>
+                    <table class="table table-sm mb4" style="width: 100%;">
+                        <tr>
+                            <td class="text-center" style="border: 1px solid black; width: 10%;">
+                                <br/>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/><br/>
+                                <small>ลงชื่อผู้จัดทำ</small>
+                            </td>
+                            <td class="text-center" style="border: 1px solid black; width: 18%;">
+                                <br/>
+                                <br/>
+                                <small>หน.สินค้าสำเร็จรูป ลงชื่อ</small>
+                            </td>
+                            <td class="text-center" style="border: 1px solid black; width: 13%;">
+                                <br/>
+                                <br/>
+                                <small>หน.วัตถุดิบ ลงชื่อ</small>
+                            </td>
+                            <td class="text-center" style="border: 1px solid black; width: 23%;">
+                                <br/>
+                                <br/>
+                                <small>หน.แผนกคลังสินค้าและวัตถุดิบ</small>
+                            </td>
+                            <td class="text-center" style="border: 1px solid black; width: 27%;">
+                                <br/>
+                                <br/>
+                                <small>QA ลงชื่อ ตรวจสอบก่อนขึ้นรถทุกครั้ง</small>
+                            </td>
+                            <td class="text-center" style="border: 1px solid black; width: 9%;">
+                                <br/>
+                                <br/>
+                                <small>รปภ.ลงชื่อ</small>
+                            </td>
+                        </tr>
+                    </table>
+                    <small>
+                        ** กรณีสินค้าสำเร็จรูป มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.สินค้าสำเร็จรูป **<br/>
+                        ** กรณีวัตถุดิบ มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.วัตถุดิบ **<br/>
+                        ** กรณีสภาพรถที่ขนส่ง มีปัญหา เกิดอุบัติเหตุ สินค้าที่บรรทุกเสียหาย เป็นความรับผิดชอบโดยตรงของ คนขับรถ **<br/>
+                        ** การบรรทุกเกิน นน.ที่บริษัทฯ กำหนด เป็นความรับผิดชอบโดยตรงของพนักงานขับรถ **
+                    </small>
                 </div>
-                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <div class="row">
                     <div class="col-4">
-                        <table class="table table-sm mb0" style="width: 100%;">
-                            <tr>
-                                <td style="border: 1px solid black; width: 50%;">
-                                    ส่งพาเลท:
-                                </td>
-                                <td style="border: 1px solid black; width: 50%;"/>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black; width: 50%;">
-                                    รับคืนพาเลท:
-                                </td>
-                                <td style="border: 1px solid black; width: 50%;"/>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid black; width: 50%;">
-                                    ยอดค้างพาเลท:
-                                </td>
-                                <td style="border: 1px solid black; width: 50%;"/>
-                            </tr>
-                        </table>
-                        <table class="table table-sm mt0">
-                            <tr>
-                                <td class="text-center" style="border: 1px solid black;">
-                                    <br/>
-                                    <small>ผู้มีอำนาจปล่อยรถ (........./........./.........)</small>
-                                </td>
-                            </tr>
-                        </table>
+                        <small>FM-MK-006</small>
                     </div>
                     <div class="col-8">
-                        <small>
-                            * ห้ามนำกล่องกระดาษ ถังพลาสติก หรือรายการอื่น นอกเหนือจากที่ระบุข้างต้น ออกนอกบริษัทฯ<br/>
-                            มิฉะนั้นจะถือเป็นการลักขโมยทรัพย์สิน มีความผิดอาญา ทั้งจำทั้งปรับ<br/>
-                            * กรณีพบบานลูกกรงไม่ได้ล็อคแม่กุญแจ หรือมีสภาพถูกงัดแงะ กระโปรงท้ายถูกเปิด ขอให้ติดต่อกลับมาที่บริษัทฯ ห้ามนำสินค้าออกจากรถเด็ดขาด มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ<br/>
-                            * กรณีไม่มีลายเซ็นต์ผู้มีอำนาจปล่อยรถ ขอความร่วมมือให้ลูกค้าส่งสินค้าคืนบริษัทฯ
-                        </small>
-                        <br/>
-                        <p class="text-right"><small>เอกสารฉบับนี้จัดทำโดยแผนกบัญชีเท่านั้น</small></p>
+                        <small>แก้ไขครั้งที่ 1 (วันที่บังคับใช้ 06/06/57)</small>
                     </div>
                 </div>
-                <table class="table table-sm mb4" style="width: 100%;">
-                    <tr>
-                        <td class="text-center" style="border: 1px solid black; width: 10%;">
-                            <br/>
-                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/><br/>
-                            <small>ลงชื่อผู้จัดทำ</small>
-                        </td>
-                        <td class="text-center" style="border: 1px solid black; width: 18%;">
-                            <br/>
-                            <br/>
-                            <small>หน.สินค้าสำเร็จรูป ลงชื่อ</small>
-                        </td>
-                        <td class="text-center" style="border: 1px solid black; width: 13%;">
-                            <br/>
-                            <br/>
-                            <small>หน.วัตถุดิบ ลงชื่อ</small>
-                        </td>
-                        <td class="text-center" style="border: 1px solid black; width: 23%;">
-                            <br/>
-                            <br/>
-                            <small>หน.แผนกคลังสินค้าและวัตถุดิบ</small>
-                        </td>
-                        <td class="text-center" style="border: 1px solid black; width: 27%;">
-                            <br/>
-                            <br/>
-                            <small>QA ลงชื่อ ตรวจสอบก่อนขึ้นรถทุกครั้ง</small>
-                        </td>
-                        <td class="text-center" style="border: 1px solid black; width: 9%;">
-                            <br/>
-                            <br/>
-                            <small>รปภ.ลงชื่อ</small>
-                        </td>
-                    </tr>
-                </table>
-                <small>
-                    ** กรณีสินค้าสำเร็จรูป มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.สินค้าสำเร็จรูป **<br/>
-                    ** กรณีวัตถุดิบ มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.วัตถุดิบ **<br/>
-                    ** กรณีสภาพรถที่ขนส่ง มีปัญหา เกิดอุบัติเหตุ สินค้าที่บรรทุกเสียหาย เป็นความรับผิดชอบโดยตรงของ คนขับรถ **<br/>
-                    ** การบรรทุกเกิน นน.ที่บริษัทฯ กำหนด เป็นความรับผิดชอบโดยตรงของพนักงานขับรถ **
-                </small>
             </div>
         </div>
     </template>
