@@ -48,6 +48,7 @@
         "account_form/reports/official_commercial_invoice_form.xml",
         "account_form/reports/customer_commercial_invoice_form.xml",
         "account_form/reports/payment_form.xml",
+        "account_form/reports/payment_receipt_form.xml",
         "account_form/reports/invoice_form.xml",
         "purchase_form/datas/paper_format.xml",
         "purchase_form/datas/report_data.xml",

@@ -240,52 +240,62 @@
                     </div>
                 </div>
             </div>
-            <div class="footer last-page">
-                <strong>Sincerely yours,</strong>
-                <br/>
-                <br/>
-                <br/>
-                <strong><span t-field="o.responsible_person"/></strong>
-                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
-                <div class="row">
-                    <div class="col-6">
-                        <strong>Shipping Mark:</strong>
-                        <p>Made In Thailand</p>
+            <div class="footer">
+                <div class="last-page">
+                    <strong>Sincerely yours,</strong>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <strong><span t-field="o.responsible_person"/></strong>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Shipping Mark:</strong>
+                            <p>Made In Thailand</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Total Packages:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span t-esc="'{0:,.3f}'.format(o.package_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Cartons</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Gross Weight:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.gross_weight_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Net Weight:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.net_weight_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-5 text-right">
-                                <strong>Total Packages:</strong>
-                            </div>
-                            <div class="col-4 text-right">
-                                <span t-esc="'{0:,.3f}'.format(o.package_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Cartons</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 text-right">
-                                <strong>Gross Weight:</strong>
-                            </div>
-                            <div class="col-4 text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.gross_weight_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Kgs.</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 text-right">
-                                <strong>Net Weight:</strong>
-                            </div>
-                            <div class="col-4 text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.net_weight_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Kgs.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <small>QF-MK-003</small>
+                    </div>
+                    <div class="col-8">
+                        <small>แก้ไขครั้งที่ 2 (วันที่บังคับใช้ 04/06/60)</small>
                     </div>
                 </div>
             </div>

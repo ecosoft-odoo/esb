@@ -349,54 +349,64 @@
                     </div>
                 </div>
             </div>
-            <div class="footer last-page">
-                <p>Sincerely yours,</p>
-                <br/>
-                <br/>
-                <br/>
-                <span t-field="o.packing_list_id.responsible_person"/>
-                <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
-                <div class="row">
-                    <div class="col-6">
-                        <p>
-                            Shipping Mark:<br/>
-                            Made In Thailand
-                        </p>
+            <div class="footer">
+                <div class="last-page">
+                    <p>Sincerely yours,</p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <span t-field="o.packing_list_id.responsible_person"/>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>
+                                Shipping Mark:<br/>
+                                Made In Thailand
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Packages:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.packing_list_id.package_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Cartons</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Gross Weight:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.packing_list_id.gross_weight_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Net Weight:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span t-esc="'{0:,.2f}'.format(o.packing_list_id.net_weight_total)"/>
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-6">
-                                Total Packages:
-                            </div>
-                            <div class="col-3 text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.packing_list_id.package_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Cartons</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                Total Gross Weight:
-                            </div>
-                            <div class="col-3 text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.packing_list_id.gross_weight_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Kgs.</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                Total Net Weight:
-                            </div>
-                            <div class="col-3 text-right">
-                                <span t-esc="'{0:,.2f}'.format(o.packing_list_id.net_weight_total)"/>
-                            </div>
-                            <div class="col-3">
-                                <p>Kgs.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <small>QF-MK-002</small>
+                    </div>
+                    <div class="col-8">
+                        <small>แก้ไขครั้งที่ 2 (วันที่บังคับใช้ 04/01/60)</small>
                     </div>
                 </div>
             </div>
