@@ -280,7 +280,7 @@
                                 <strong>Total Amount</strong>
                             </td>
                             <td class="text-right">
-                                <span t-esc="amount_total_discount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                <span t-esc="amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                             </td>
                         </tr>
                     </tbody>
