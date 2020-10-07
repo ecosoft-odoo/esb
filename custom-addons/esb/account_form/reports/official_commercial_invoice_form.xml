@@ -141,9 +141,10 @@
                                         <span t-esc="price_after_disc" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                     <td class="text-right">
-                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
-                                        <t t-set="amount_total" t-value="amount_total + line.quantity*round(line.price_unit * ((100 - line.discount) / 100), 2)"/>
-                                        <span t-esc="line.quantity*round(line.price_unit * ((100 - line.discount) / 100), 2)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        <t t-set="amount" t-value="line.quantity * price_after_disc"/>
+                                        <t t-set="current_subtotal" t-value="current_subtotal + amount"/>
+                                        <t t-set="amount_total" t-value="amount_total + amount"/>
+                                        <span t-esc="amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                     </td>
                                 </t>
                                 <t t-if="line.display_type == 'line_section'">
