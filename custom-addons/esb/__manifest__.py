@@ -31,6 +31,7 @@
         "stock/reports/report_picking_operations.xml",
         "stock/views/stock_move_views.xml",
         "stock/views/stock_picking_views.xml",
+        "stock/views/stock_inventory_views.xml",
         "fonts/style_report.xml",
         # Packing List
         "packing_list/datas/paper_format.xml",

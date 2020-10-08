@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <record id="view_inventory_form" model="ir.ui.view">
+        <field name="name">stock.inventory.form</field>
+        <field name="model">stock.inventory</field>
+        <field name="inherit_id" ref="stock.view_inventory_form"/>
+        <field name="arch" type="xml">
+            <field name="prefill_counted_quantity" position="after">
+                <field name="remark" placeholder="Remark ..."/>
+            </field>
+        </field>
+    </record>
+</odoo>
