@@ -104,12 +104,12 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th class="text-center" style="vertical-align: middle;">No.</th>
-                            <th class="text-center" style="vertical-align: middle;">Description</th>
-                            <th class="text-center" style="vertical-align: middle;">Brand</th>
-                            <th class="text-center" style="vertical-align: middle;">Quantity</th>
-                            <th class="text-center" style="vertical-align: middle;">Unit Price</th>
-                            <th class="text-center" style="vertical-align: middle;">Amount</th>
+                            <th class="text-center" style="vertical-align: top;">No.</th>
+                            <th class="text-center" style="vertical-align: top;">Description</th>
+                            <th class="text-center" style="vertical-align: top;">Brand</th>
+                            <th class="text-center" style="vertical-align: top;">Quantity<br/>(PCS)</th>
+                            <th class="text-center" style="vertical-align: top;">Unit Price</th>
+                            <th class="text-center" style="vertical-align: top;">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
