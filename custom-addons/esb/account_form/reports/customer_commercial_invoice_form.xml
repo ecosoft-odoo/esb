@@ -104,6 +104,22 @@
                                 <span t-field="o.invoice_payment_term_id.name"/>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship From:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.packing_list_id.ship_from"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship To:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.packing_list_id.ship_to"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
