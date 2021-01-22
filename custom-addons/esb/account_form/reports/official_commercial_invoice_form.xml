@@ -60,7 +60,7 @@
                 <div class="row mt4 mb4" style="border-bottom: 1px solid black;"/>
                 <!-- Partner Data -->
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-7">
                         <div class="row">
                             <div class="col-2">
                                 <p>MESSR:</p>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="row">
                             <div class="col-4">
                                 <p>No:</p>
@@ -95,6 +95,22 @@
                             <div class="col-8">
                                 <t t-set="orders" t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')"/>
                                 <span t-esc="', '.join(filter(lambda l: l != False and l != '', [order.client_order_ref for order in orders]))"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship From:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.packing_list_id.ship_from"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship To:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.packing_list_id.ship_to"/>
                             </div>
                         </div>
                     </div>
