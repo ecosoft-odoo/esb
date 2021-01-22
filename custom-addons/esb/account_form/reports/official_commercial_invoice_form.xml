@@ -99,6 +99,14 @@
                         </div>
                         <div class="row">
                             <div class="col-4">
+                                <p>Payment:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.invoice_payment_term_id.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
                                 <p>Ship From:</p>
                             </div>
                             <div class="col-8">
