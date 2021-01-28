@@ -16,7 +16,7 @@
             file="esb.esb_official_commercial_invoice_form_pdf"
             report_type="qweb-pdf"
             print_report_name="object.display_name"
-            paperformat="esb.esb_paperformat_commercial_invoice"/>
+            paperformat="esb.esb_paperformat_official_commercial_invoice"/>
 
     <report string="Commercial Invoice (Customer)"
             id="customer_commercial_invoice_form_pdf_report"
@@ -25,7 +25,7 @@
             file="esb.esb_customer_commercial_invoice_form_pdf"
             report_type="qweb-pdf"
             print_report_name="object.display_name"
-            paperformat="esb.esb_paperformat_commercial_invoice"/>
+            paperformat="esb.esb_paperformat_customer_commercial_invoice"/>
 
     <report string="ใบสำคัญรับ/จ่าย"
             id="payment_receipt_form_pdf_report"
