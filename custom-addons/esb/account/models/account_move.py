@@ -12,6 +12,7 @@ class AccountMove(models.Model):
         string="Packing List",
         ondelete="cascade",
     )
+    ship_by = fields.Char(string="By")
     discount_waranty = fields.Monetary(
         string="Waranty Discount",
         digits="Discount",
