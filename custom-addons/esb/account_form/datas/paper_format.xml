@@ -15,19 +15,34 @@
         <field name="header_spacing">70</field>
         <field name="dpi">90</field>
     </record>
-    <record id="esb_paperformat_commercial_invoice" model="report.paperformat">
-        <field name="name">Commercial Invoice A4</field>
+    <record id="esb_paperformat_official_commercial_invoice" model="report.paperformat">
+        <field name="name">Official Commercial Invoice A4</field>
         <field name="default" eval="True" />
         <field name="format">A4</field>
         <field name="page_height">0</field>
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">90</field>
-        <field name="margin_bottom">60</field>
+        <field name="margin_top">99</field>
+        <field name="margin_bottom">54</field>
         <field name="margin_left">7</field>
         <field name="margin_right">7</field>
         <field name="header_line" eval="False" />
-        <field name="header_spacing">87</field>
+        <field name="header_spacing">96</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="esb_paperformat_customer_commercial_invoice" model="report.paperformat">
+        <field name="name">Customer Commercial Invoice A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">93</field>
+        <field name="margin_bottom">54</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">90</field>
         <field name="dpi">90</field>
     </record>
     <record id="esb_paperformat_payment_form" model="report.paperformat">
