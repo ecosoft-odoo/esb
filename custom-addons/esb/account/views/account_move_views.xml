@@ -8,6 +8,7 @@
             <!-- Add packing_list_id on account.move view -->
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="packing_list_id"/>
+                <field name="ship_by"/>
             </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">
