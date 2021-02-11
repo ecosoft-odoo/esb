@@ -13,6 +13,7 @@ class AccountMove(models.Model):
         ondelete="cascade",
     )
     ship_by = fields.Char(string="By")
+    excise_form_number = fields.Char(string="Excise Form Number")
     discount_waranty = fields.Monetary(
         string="Waranty Discount",
         digits="Discount",

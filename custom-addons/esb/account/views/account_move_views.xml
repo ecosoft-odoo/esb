@@ -5,10 +5,14 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account_invoice_triple_discount.invoice_triple_discount_form_view" />
         <field name="arch" type="xml">
-            <!-- Add packing_list_id on account.move view -->
+            <!-- Add packing_list_id, ship_by on account.move view -->
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="packing_list_id"/>
                 <field name="ship_by"/>
+            </xpath>
+            <!-- Add excise_form_number on account.move view -->
+            <xpath expr="//field[@name='invoice_origin']" position="after">
+                <field name="excise_form_number"/>
             </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">

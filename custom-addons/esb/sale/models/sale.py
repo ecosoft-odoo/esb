@@ -8,6 +8,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     so_created = fields.Boolean(default=False)
+    excise_form_number = fields.Char(string="Excise Form Number")
 
     discount_waranty = fields.Monetary(
         string="Waranty Discount",
@@ -51,6 +52,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         invoice_vals = super()._prepare_invoice()
         invoice_vals["invoice_partner_bank_id"] = self.partner_bank_id.id
+        invoice_vals["excise_form_number"] = self.excise_form_number
         return invoice_vals
 
 
