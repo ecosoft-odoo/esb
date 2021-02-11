@@ -11,9 +11,10 @@
             <xpath expr="//field[@name='type_id']" position="attributes">
                 <attribute name="attrs">{'readonly': [('so_created', '=', True)]}</attribute>
             </xpath>
-            <!-- Add bank account -->
+            <!-- Add bank account, excise form number -->
             <xpath expr="//group[@name='sale_info']//field[@name='invoice_status']" position="after">
                 <field name="partner_bank_id"/>
+                <field name="excise_form_number"/>
             </xpath>
         </field>
     </record>
