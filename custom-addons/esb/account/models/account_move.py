@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         ondelete="cascade",
     )
     ship_by = fields.Char(string="By")
-    excise_form_number = fields.Char(string="Excise Form Number")
+    excise_form_number = fields.Char(string="Excise Form Number", compute="_compute_excise_form_number")
     discount_waranty = fields.Monetary(
         string="Waranty Discount",
         digits="Discount",
@@ -24,6 +24,15 @@ class AccountMove(models.Model):
         digits="Discount",
         compute="_compute_discount",
     )
+
+    def _compute_excise_form_number(self):
+        SaleOrder = self.env["sale.order"]
+        for record in self:
+            sale_orders = SaleOrder.search([]).filtered(lambda l: record.id in l.invoice_ids.ids)
+            if sale_orders and len(sale_orders) == 1:
+                record.excise_form_number = sale_orders.excise_form_number
+            else:
+                record.excise_form_number = ""
 
     @api.depends("invoice_line_ids")
     def _compute_discount(self):
