@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
 
     so_created = fields.Boolean(default=False)
     excise_form_number = fields.Char(string="Excise Form Number")
+    plan_load_date = fields.Datetime(string="Plan Load Date")
 
     discount_waranty = fields.Monetary(
         string="Waranty Discount",

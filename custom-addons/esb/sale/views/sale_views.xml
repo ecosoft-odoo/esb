@@ -23,6 +23,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_quotation_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='expected_date']" position="after">
+                <field name="plan_load_date" optional="hide"/>
+            </xpath>
             <xpath expr="//field[@name='invoice_status']" position="after">
                 <field name="client_order_ref" optional="hide"/>
             </xpath>
@@ -34,6 +37,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='expected_date']" position="after">
+                <field name="plan_load_date" optional="hide"/>
+            </xpath>
             <xpath expr="//field[@name='invoice_status']" position="after">
                 <field name="client_order_ref" optional="hide"/>
             </xpath>
@@ -44,6 +50,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_triple_discount.sale_order_triple_discount_form_view" />
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="plan_load_date"/>
+            </xpath>
             <!-- Add discount fields -->
             <xpath expr="//field[@name='amount_untaxed']" position="before">
                 <field name="discount_waranty"/>
