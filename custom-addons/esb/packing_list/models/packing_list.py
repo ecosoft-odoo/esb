@@ -348,7 +348,7 @@ class ESBPackingList(models.Model):
                         "product_uom_id": move_line.product_uom_id.id,
                         "origin": move_line.picking_id.origin,
                         "lot_id": move_line.lot_id.id,
-                        "quantity": move_line.product_uom_qty,
+                        "quantity": move_line.qty_done,
                     }))
             rec.line_ids = lines
             rec.detail_line_ids = detail_lines
