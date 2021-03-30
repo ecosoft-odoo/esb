@@ -35,7 +35,7 @@ class ESBPackingList(models.Model):
             "cancel": [("readonly", True)],
         },
     )
-    origin = fields.Many2one(
+    origin = fields.Char(
         string="Source Document",
         copy=False,
         default=lambda self: self._get_default_origin(),
