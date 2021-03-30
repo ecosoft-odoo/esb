@@ -35,7 +35,7 @@ class ESBPackingList(models.Model):
             "cancel": [("readonly", True)],
         },
     )
-    origin = fields.Char(
+    origin = fields.Many2one(
         string="Source Document",
         copy=False,
         default=lambda self: self._get_default_origin(),
@@ -346,7 +346,7 @@ class ESBPackingList(models.Model):
                         "product_id": move_line.product_id.id,
                         "name": move_line.product_id.name,
                         "product_uom_id": move_line.product_uom_id.id,
-                        "origin": move_line.picking_id.origin,
+                        "origin": move_line.picking_id.sale_id.client_order_ref,
                         "lot_id": move_line.lot_id.id,
                         "quantity": move_line.qty_done,
                     }))
