@@ -20,7 +20,6 @@
     merges:
         - oca 13.0
         - oca refs/pull/329/head # account_check_printing_report_base
-        - oca refs/pull/335/head # account_check_date
     target: ecosoft 13.0-esb
 ./l10n-thailand:
     remotes:
@@ -58,7 +57,7 @@
         ecosoft: https://github.com/ecosoft-odoo/multi-company.git
     merges:
         - oca 13.0
-        - oca refs/pull/225/head # fix purchase_sale_inter_company
+        - oca refs/pull/275/head # fix purchase_sale_inter_company
     target: ecosoft 13.0-esb
 ./partner-contact:
     remotes:
