@@ -1,0 +1,80 @@
+account-analytic:
+  - mrp_analytic
+  - scrap_analytic
+  - stock_analytic
+account-financial-reporting:
+  - account_financial_report
+# account-invoicing:
+#   - account_invoice_triple_discount
+account-payment:
+  - account_check_printing_report_base
+  - account_check_date
+  - account_payment_multi_deduction
+l10n-thailand:
+  - l10n_th_amount_to_text
+  - l10n_th_base_location
+  - l10n_th_check_scb_bank
+  - l10n_th_partner
+  - l10n_th_tax_invoice
+  - l10n_th_tax_report
+  - l10n_th_withholding_tax
+  - l10n_th_withholding_tax_cert
+  - l10n_th_withholding_tax_cert_form
+  - l10n_th_withholding_tax_report
+maintenance:
+  - base_maintenance
+manufacture:
+  - manufacturing_order_type
+  - mrp_multi_level
+  - mrp_warehouse_calendar
+mis-builder:
+  - mis_builder
+  - mis_builder_budget
+  - mis_builder_demo
+multi-company:
+  - account_invoice_inter_company
+  - purchase_sale_inter_company
+partner-contact:
+  - base_location
+  - base_location_geonames_import
+  - partner_company_type
+  - partner_firstname
+product-attribute:
+  - product_secondary_unit
+purchase-workflow:
+  - purchase_deposit
+  - purchase_discount
+  - purchase_order_secondary_unit
+  - purchase_order_type
+  # - purchase_triple_discount
+reporting-engine:
+  - report_csv
+  - report_wkhtmltopdf_param
+  - report_qweb_element_page_visibility
+  - report_xlsx
+  - report_xlsx_helper
+sale-workflow:
+  - sale_order_type
+  - sale_order_line_date
+  - sale_procurement_group_by_line
+  - sale_procurement_group_by_commitment_date
+  # - sale_triple_discount
+server-backend:
+  - base_user_role
+server-tools:
+  - auto_backup
+  - onchange_helper
+server-ux:
+  - date_range
+  - sequence_reset_period
+stock-logistics-warehouse:
+  - stock_available_unreserved
+  - scrap_reason_code
+  - stock_secondary_unit
+  - stock_warehouse_calendar
+stock-logistics-workflow:
+  - stock_no_negative
+  - stock_picking_filter_lot
+web:
+  - web_environment_ribbon
+  - web_m2x_options

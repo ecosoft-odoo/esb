@@ -1,0 +1,403 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_packing_list_form_print">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <img
+                                    t-if="o.company_id.logo"
+                                    t-att-src="image_data_uri(o.company_id.logo)"
+                                    style="max-height: 45px;"
+                                    alt="Logo"
+                                />
+                            </div>
+                            <div class="col-10">
+                                <address
+                                    t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Contact:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.phone" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Website:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.website" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Tax ID:</p>
+                            </div>
+                            <div class="col-10">
+                                <p>
+                                    <span
+                                        t-field="o.company_id.vat"
+                                    /> &#160;&#160;&#160;
+                                    <t
+                                        t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'"
+                                    >
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'en_US'"
+                                        >Head Office</t>
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'th_TH'"
+                                        >สำนักงานใหญ่</t>
+                                    </t>
+                                    <t t-else="">
+                                        Branch: <span t-field="o.company_id.branch" />
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h3>Packing List</h3>
+                        <p class="mb0">
+                          <strong
+                                t-if="o.state == 'cancel'"
+                                style="color: red;"
+                            >Cancelled</strong>
+                          Page: <span class="page" /> / <span class="topage" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                <!-- Partner Data -->
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-2">
+                                <p>ATTN:</p>
+                            </div>
+                            <div class="col-10">
+                                <address
+                                    t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "email", "phone"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Inv. No.:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.ref" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Date:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.date" t-options="{'widget': 'date'}" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>P.I. No.:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.origin" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Term:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.incoterm_id.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship From:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.ship_from" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>Ship To:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.ship_to" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >No.</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Part No.</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Description</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Brand</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Quantity<br />(PCS)</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Packages</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Total Net Weight</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: top;"
+                            >Total Gross Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="number" t-value="0" />
+                        <t t-set="current_qty" t-value="0" />
+                        <t t-set="current_package" t-value="0" />
+                        <t t-set="current_net_weight" t-value="0" />
+                        <t t-set="current_gross_weight" t-value="0" />
+                        <t t-foreach="o.line_ids" t-as="line">
+                            <tr>
+                                <t t-if="not line.display_type">
+                                    <td>
+                                        <t t-set="number" t-value="number + 1" />
+                                        <span t-esc="number" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.series" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.brand" />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_qty"
+                                            t-value="current_qty + line.quantity"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.quantity)"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_package"
+                                            t-value="current_package + line.package"
+                                        />
+                                        <span t-esc="'{0:,.2f}'.format(line.package)" />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_net_weight"
+                                            t-value="current_net_weight + line.net_weight"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.net_weight)"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_gross_weight"
+                                            t-value="current_gross_weight + line.gross_weight"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.gross_weight)"
+                                        />
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td class="table-active" colspan="99" id="section">
+                                        <strong><span t-field="line.name" /></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line" />
+                                    <t t-set="number" t-value="0" />
+                                    <t t-set="current_qty" t-value="0" />
+                                    <t t-set="current_package" t-value="0" />
+                                    <t t-set="current_net_weight" t-value="0" />
+                                    <t t-set="current_gross_weight" t-value="0" />
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span class="font-italic" t-field="line.name" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <t
+                                t-if="current_section and (line_last or o.line_ids[line_index+1].display_type == 'line_section')"
+                            >
+                                <tr
+                                    class="is-subtotal text-right"
+                                    t-if="current_qty or current_package or current_net_weight or current_gross_weight"
+                                >
+                                    <td colspan="4">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td>
+                                        <strong><span
+                                                t-esc="'{0:,.2f}'.format(current_qty)"
+                                            /></strong>
+                                    </td>
+                                    <td>
+                                        <strong><span
+                                                t-esc="'{0:,.2f}'.format(current_package)"
+                                            /></strong>
+                                    </td>
+                                    <td>
+                                        <strong><span
+                                                t-esc="'{0:,.2f}'.format(current_net_weight)"
+                                            /></strong>
+                                    </td>
+                                    <td>
+                                        <strong><span
+                                                t-esc="'{0:,.2f}'.format(current_gross_weight)"
+                                            /></strong>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr class="text-right">
+                            <td colspan="4">
+                                <strong>Total</strong>
+                            </td>
+                            <td>
+                                <strong><span
+                                        t-esc="'{0:,.2f}'.format(o.quantity_total)"
+                                    /></strong>
+                            </td>
+                            <td>
+                                <strong><span
+                                        t-esc="'{0:,.2f}'.format(o.package_total)"
+                                    /></strong>
+                            </td>
+                            <td>
+                                <strong><span
+                                        t-esc="'{0:,.2f}'.format(o.net_weight_total)"
+                                    /></strong>
+                            </td>
+                            <td>
+                                <strong><span
+                                        t-esc="'{0:,.2f}'.format(o.gross_weight_total)"
+                                    /></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row text-left">
+                    <div class="col-2">
+                        <strong>Remarks</strong>
+                    </div>
+                    <div class="col-10">
+                        <span t-field="o.note" />
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="last-page">
+                    <strong>Sincerely yours,</strong>
+                    <br />
+                    <br />
+                    <br />
+                    <strong><span t-field="o.responsible_person" /></strong>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Shipping Mark:</strong>
+                            <p>Made In Thailand</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Total Packages:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span t-esc="'{0:,.3f}'.format(o.package_total)" />
+                                </div>
+                                <div class="col-3">
+                                    <p>Cartons</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Gross Weight:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.gross_weight_total)"
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 text-right">
+                                    <strong>Net Weight:</strong>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.net_weight_total)"
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <small>QF-MK-003</small>
+                    </div>
+                    <div class="col-8">
+                        <small>แก้ไขครั้งที่ 2 (วันที่บังคับใช้ 04/06/60)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="esb_packing_list_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="esb.esb_packing_list_form_print"
+                    t-lang="o.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,140 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="short_code" />
+                <field name="short_name" />
+                <field name="long_name" />
+                <field name="brand" />
+                <field name="series" />
+                <field name="spec1" />
+                <field name="spec2" />
+                <field name="spec3" />
+            </xpath>
+            <xpath expr="//group[@name='group_standard_price']" position="inside">
+                <field name="pack_carton" />
+                <field name="sale_ratio" />
+                <field name="excise_product_code" />
+                <field name="excise_price" />
+                <field
+                    name="retail_price"
+                    widget='monetary'
+                    options="{'currency_field': 'currency_id'}"
+                />
+            </xpath>
+            <xpath
+                expr="//page[@name='inventory']//div[@name='weight']"
+                position="after"
+            >
+                <label
+                    for="gross_weight"
+                    attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
+                />
+                <div
+                    class="o_row"
+                    name="gross_weight"
+                    attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
+                >
+                    <field name="gross_weight" />
+                    <span><field name="gross_weight_uom_name" /></span>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="uom_so_id" />
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute
+                    name="filter_domain"
+                >['|', '|', '|', '|', '|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self), ('short_code', 'ilike', self), ('short_name', 'ilike', self), ('long_name', 'ilike', self), ('series', 'ilike', self)]</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='categ_id']" position="after">
+                <filter string="Brand" name="brand" context="{'group_by':'brand'}" />
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_tree_view" model="ir.ui.view">
+        <field name="name">product.template.tree.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_code" optional="hide" />
+                <field name="short_name" optional="hide" />
+                <field name="long_name" optional="hide" />
+                <field name="brand" optional="hide" />
+                <field name="series" optional="hide" />
+                <field name="spec1" optional="hide" />
+                <field name="spec2" optional="hide" />
+                <field name="spec3" optional="hide" />
+                <field name="pack_carton" optional="hide" />
+                <field name="sale_ratio" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="short_code" optional="hide" />
+                <field name="short_name" optional="hide" />
+                <field name="long_name" optional="hide" />
+                <field name="brand" optional="hide" />
+                <field name="series" optional="hide" />
+                <field name="spec1" optional="hide" />
+                <field name="spec2" optional="hide" />
+                <field name="spec3" optional="hide" />
+                <field name="pack_carton" optional="hide" />
+                <field name="sale_ratio" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Hide secondary unit -->
+    <record id="product_template_tree_view_hide_secondary_unit" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field
+            name="inherit_id"
+            ref="stock_secondary_unit.product_template_tree_view"
+        />
+        <field name="groups_id" eval="[(4, ref('uom.group_uom'))]" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='secondary_unit_qty_available']"
+                position="attributes"
+            >
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='stock_secondary_uom_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_tree_view_hide_secondary_unit" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock_secondary_unit.product_product_tree_view" />
+        <field name="groups_id" eval="[(4, ref('uom.group_uom'))]" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='secondary_unit_qty_available']"
+                position="attributes"
+            >
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='stock_secondary_uom_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,431 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_delivery_order_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <img
+                                    t-if="o.company_id.logo"
+                                    t-att-src="image_data_uri(o.company_id.logo)"
+                                    style="max-height: 45px;"
+                                    alt="Logo"
+                                />
+                            </div>
+                            <div class="col-10">
+                                <address
+                                    t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Contact:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.phone" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Website:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.website" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Tax ID:</p>
+                            </div>
+                            <div class="col-10">
+                                <p>
+                                    <span
+                                        t-field="o.company_id.vat"
+                                    /> &#160;&#160;&#160;
+                                    <t
+                                        t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'"
+                                    >
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'en_US'"
+                                        >Head Office</t>
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'th_TH'"
+                                        >สำนักงานใหญ่</t>
+                                    </t>
+                                    <t t-else="">
+                                        Branch: <span t-field="o.company_id.branch" />
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h3>ใบกำกับการส่งมอบ</h3>
+                        <p class="mb0">
+                          <strong
+                                t-if="o.state == 'cancel'"
+                                style="color: red;"
+                            >Cancelled</strong>
+                          Page: <span class="page" /> / <span class="topage" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                <!-- Partner Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-3">
+                                <p>เรียน:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.partner_id" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>คนขับรถ ลงชื่อ:</p>
+                            </div>
+                            <div
+                                class="col-9"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>เลขที่:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.date" t-options="{'widget': 'date'}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article">
+                <table
+                    class="table table-sm"
+                    style="border-bottom: 1px solid lightgray;"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >No.</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Series</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Description</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Unit</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >GE</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Lot</th>
+                            <th class="text-center" style="vertical-align: middle;" />
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="number" t-value="0" />
+                        <t t-set="current_number" t-value="0" />
+                        <t t-set="current_qty" t-value="0" />
+                        <t t-foreach="o.detail_line_ids" t-as="line">
+                            <tr>
+                                <t t-if="not line.display_type">
+                                    <td>
+                                        <t t-set="number" t-value="number + 1" />
+                                        <t
+                                            t-set="current_number"
+                                            t-value="current_number + 1"
+                                        />
+                                        <span t-esc="current_number" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.series" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_uom_id.name" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.origin" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.lot_id.name" />
+                                    </td>
+                                    <td>
+                                        <span
+                                            t-if="line.move_line_id.state == 'done'"
+                                            t-esc="'.'"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_qty"
+                                            t-value="current_qty + line.quantity"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.quantity)"
+                                        />
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td class="table-active" colspan="99" id="section">
+                                        <strong><span t-field="line.name" /></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line" />
+                                    <t t-set="current_number" t-value="0" />
+                                    <t t-set="current_qty" t-value="0" />
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span class="font-italic" t-field="line.name" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <t
+                                t-if="current_section and (line_last or o.detail_line_ids[line_index+1].display_type == 'line_section')"
+                            >
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="7">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td>
+                                        <strong><span
+                                                t-esc="'{0:,.2f}'.format(current_qty)"
+                                            /></strong>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <span t-esc="number" />
+                    </div>
+                    <div class="col-2">
+                        <p>รายการ</p>
+                    </div>
+                    <div class="col-2 text-right">
+                        <p>จำนวนทั้งหมด:</p>
+                    </div>
+                    <div
+                        class="col-2 text-right"
+                        style="border-bottom: 1px solid black;"
+                    >
+                        <span t-esc="'{0:,.2f}'.format(o.detail_quantity_total)" />
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="last-page">
+                    <small
+                    >** กรณีจำนวนที่ได้รับไม่ตรงเอกสาร กรุณาติดต่อกลับมาที่บริษัทฯทันที ห้ามแก้ไขเอกสารกับคนขับรถ มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ **</small>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p>หมายเหตุ:</p>
+                                </div>
+                                <div class="col-9">
+                                    <span t-field="o.note" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <p>น้ำหนักสินค้าไม่รวมพาเลท:</p>
+                                </div>
+                                <div class="col-3">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.net_weight_total)"
+                                    />
+                                </div>
+                                <div class="col-4">
+                                    <p>กก.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td
+                                        class="text-center"
+                                        style="border: 1px solid black;"
+                                    >
+                                        <br />
+                                        <br />
+                                        ผู้รับของ (........./........./.........)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                    <div class="row">
+                        <div class="col-4">
+                            <table class="table table-sm mb0" style="width: 100%;">
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        ส่งพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;" />
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        รับคืนพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;" />
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; width: 50%;">
+                                        ยอดค้างพาเลท:
+                                    </td>
+                                    <td style="border: 1px solid black; width: 50%;" />
+                                </tr>
+                            </table>
+                            <table class="table table-sm mt0">
+                                <tr>
+                                    <td
+                                        class="text-center"
+                                        style="border: 1px solid black;"
+                                    >
+                                        <br />
+                                        <small
+                                        >ผู้มีอำนาจปล่อยรถ (........./........./.........)</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-8">
+                            <small>
+                                * ห้ามนำกล่องกระดาษ ถังพลาสติก หรือรายการอื่น นอกเหนือจากที่ระบุข้างต้น ออกนอกบริษัทฯ<br
+                                />
+                                มิฉะนั้นจะถือเป็นการลักขโมยทรัพย์สิน มีความผิดอาญา ทั้งจำทั้งปรับ<br
+                                />
+                                * กรณีพบบานลูกกรงไม่ได้ล็อคแม่กุญแจ หรือมีสภาพถูกงัดแงะ กระโปรงท้ายถูกเปิด ขอให้ติดต่อกลับมาที่บริษัทฯ ห้ามนำสินค้าออกจากรถเด็ดขาด มิฉะนั้นบริษัทฯ จะไม่รับผิดชอบ<br
+                                />
+                                * กรณีไม่มีลายเซ็นต์ผู้มีอำนาจปล่อยรถ ขอความร่วมมือให้ลูกค้าส่งสินค้าคืนบริษัทฯ
+                            </small>
+                            <br />
+                            <p class="text-right"><small
+                                >เอกสารฉบับนี้จัดทำโดยแผนกบัญชีเท่านั้น</small></p>
+                        </div>
+                    </div>
+                    <table class="table table-sm mb4" style="width: 100%;">
+                        <tr>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 10%;"
+                            >
+                                <br />
+                                <span
+                                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"
+                                /><br />
+                                <small>ลงชื่อผู้จัดทำ</small>
+                            </td>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 18%;"
+                            >
+                                <br />
+                                <br />
+                                <small>หน.สินค้าสำเร็จรูป ลงชื่อ</small>
+                            </td>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 13%;"
+                            >
+                                <br />
+                                <br />
+                                <small>หน.วัตถุดิบ ลงชื่อ</small>
+                            </td>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 23%;"
+                            >
+                                <br />
+                                <br />
+                                <small>หน.แผนกคลังสินค้าและวัตถุดิบ</small>
+                            </td>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 27%;"
+                            >
+                                <br />
+                                <br />
+                                <small>QA ลงชื่อ ตรวจสอบก่อนขึ้นรถทุกครั้ง</small>
+                            </td>
+                            <td
+                                class="text-center"
+                                style="border: 1px solid black; width: 9%;"
+                            >
+                                <br />
+                                <br />
+                                <small>รปภ.ลงชื่อ</small>
+                            </td>
+                        </tr>
+                    </table>
+                    <small>
+                        ** กรณีสินค้าสำเร็จรูป มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.สินค้าสำเร็จรูป **<br
+                        />
+                        ** กรณีวัตถุดิบ มีปัญหา จำนวนไม่ถูกต้อง หรือสินค้าไม่ตรง ทำให้บริษัทฯ เสียหาย เป็นความรับผิดชอบโดยตรงของ หน.วัตถุดิบ **<br
+                        />
+                        ** กรณีสภาพรถที่ขนส่ง มีปัญหา เกิดอุบัติเหตุ สินค้าที่บรรทุกเสียหาย เป็นความรับผิดชอบโดยตรงของ คนขับรถ **<br
+                        />
+                        ** การบรรทุกเกิน นน.ที่บริษัทฯ กำหนด เป็นความรับผิดชอบโดยตรงของพนักงานขับรถ **
+                    </small>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <small>FM-MK-006</small>
+                    </div>
+                    <div class="col-8">
+                        <small>แก้ไขครั้งที่ 1 (วันที่บังคับใช้ 06/06/57)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="esb_delivery_order_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="esb.esb_delivery_order_form" t-lang="o.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+</odoo>

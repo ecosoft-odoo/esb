@@ -1,0 +1,79 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field
+            name="inherit_id"
+            ref="account_invoice_triple_discount.invoice_triple_discount_form_view"
+        />
+        <field name="arch" type="xml">
+            <!-- Add packing_list_id, ship_by on account.move view -->
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="packing_list_id" />
+                <field name="ship_by" />
+            </xpath>
+            <!-- Add excise_form_number on account.move view -->
+            <xpath expr="//field[@name='invoice_origin']" position="after">
+                <field name="excise_form_number" />
+            </xpath>
+            <!-- Add discount fields -->
+            <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="discount_waranty" />
+                <field name="discount_special" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']"
+                position="before"
+            >
+                <field name="subtotal_no_disc" optional="show" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']//kanban//field[@name='price_subtotal']"
+                position="before"
+            >
+                <field name="subtotal_no_disc" optional="show" />
+            </xpath>
+            <!-- Hide discount 3 -->
+            <xpath
+                expr="//field[@name='invoice_line_ids']//tree//field[@name='discount3']"
+                position="attributes"
+            >
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']//form//field[@name='discount3']"
+                position="attributes"
+            >
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <!-- Show discount 1 -->
+            <xpath
+                expr="//field[@name='invoice_line_ids']//tree//field[@name='discount1']"
+                position="attributes"
+            >
+                <attribute name="groups" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']//form//field[@name='discount1']"
+                position="attributes"
+            >
+                <attribute name="groups" />
+            </xpath>
+            <!-- Show discount 2 -->
+            <xpath
+                expr="//field[@name='invoice_line_ids']//tree//field[@name='discount2']"
+                position="attributes"
+            >
+                <attribute name="groups" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']//form//field[@name='discount2']"
+                position="attributes"
+            >
+                <attribute name="groups" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
