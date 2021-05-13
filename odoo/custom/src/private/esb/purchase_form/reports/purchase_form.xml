@@ -1,0 +1,433 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_purchase_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <img
+                                    t-if="o.company_id.logo"
+                                    t-att-src="image_data_uri(o.company_id.logo)"
+                                    style="max-height: 45px;"
+                                    alt="Logo"
+                                />
+                            </div>
+                            <div class="col-10">
+                                <address
+                                    t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                        <p>
+                            Contact: &#160; <span
+                                t-field="o.company_id.phone"
+                            /> &#160;&#160;&#160;&#160;&#160;&#160;
+                            E-mail: &#160; <span
+                                t-field="o.company_id.email"
+                            /> &#160;&#160;&#160;&#160;&#160;&#160;
+                            Tax ID: &#160;
+                            <span t-field="o.company_id.vat" /> &#160;&#160;&#160;
+                            <t
+                                t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'"
+                            >
+                                <t
+                                    t-if="o.company_id.partner_id.lang == 'en_US'"
+                                >Head Office</t>
+                                <t
+                                    t-if="o.company_id.partner_id.lang == 'th_TH'"
+                                >สำนักงานใหญ่</t>
+                            </t>
+                            <t t-else="">
+                                Branch: &#160; <span t-field="o.company_id.branch" />
+                            </t>
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h3>ใบสั่งซื้อ (Purchase Order)</h3>
+                        <p>
+                          <strong style="color: red;">
+                              <t t-if="o.state in ('draft', 'sent')">Draft</t>
+                              <t t-if="o.state in ('to approve')">To Approve</t>
+                              <t t-if="o.state in ('purchase', 'done')">Done</t>
+                              <t t-if="o.state in ('cancel')">Cancelled</t>
+                          </strong>
+                          หน้าที่: <span class="page" /> / <span class="topage" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                <!-- Vendor Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <p>ชื่อเจ้าหนี้:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.partner_id.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>ติดต่อ:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.partner_id.phone" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่:</p>
+                            </div>
+                            <div class="col-8">
+                                <span
+                                    t-field="o.date_order"
+                                    t-options="{'widget': 'date'}"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>PO No.:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>เครดิต:</p>
+                            </div>
+                            <div class="col-8">
+                                <span t-field="o.payment_term_id.name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article">
+                <table
+                    class="table table-sm mb4"
+                    style="border-bottom: 1px solid lightgray;"
+                >
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Part No.</th>
+                            <th class="text-center">Description</th>
+                            <th class="text-center">Due Date</th>
+                            <th class="text-center">Brand</th>
+                            <th class="text-center">Specification</th>
+                            <th class="text-center">Ref. MO</th>
+                            <th class="text-center">Unit</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-center">Unit Price</th>
+                            <th class="text-center">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="number" t-value="0" />
+                        <t t-set="total_amount" t-value="0" />
+                        <t t-set="current_subtotal" t-value="0" />
+                        <t
+                            t-set="delivery_date"
+                            t-value="o.order_line.filtered(lambda line: line.date_planned).sorted(lambda line: line.date_planned)[0].date_planned"
+                        />
+                        <t t-foreach="o.order_line" t-as="line">
+                            <tr>
+                                <t t-if="not line.display_type">
+                                    <td>
+                                        <t t-set="number" t-value="number + 1" />
+                                        <span t-esc="number" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.default_code" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span
+                                            t-field="line.date_planned"
+                                            t-options="{'widget': 'date'}"
+                                        />
+                                        <t t-if="line.date_planned &lt; delivery_date">
+                                            <t
+                                                t-set="delivery_date"
+                                                t-value="line.date_planned"
+                                            />
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.brand" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.spec3" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.mo_ref" />
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="line.secondary_uom_id">
+                                            <span
+                                                t-field="line.secondary_uom_id.code"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="line.product_uom.name" />
+                                        </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-if="line.secondary_uom_qty">
+                                            <t
+                                                t-set="quantity"
+                                                t-value="line.secondary_uom_qty"
+                                            />
+                                        </t>
+                                        <t t-else="">
+                                            <t
+                                                t-set="quantity"
+                                                t-value="line.product_qty"
+                                            />
+                                        </t>
+                                        <span t-esc="'{0:,.2f}'.format(quantity)" />
+                                    </td>
+                                    <td class="text-right">
+                                        <span
+                                            t-esc="'{0:,.3f}'.format(line.price_unit)"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_subtotal"
+                                            t-value="current_subtotal + line.subtotal_no_disc"
+                                        />
+                                        <t
+                                            t-set="total_amount"
+                                            t-value="total_amount + line.subtotal_no_disc"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.subtotal_no_disc)"
+                                        />
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td class="table-active" colspan="99" id="section">
+                                        <strong><span t-field="line.name" /></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line" />
+                                    <t t-set="current_subtotal" t-value="0" />
+                                    <t t-set="number" t-value="0" />
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span class="font-italic" t-field="line.name" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <t
+                                t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')"
+                            >
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="99">
+                                        <strong class="mr16">Subtotal</strong>
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(current_subtotal)"
+                                        />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-2">
+                                    <p>หมายเหตุ:</p>
+                                </div>
+                                <div class="col-10">
+                                    <span t-field="o.notes" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <table class="table table-sm table-borderless">
+                                <tr>
+                                    <td>Total Amount</td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(total_amount)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Discount</td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="discount"
+                                            t-value="total_amount - o.amount_untaxed"
+                                        />
+                                        <t t-if="discount">
+                                            <span t-esc="'{0:,.2f}'.format(discount)" />
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td />
+                                    <td class="text-right">
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(o.amount_untaxed)"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VAT 7%</td>
+                                    <td class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_tax)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total Balance</td>
+                                    <td
+                                        class="text-right"
+                                        style="border-bottom: double;"
+                                    >
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(o.amount_total)"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer last-page">
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                <div class="row">
+                    <div class="col-5">
+                        <p>
+                            กรุณาส่งของวันที่: &#160; <span
+                                t-esc="context_timestamp(delivery_date).strftime('%d/%m/%Y')"
+                            /><br />
+                            กรุณาลงชื่อยืนยันวันที่จัดส่ง และแฟกซ์กลับภายใน 3 วัน
+                        </p>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-2">
+                                <p>[ &#160;&#160;&#160; ] ส่งทัน</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p>[ &#160;&#160;&#160; ] เลื่อนส่งเป็นวันที่</p>
+                            </div>
+                            <div
+                                class="col-2"
+                                style="border-bottom: 1px solid black;"
+                            />
+                            <div class="col-3 text-right">
+                                <p>ลงชื่อผู้ตอบกลับ</p>
+                            </div>
+                            <div
+                                class="col-2"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt16">
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>จัดทำโดย:</p>
+                            </div>
+                            <div class="col-8" style="border-bottom: 1px solid black;">
+                                <span t-esc="user.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่:</p>
+                            </div>
+                            <div class="col-8" style="border-bottom: 1px solid black;">
+                                <span
+                                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>QF-PU-005</p>
+                            </div>
+                            <div class="col-8" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>ตรวจสอบโดย:</p>
+                            </div>
+                            <div
+                                class="col-8"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่:</p>
+                            </div>
+                            <div
+                                class="col-8"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                        <div class="row">
+                            <div class="col-12" align="right">
+                                <p>REV.02 (effective date: 01/06/2563)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <p>อนุมัติโดย:</p>
+                            </div>
+                            <div
+                                class="col-8"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่:</p>
+                            </div>
+                            <div
+                                class="col-8"
+                                style="border-bottom: 1px solid black;"
+                            />
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="esb_purchase_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="esb.esb_purchase_form"
+                    t-lang="o.company_id.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

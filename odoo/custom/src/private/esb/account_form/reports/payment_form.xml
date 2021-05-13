@@ -1,0 +1,198 @@
+<odoo>
+    <template id="esb_payment_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+        <div class="o_sarabun">
+            <div class="header">
+                <div class="row">
+                    <div class="col-7">
+                        <address
+                            t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+                        />
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>สมุดรายวัน<t
+                                        t-if="o.partner_type == 'customer'"
+                                    >รับ</t><t
+                                        t-if="o.partner_type == 'supplier'"
+                                    >จ่าย</t> :</p>
+                                </div>
+                                <div class="col-8">
+                                    <span t-field="o.journal_id" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>รายละเอียด :</p>
+                                </div>
+                                <div class="col-3">
+                                    <p><t t-if="o.partner_type == 'customer'">รับ</t><t
+                                        t-if="o.partner_type == 'supplier'"
+                                    >จ่าย</t>ชำระหนี้ :</p>
+                                </div>
+                                <div class="col-5">
+                                    <span t-field="o.partner_id" />
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="text-right">
+                            <p class="mb0">
+                                หน้าที่ : <span class="page" /> / <span
+                                    class="topage"
+                                />
+                            </p><br />
+                            <h4>ใบสำคัญ<t t-if="o.partner_type == 'customer'">รับ</t><t
+                                    t-if="o.partner_type == 'supplier'"
+                                >จ่าย</t></h4>
+                            <h5><t t-if="o.partner_type == 'customer'">RECEIPT</t><t
+                                    t-if="o.partner_type == 'supplier'"
+                                >PAYMENT</t></h5><br />
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>เลขที่ :</p>
+                            </div>
+                            <div class="col-8 text-left">
+                                <span t-field="o.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>วันที่ :</p>
+                            </div>
+                            <div class="col-8 text-left">
+                                <span t-field="o.payment_date" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article">
+                <table class="table table-sm mt8">
+                    <thead>
+                        <tr class="text-center">
+                            <th>เลขที่บัญชี<br />No.</th>
+                            <th>รายละเอียด<br />Description</th>
+                            <th>เดบิท<br />Debit</th>
+                            <th>เครดิต<br />Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.move_line_ids" t-as="line">
+                            <tr class="text-left">
+                                <td class="width15">
+                                    <span t-field="line.account_id.code" />
+                                </td>
+                                <td class="width55">
+                                    <span t-field="line.account_id.name" />
+                                </td>
+                                <td class="text-center width15">
+                                    <span t-field="line.debit" />
+                                </td>
+                                <td class="text-center width15">
+                                    <span t-field="line.credit" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr class="last-child">
+                            <td>
+                                <div class="row">
+                                    <div class="col-10 text-right">
+                                        เช็ค#
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <span t-field="o.check_number" />
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        <span t-field="o.check_date" />
+                                    </div>
+                                    <div class="col-4 text-left">
+                                        <span t-field="o.amount" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-center total">
+                            <td colspan="2">
+                                (<span
+                                    t-esc="o.currency_id.with_context({'lang': 'th_TH'}).amount_to_text(o.amount)"
+                                />)
+                            </td>
+                            <td>
+                                <span t-field="o.amount" />
+                            </td>
+                            <td>
+                                <span t-field="o.amount" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="footer last-page">
+                <div class="row">
+                    <div class="col-7">
+                        <table class="table table-sm" style="width: 100%;">
+                            <tr>
+                                <td
+                                    class="text-center"
+                                    style="border: 1px solid black; width: 50%;"
+                                >
+                                    ผู้จัดทำ<br /><br />
+                                    ...........................................................<br
+                                    />
+                                    ......../......../........
+                                </td>
+                                <td
+                                    class="text-center"
+                                    style="border: 1px solid black; width: 50%;"
+                                >
+                                    ผู้ตรวจสอบ<br /><br />
+                                    ...........................................................<br
+                                    />
+                                    ......../......../........
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <table class="table table-sm" style="width: 100%;">
+                            <tr>
+                                <td
+                                    class="text-center"
+                                    style="border: 1px solid black; width: 100%;"
+                                >
+                                    ได้รับเงินถูกต้องเรียบร้อย<br /><br />
+                                    ...........................................................<br
+                                    />
+                                    ......../......../........<br />
+                                    ผู้รับเงิน
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="esb_payment_receipt_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="esb.esb_payment_form"
+                    t-lang="o.company_id.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+
+</odoo>

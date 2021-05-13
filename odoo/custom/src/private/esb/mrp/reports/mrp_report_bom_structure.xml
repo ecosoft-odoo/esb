@@ -1,0 +1,19 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="report_mrp_bom" inherit_id="mrp.report_mrp_bom">
+        <!-- Add signagure -->
+        <xpath expr="//table" position="after">
+            <div class="row">
+                <div class="col-6" />
+                <div class="col-6 text-center">
+                    <br /><br /><br />
+                    ..................................................................<br
+                    />
+                    (พันธุ์ธัช ทัศนรังสรรค์)<br />
+                    <strong>ผู้อนุมัติ</strong><br />
+                    (........./........./.........)
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,605 @@
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <template id="esb_customer_commercial_invoice_form">
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+        <div class="o_sarabun">
+            <div class="header">
+                <!-- Company Data -->
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-2">
+                                <img
+                                    t-if="o.company_id.logo"
+                                    t-att-src="image_data_uri(o.company_id.logo)"
+                                    style="max-height: 45px;"
+                                    alt="Logo"
+                                />
+                            </div>
+                            <div class="col-10">
+                                <address
+                                    t-field="o.with_context(lang=o.company_id.partner_id.lang).company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address","name"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Contact:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.phone" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>E-mail:</p>
+                            </div>
+                            <div class="col-10">
+                                <span t-field="o.company_id.email" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Tax ID:</p>
+                            </div>
+                            <div class="col-10">
+                                <p>
+                                    <span
+                                        t-field="o.company_id.vat"
+                                    /> &#160;&#160;&#160;
+                                    <t
+                                        t-if="not o.company_id.branch or o.company_id.branch == '00000' or o.company_id.branch == 'Head Office' or o.company_id.branch == 'สำนักงานใหญ่'"
+                                    >
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'en_US'"
+                                        >Head Office</t>
+                                        <t
+                                            t-if="o.company_id.partner_id.lang == 'th_TH'"
+                                        >สำนักงานใหญ่</t>
+                                    </t>
+                                    <t t-else="">
+                                        Branch: <span t-field="o.company_id.branch" />
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h3>Commercial Invoice</h3>
+                        <p class="mb0">
+                          <strong
+                                t-if="o.state == 'cancel'"
+                                style="color: red;"
+                            >Cancelled</strong>
+                          Page: <span class="page" /> / <span class="topage" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                <!-- Partner Data -->
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-3">
+                                <p>MESSR:</p>
+                            </div>
+                            <div class="col-9">
+                                <address
+                                    t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "email", "phone"], "no_marker": True}'
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-3">
+                                <p>No:</p>
+                            </div>
+                            <div class="col-9">
+                                <t
+                                    t-set="invoices"
+                                    t-value="o.tax_invoice_ids.mapped('tax_invoice_number')"
+                                />
+                                <span
+                                    t-esc="', '.join(filter(lambda l: l != False and l != '', [invoice for invoice in invoices]))"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Date:</p>
+                            </div>
+                            <div class="col-9">
+                                <span
+                                    t-field="o.invoice_date"
+                                    t-options="{'widget': 'date'}"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>PI No.:</p>
+                            </div>
+                            <div class="col-9">
+                                <t
+                                    t-set="orders"
+                                    t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')"
+                                />
+                                <span
+                                    t-esc="', '.join(filter(lambda l: l != False and l != '', [order.client_order_ref for order in orders]))"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Term:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.invoice_incoterm_id.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Payment:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.invoice_payment_term_id.name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Ship From:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.packing_list_id.ship_from" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Ship To:</p>
+                            </div>
+                            <div class="col-9">
+                                <span t-field="o.packing_list_id.ship_to" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article">
+                <table
+                    class="table table-sm"
+                    style="border-bottom: 1px solid lightgray;"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >No.</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Part No.</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Description</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Brand</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Quantity</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Unit Price</th>
+                            <th
+                                class="text-center"
+                                style="vertical-align: middle;"
+                            >Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="number" t-value="0" />
+                        <t t-set="current_qty" t-value="0" />
+                        <t t-set="current_subtotal" t-value="0" />
+                        <t t-set="qty_total" t-value="0" />
+                        <!-- <t t-set="discount_total" t-value="0"/> -->
+                        <t t-set="amount_total" t-value="0" />
+                        <t
+                            t-foreach="o.invoice_line_ids.sorted('sequence')"
+                            t-as="line"
+                        >
+                            <tr>
+                                <t
+                                    t-if="not line.display_type and line.product_id.type in ('product', 'consu')"
+                                >
+                                    <td>
+                                        <t t-set="number" t-value="number + 1" />
+                                        <span t-esc="number" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.series" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.brand" />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_qty"
+                                            t-value="current_qty + line.quantity"
+                                        />
+                                        <t
+                                            t-set="qty_total"
+                                            t-value="qty_total + line.quantity"
+                                        />
+                                        <span
+                                            t-esc="'{0:,.2f}'.format(line.quantity)"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <span
+                                            t-field="line.price_unit"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                        />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="current_subtotal"
+                                            t-value="current_subtotal + line.subtotal_no_disc"
+                                        />
+                                        <t
+                                            t-set="amount_total"
+                                            t-value="amount_total + line.subtotal_no_disc"
+                                        />
+                                        <!-- <t t-set="discount_total" t-value="discount_total + line.subtotal_no_disc - line.price_subtotal"/> -->
+                                        <span
+                                            t-field="line.subtotal_no_disc"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                        />
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td class="table-active" colspan="99" id="section">
+                                        <strong><span t-field="line.name" /></strong>
+                                    </td>
+                                    <t t-set="current_section" t-value="line" />
+                                    <t t-set="current_qty" t-value="0" />
+                                    <t t-set="current_subtotal" t-value="0" />
+                                    <t t-set="number" t-value="0" />
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span class="font-italic" t-field="line.name" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <t
+                                t-if="current_section and (line_last or o.invoice_line_ids.sorted('sequence')[line_index+1].display_type == 'line_section')"
+                            >
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="4">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong
+                                            t-esc="'{0:,.2f}'.format(current_qty)"
+                                        />
+                                    </td>
+                                    <td />
+                                    <td class="text-right">
+                                        <strong
+                                            t-esc="current_subtotal"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                        />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr>
+                            <td colspan="4">
+                                Total Amount
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="'{0:,.2f}'.format(qty_total)" />
+                            </td>
+                            <td />
+                            <td class="text-right">
+                                <span
+                                    t-esc="amount_total"
+                                    t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <t
+                                t-set="discount_all"
+                                t-value="o.discount_waranty + o.discount_special"
+                            />
+                            <td>
+                                <span style="text-decoration: underline;">Less</span>
+                            </td>
+                            <td colspan="5">
+                                Total Discount
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-esc="discount_all"
+                                    t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                />
+                                <t
+                                    t-set="amount_total_discount"
+                                    t-value="amount_total - discount_all"
+                                />
+                                <t
+                                    t-set="total_after_plus"
+                                    t-value="amount_total - discount_all"
+                                />
+                            </td>
+                        </tr>
+                        <t
+                            t-foreach="o.invoice_line_ids.sorted('sequence')"
+                            t-as="line"
+                        >
+                            <t
+                                t-if="not line.display_type and line.product_id.type == 'service' and line.debit"
+                            >
+                                <tr>
+                                    <td />
+                                    <td colspan="5">
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-right">
+                                        <t
+                                            t-set="amount_total_discount"
+                                            t-value="amount_total_discount - abs(line.price_subtotal)"
+                                        />
+                                        <t
+                                            t-set="total_after_plus"
+                                            t-value="total_after_plus - abs(line.price_subtotal)"
+                                        />
+                                        <!-- <t t-set="amount_total" t-value="amount_total_discount + line.price_subtotal"/> -->
+                                        <span
+                                            t-esc="line.price_subtotal"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                        />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                            <tr>
+                                <td colspan="3">
+                                    Total Amount After Discount
+                                </td>
+                                <td colspan="2" />
+                                <!-- <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                    <td><span class="text-nowrap" t-esc="amount_by_group[0]"/>:</td>
+                                    <td class="text-right">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3][:-1]" />
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td>
+                                        <span t-esc="amount_by_group[0]"/>
+                                        <span class="text-nowrap"> on
+                                            <t t-esc="amount_by_group[4]"/>:
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="text-nowrap" t-esc="amount_by_group[3][:-1]"/>
+                                    </td>
+                                </t> -->
+                                <td colspan="2" class="text-right">
+                                    <span
+                                        t-esc="amount_total_discount"
+                                        t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                    />
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-set="number" t-value="1" />
+                        <t
+                            t-foreach="o.invoice_line_ids.sorted('sequence')"
+                            t-as="line"
+                        >
+                            <t
+                                t-if="not line.display_type and line.product_id.type == 'service' and line.credit"
+                            >
+                                <tr>
+                                    <td>
+                                        <t t-if="number == 1">
+                                            <span
+                                                style="text-decoration: underline;"
+                                            >Plus</span>
+                                            <t t-set="number" t-value="number+1" />
+                                        </t>
+                                    </td>
+                                    <td colspan="5">
+                                        <span t-field="line.name" />
+                                    </td>
+                                    <td class="text-right">
+                                        <!-- <t t-set="amount_total" t-value="amount_total + abs(line.price_subtotal)"/> -->
+                                        <t
+                                            t-set="total_after_plus"
+                                            t-value="total_after_plus + abs(line.price_subtotal)"
+                                        />
+                                        <span
+                                            t-esc="abs(line.price_subtotal)"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                        />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr>
+                            <td colspan="6">
+                                <strong>Total Amount</strong>
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-esc="total_after_plus"
+                                    t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="page-break-inside: avoid;">
+                    <div class="row">
+                        <div class="col-2">
+                            Remark:
+                        </div>
+                        <div class="col-10">
+                            1. Buyer has to accept the goods within 7 days after production is finished.<br
+                            />
+                            2. Late of payment will be charged at the rate 1% per month.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <span
+                                style="text-decoration: underline;"
+                            >Bank Information</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Account No.:</p>
+                        </div>
+                        <div class="col-10">
+                            <span t-field="o.invoice_partner_bank_id.acc_number" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Account Name:</p>
+                        </div>
+                        <div class="col-10">
+                            <span t-field="o.invoice_partner_bank_id.acc_holder_name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Bank Name:</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                The Siam Commercial Bank Public Co., Ltd.<br />
+                                9 Ratchadaphisek Road, SCB Park, Chatuchak, Bangkok, Thailand
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Bank Branch:</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                Bangna-Trad Branch<br />
+                                SWIFT: SICOTHBK / TELEX: 82876
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="color: red;">
+                            Important: Phone call is a must when changing bank Information <br
+                            />
+                            1. If we change bank information, we will send you email and call you to reconfirm. <br
+                            />
+                            2. If you receive any email about change of our bank information, kindly must call us to reconfirm, because the email may be
+                            from a cheater or virus, which will lead to your losses. <br
+                            />
+                            3. Be careful about any email about change of supplier's bank information, to avoid your losses.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="last-page">
+                    <p>Sincerely yours,</p>
+                    <br />
+                    <br />
+                    <br />
+                    <span t-field="o.packing_list_id.responsible_person" />
+                    <div class="row mt4 mb4" style="border-bottom: 1px solid black;" />
+                    <div class="row">
+                        <div class="col-6">
+                            <p>
+                                Shipping Mark:<br />
+                                Made In Thailand
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Packages:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.packing_list_id.package_total)"
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <p>Cartons</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Gross Weight:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.packing_list_id.gross_weight_total)"
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Total Net Weight:
+                                </div>
+                                <div class="col-3 text-right">
+                                    <span
+                                        t-esc="'{0:,.2f}'.format(o.packing_list_id.net_weight_total)"
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <p>Kgs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <small>QF-MK-002</small>
+                    </div>
+                    <div class="col-8">
+                        <small>แก้ไขครั้งที่ 2 (วันที่บังคับใช้ 04/01/60)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="esb_customer_commercial_invoice_form_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="esb.esb_customer_commercial_invoice_form"
+                    t-lang="o.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

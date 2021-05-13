@@ -1,0 +1,60 @@
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_picking">
+        <xpath expr="//table[1]" position="after">
+            <div class="row mt8">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <strong>จำนวนรายการ :</strong>
+                        </div>
+                        <div class="col-9">
+                            <t
+                                t-esc="len(o.move_ids_without_package.mapped('move_line_ids'))"
+                            />
+                            รายการ
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <strong>จำนวนรวมทั้งสิ้น :</strong>
+                        </div>
+                        <div class="col-9">
+                            <t
+                                t-set="move_lines"
+                                t-value="o.move_line_ids and o.move_ids_without_package"
+                            />
+                            <t
+                                t-set="uoms"
+                                t-value="move_lines.mapped('product_uom')"
+                            />
+                            <t t-foreach="uoms" t-as="uom">
+                                <span
+                                    t-if="o.state != 'done'"
+                                    t-esc="' %s %s' % (sum(move_lines.filtered(lambda l: l.product_uom == uom).mapped('product_uom_qty')), uom.name)"
+                                />
+                                <span
+                                    t-if="o.state == 'done'"
+                                    t-esc="' %s %s' % (sum(move_lines.filtered(lambda l: l.product_uom == uom).mapped('quantity_done')), uom.name)"
+                                />
+                                <br />
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Add ISO Signature -->
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//ul[@class='list-inline mb4']" position="after">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3">QF-PU-005</div>
+                    <div class="col-9">REV.02 (effective date: 01/06/2563)</div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

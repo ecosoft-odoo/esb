@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Copyright 2020 Ecosoft Co., Ltd (http://ecosoft.co.th/)-->
+    <act_window
+        id="action_esb_packing_list"
+        name="Create Packing List"
+        binding_model="stock.picking"
+        res_model="esb.packing.list"
+        binding_views="list"
+        view_mode="form"
+        target="current"
+        context="{'default_picking_ids': active_ids}"
+    />
+
+    <record id="esb_packing_list_form" model="ir.ui.view">
+        <field name="name">esb.packing.list.form</field>
+        <field name="model">esb.packing.list</field>
+        <field name="arch" type="xml">
+            <form string="Packing List" duplicate="false">
+                <header>
+                    <button
+                        string="Done"
+                        name="action_done"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('state', '=', 'done')]}"
+                    />
+                    <button
+                        string="Draft"
+                        name="action_draft"
+                        type="object"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                    />
+                    <button
+                        string="Cancel"
+                        name="action_cancel"
+                        type="object"
+                        attrs="{'invisible': [('state', '=', 'cancel')]}"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft, done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_pickings"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('picking_count', '=', 0)]}"
+                        >
+                            <field
+                                name="picking_count"
+                                widget="statinfo"
+                                string="Pickings"
+                            />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group name="main">
+                        <group name="main-left">
+                            <field name="partner_id" />
+                            <field name="pl_created" invisible="1" />
+                            <field
+                                name="pl_type_id"
+                                attrs="{'readonly': [('pl_created', '=', True)]}"
+                            />
+                            <field name="picking_ids" widget="many2many_tags" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="responsible_person" />
+                        </group>
+                        <group name="main-right">
+                            <field name="ref" />
+                            <field name="date" />
+                            <field name="origin" />
+                            <field name="incoterm_id" />
+                            <field name="ship_from" />
+                            <field name="ship_to" />
+                        </group>
+                    </group>
+                    <button
+                        name="action_compute"
+                        string="Generate Packing Lines"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <notebook>
+                        <page
+                            string="Detailed Packing Lines"
+                            name="detailed_packing_lines"
+                        >
+                            <field
+                                name="detail_line_ids"
+                                widget="section_and_note_one2many"
+                            >
+                                <tree editable="bottom">
+                                    <control>
+                                        <create
+                                            name="add_product_control"
+                                            string="Add a product"
+                                        />
+                                        <create
+                                            name="add_section_control"
+                                            string="Add a section"
+                                            context="{'default_display_type': 'line_section'}"
+                                        />
+                                        <create
+                                            name="add_note_control"
+                                            string="Add a note"
+                                            context="{'default_display_type': 'line_note'}"
+                                        />
+                                    </control>
+                                    <field name="display_type" invisible="1" />
+                                    <field name="sequence" widget="handle" />
+                                    <field name="move_line_id" invisible="1" />
+                                    <field name="company_id" invisible="1" />
+                                    <field name="product_id" />
+                                    <field
+                                        name="name"
+                                        widget="section_and_note_text"
+                                        optional="show"
+                                    />
+                                    <field name="origin" optional="show" />
+                                    <field name="lot_id" optional="show" />
+                                    <field name="quantity" sum="Total" />
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field
+                                        name="note"
+                                        nolabel="1"
+                                        placeholder="Terms and conditions..."
+                                    />
+                                </group>
+                                <group
+                                    class="oe_subtotal_footer oe_right"
+                                    colspan="2"
+                                    name="picking_total"
+                                >
+                                    <field name="detail_quantity_total" />
+                                </group>
+                                <div class="oe_clear" />
+                            </group>
+                        </page>
+                        <page string="Packing Lines" name="packing_lines">
+                            <field name="line_ids" widget="section_and_note_one2many">
+                                <tree editable="bottom">
+                                    <control>
+                                        <create
+                                            name="add_product_control"
+                                            string="Add a product"
+                                        />
+                                        <create
+                                            name="add_section_control"
+                                            string="Add a section"
+                                            context="{'default_display_type': 'line_section'}"
+                                        />
+                                        <create
+                                            name="add_note_control"
+                                            string="Add a note"
+                                            context="{'default_display_type': 'line_note'}"
+                                        />
+                                    </control>
+                                    <field name="display_type" invisible="1" />
+                                    <field name="sequence" widget="handle" />
+                                    <field name="number" />
+                                    <field name="move_id" invisible="1" />
+                                    <field name="company_id" invisible="1" />
+                                    <field name="product_id" />
+                                    <field
+                                        name="name"
+                                        widget="section_and_note_text"
+                                        optional="show"
+                                    />
+                                    <field name="quantity" sum="Total" />
+                                    <field name="package" sum="Total Packages" />
+                                    <field name="net_weight" sum="Total Net Weight" />
+                                    <field
+                                        name="gross_weight"
+                                        sum="Total Gross Weight"
+                                    />
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field
+                                        name="note"
+                                        nolabel="1"
+                                        placeholder="Terms and conditions..."
+                                    />
+                                </group>
+                                <group
+                                    class="oe_subtotal_footer oe_right"
+                                    colspan="2"
+                                    name="picking_total"
+                                >
+                                    <field name="quantity_total" />
+                                    <field name="package_total" />
+                                    <field name="net_weight_total" />
+                                    <field name="gross_weight_total" />
+                                </group>
+                                <div class="oe_clear" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="esb_packing_list_tree" model="ir.ui.view">
+        <field name="name">esb.packing.list.tree</field>
+        <field name="model">esb.packing.list</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="pl_type_id" optional="show" />
+                <field name="quantity_total" optional="show" />
+                <field name="package_total" optional="show" />
+                <field name="net_weight_total" optional="show" />
+                <field name="gross_weight_total" optional="show" />
+                <field name="state" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="esb_packing_list_search" model="ir.ui.view">
+        <field name="name">esb.packing.list.search</field>
+        <field name="model">esb.packing.list</field>
+        <field name="arch" type="xml">
+            <search string="Packing List">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="picking_ids" />
+                <filter
+                    string="Draft"
+                    domain="[('state', '=', 'draft')]"
+                    name="draft"
+                />
+                <filter string="Done" domain="[('state', '=', 'done')]" name="draft" />
+                <group name="groupby">
+                    <filter
+                        name="partner_id"
+                        string="Partner"
+                        context="{'group_by': 'partner_id'}"
+                    />
+                    <filter
+                        name="pl_type_id"
+                        string="Type"
+                        context="{'group_by': 'pl_type_id'}"
+                    />
+                    <filter
+                        name="company_id"
+                        string="Company"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"
+                    />
+                    <filter
+                        name="incoterm_id"
+                        string="Incoterm"
+                        context="{'group_by': 'incoterm_id'}"
+                    />
+                    <filter
+                        name="state"
+                        string="State"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="esb_packing_list_action" model="ir.actions.act_window">
+        <field name="name">Packing List</field>
+        <field name="res_model">esb.packing.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="esb_packing_list_menu"
+        action="esb_packing_list_action"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="300"
+    />
+
+</odoo>
