@@ -26,10 +26,6 @@ class ProductTemplate(models.Model):
     # change Weight to Net Weight
     weight = fields.Float(
         string="Net Weight",
-        # compute="_compute_weight",
-        # digits="Stock Weight",
-        # inverse="_set_weight",
-        # store=True,
     )
     # sale unit
     uom_so_id = fields.Many2one(
