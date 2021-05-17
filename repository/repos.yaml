@@ -1,0 +1,191 @@
+# See https://github.com/Tecnativa/doodba#optodoocustomsrcreposyaml
+#./odoo:
+#  defaults:
+#    # Shallow repositories ($DEPTH_DEFAULT=1) are faster & thinner
+#    # You may need a bigger depth when merging PRs (use 1
+#    # for a sane value of 100 commits)
+#    depth: $DEPTH_DEFAULT
+#  remotes:
+#    ocb: https://github.com/OCA/OCB.git
+#    odoo: https://github.com/odoo/odoo.git
+#    openupgrade: https://github.com/OCA/OpenUpgrade.git
+#  target: ocb 13.0
+#  merges:
+#    - ocb 13.0
+#    # Example of a merge of the PR with the number <PR>
+#    # - oca refs/pull/<PR>/head
+
+account-analytic:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/account-analytic.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+    - origin refs/pull/306/head # scrap_analytic
+
+account-financial-reporting:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/account-financial-reporting.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+account-payment:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/account-payment.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+l10n-thailand:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/l10n-thailand.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+    - origin refs/pull/138/head # l10n_th_check_scb_bank
+
+maintenance:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/maintenance.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+manufacture:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/manufacture.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+    - origin refs/pull/499/head # manufacturing_order_type
+
+mis-builder:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/mis-builder.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+multi-company:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/multi-company.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+partner-contact:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/partner-contact.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+product-attribute:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/product-attribute.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+purchase-workflow:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/purchase-workflow.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+reporting-engine:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/reporting-engine.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+sale-workflow:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/sale-workflow.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+    - origin refs/pull/1129/head # sale_procurement_group_by_commitment_date
+
+server-backend:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/server-backend.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+server-tools:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/server-tools.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+server-ux:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/server-ux.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+stock-logistics-warehouse:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/stock-logistics-warehouse.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+stock-logistics-workflow:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/stock-logistics-workflow.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
+
+web:
+  defaults:
+    depth: 100
+  remotes:
+    origin: https://github.com/OCA/web.git
+  target: origin 13.0
+  merges:
+    - origin 13.0
