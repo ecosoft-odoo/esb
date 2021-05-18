@@ -3,3 +3,4 @@ unicodecsv
 unidecode
 suds-py3
 pysftp
+openupgradelib

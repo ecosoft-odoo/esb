@@ -8,41 +8,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 00:51+0000\n"
-"PO-Revision-Date: 2017-10-19 00:51+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: French (France) (https://www.transifex.com/oca/teams/23907/"
-"fr_FR/)\n"
-"Language: fr_FR\n"
+"POT-Creation-Date: 2018-08-07 14:19+0200\n"
+"PO-Revision-Date: 2018-08-07 14:20+0200\n"
+"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_res_company
 msgid "Companies"
-msgstr "Sociétés"
+msgstr "Compañías"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_res_config_settings
+#, fuzzy
+#| msgid "res.config.settings"
 msgid "Config Settings"
-msgstr ""
+msgstr "res.config.settings"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_company__so_from_po
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_config_settings__so_from_po
 msgid "Create Sale Orders when buying to this company"
-msgstr ""
+msgstr "Crear pedido de venta al comprar a esta compañía"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,help:purchase_sale_inter_company.field_res_company__warehouse_id
+#, fuzzy
+#| msgid ""
+#| "Default value to set on Sale Orders that will be created based on "
+#| "Purchase Orders made to this company."
 msgid ""
 "Default value to set on Sale Orders that will be created based on Purchase "
 "Orders made to this company"
 msgstr ""
-"Valeur par défaut mise sur les commandes de vente créés à partir des "
-"commandes d'achat faite à cette société"
+"Valor por defecto a establecer en pedidos de venta que serán creados en base "
+"a pedidos de compra realizados a esta compañía."
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,help:purchase_sale_inter_company.field_res_config_settings__warehouse_id
@@ -50,8 +56,8 @@ msgid ""
 "Default value to set on Sale Orders that will be created based on Purchase "
 "Orders made to this company."
 msgstr ""
-"Valeur par défaut mise sur les commandes de vente créés à partir des "
-"commandes d'achat faite à cette société."
+"Valor por defecto a establecer en pedidos de venta que serán creados en base "
+"a pedidos de compra realizados a esta compañía."
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,help:purchase_sale_inter_company.field_res_company__so_from_po
@@ -61,17 +67,24 @@ msgid ""
 "created.\n"
 " The intercompany user must at least be Sale User."
 msgstr ""
+"Generar un pedido de venta cuando se cree un pedido de compra con esta "
+"compañía como proveedor.\n"
+"El usuario intercompañía debe ser al menos Usuario de Ventas."
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_stock_picking__intercompany_picking_id
+#, fuzzy
+#| msgid "Intercompany User"
 msgid "Intercompany Picking"
-msgstr ""
+msgstr "Usuario intercompañía"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_company__intercompany_sale_user_id
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_config_settings__intercompany_sale_user_id
+#, fuzzy
+#| msgid "Intercompany User"
 msgid "Intercompany Sale User"
-msgstr ""
+msgstr "Usuario intercompañía"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_account_move
@@ -81,19 +94,20 @@ msgstr ""
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_purchase_order
 msgid "Purchase Order"
-msgstr "Commande d'achat"
+msgstr "Pedido de compra"
 
 #. module: purchase_sale_inter_company
 #: model_terms:ir.ui.view,arch_db:purchase_sale_inter_company.res_config_settings_view_form
 #, fuzzy
+#| msgid "Purchase Order"
 msgid "Purchase/Sale"
-msgstr "Achat vers Vente"
+msgstr "Pedido de compra"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_company__sale_auto_validation
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_config_settings__sale_auto_validation
 msgid "Sale Orders Auto Validation"
-msgstr "Auto Validation des commandes de vente"
+msgstr "Auto confirmar pedidos de venta"
 
 #. module: purchase_sale_inter_company
 #: model_terms:ir.ui.view,arch_db:purchase_sale_inter_company.res_config_settings_view_form
@@ -103,23 +117,26 @@ msgstr ""
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_sale_order
 #, fuzzy
+#| msgid "Sales Order Line"
 msgid "Sales Order"
-msgstr "Commandes de vente"
+msgstr "Línea de pedido de venta"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Ligne de commandes de vente"
+msgstr "Línea de pedido de venta"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_sale_order__auto_purchase_order_id
+#, fuzzy
+#| msgid "Source Purchase Order Line"
 msgid "Source Purchase Order"
-msgstr "Commande d'achat source"
+msgstr "Linea pedido de compra origen"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_sale_order_line__auto_purchase_line_id
 msgid "Source Purchase Order Line"
-msgstr "Ligne de commande d'achat source"
+msgstr "Linea pedido de compra origen"
 
 #. module: purchase_sale_inter_company
 #: code:addons/purchase_sale_inter_company/models/stock_picking.py:0
@@ -128,17 +145,19 @@ msgid ""
 "There's no corresponding line in PO %s for assigning qty from %s for product "
 "%s"
 msgstr ""
+"No hay una línea correspondiente en el pedido de compra %s para asignar "
+"cantidad desde %s para el producto %s"
 
 #. module: purchase_sale_inter_company
 #: code:addons/purchase_sale_inter_company/models/account_move.py:0
 #, python-format
 msgid "This vendor bill is related with: {}"
-msgstr ""
+msgstr "Esta factura de proveedor está relacionada con: {}"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model,name:purchase_sale_inter_company.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferir"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,help:purchase_sale_inter_company.field_res_config_settings__intercompany_sale_user_id
@@ -150,13 +169,14 @@ msgstr ""
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_company__warehouse_id
 msgid "Warehouse For Sale Orders"
-msgstr "Entrepôt pour les commandes de vente"
+msgstr "Almacén para pedidos de venta"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,field_description:purchase_sale_inter_company.field_res_config_settings__warehouse_id
 #, fuzzy
+#| msgid "Warehouse For Sale Orders"
 msgid "Warehouse for Sale Orders"
-msgstr "Entrepôt pour les commandes de vente"
+msgstr "Almacén para pedidos de venta"
 
 #. module: purchase_sale_inter_company
 #: model:ir.model.fields,help:purchase_sale_inter_company.field_res_company__sale_auto_validation
@@ -165,8 +185,8 @@ msgid ""
 "When a Sale Order is created by a multi company rule for this company, it "
 "will automatically validate it."
 msgstr ""
-"Quand une commande de vente est créé en mode inter-société pour cette "
-"société, elle sera automatiquement validé."
+"Cuando un pedido de venta es creado por una regla intercompañía para esta "
+"compañía, este sera confirmado automáticamente."
 
 #. module: purchase_sale_inter_company
 #: code:addons/purchase_sale_inter_company/models/purchase_order.py:0
@@ -179,54 +199,21 @@ msgstr ""
 #, python-format
 msgid "You cannot create SO from PO because product '%s' is not intercompany"
 msgstr ""
-"Vous ne pouvez pas créer la SO à partir de la PO car le produit '%s' n'est "
-"pas multi-société"
+"No puede crear pedido de venta desde pedido de compra porque el producto "
+"'%s' no es intercompañía."
 
 #. module: purchase_sale_inter_company
 #: code:addons/purchase_sale_inter_company/models/purchase_order.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You cannot create SO from PO because sale price list currency is different "
 "than purchase price list currency."
 msgstr ""
-"Vous ne pouvez pas créer la SO à partir de la PO car la devise sur la liste "
-"de prix de vente est différente de la devise sur la liste de prix d'achat."
+"No puede crear pedido de venta desde pedido de compra porque la moneda de la "
+"tarifa de venta es distinta de la moneda de la tarifa de compra."
 
 #~ msgid "Invoice"
-#~ msgstr "Facture"
+#~ msgstr "Factura"
 
-#~ msgid ""
-#~ "Configure correct warehouse for company (%s) in Menu: Settings/companies/"
-#~ "companies"
-#~ msgstr ""
-#~ "Configurez correctement l'entrepôt pour la société (%s) dans le Menu: "
-#~ "Configuration/sociétés/sociétés"
-
-#~ msgid "Output - A"
-#~ msgstr "Output - A"
-
-#~ msgid "Output - B"
-#~ msgstr "Output - B"
-
-#~ msgid "Sale Auto Validation"
-#~ msgstr "Auto Validation de la commande de vente"
-
-#~ msgid "Stock - A"
-#~ msgstr "Stock - A"
-
-#~ msgid "Stock - B"
-#~ msgstr "Stock - B"
-
-#~ msgid ""
-#~ "When a Sale Order is created by a multi company rule for this company, it "
-#~ "will automatically validate it"
-#~ msgstr ""
-#~ "Quand une commande de vente est créé en mode inter-société pour cette "
-#~ "société, elle sera automatiquement validé"
-
-#~ msgid ""
-#~ "{'invisible':['|', ('invoice_method','in', ['picking', 'manual', "
-#~ "'intercompany']), '|', ('state','!=', 'approved'), ('invoiced','=',True)]}"
-#~ msgstr ""
-#~ "{'invisible':['|', ('invoice_method','in', ['picking', 'manual', "
-#~ "'intercompany']), '|', ('state','!=', 'approved'), ('invoiced','=',True)]}"
+#~ msgid "Quotation"
+#~ msgstr "Presupuesto"

@@ -18,6 +18,7 @@
         "report_qweb_element_page_visibility",
         "purchase_triple_discount",
         "sale_triple_discount",
+        "l10n_th_withholding_tax_cert",
     ],
     "data": [
         "account/views/account_move_views.xml",

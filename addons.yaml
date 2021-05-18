@@ -33,7 +33,10 @@ mis-builder:
   - mis_builder_demo
 multi-company:
   - account_invoice_inter_company
-  - purchase_sale_inter_company
+# - purchase_sale_inter_company
+# For this module, we can not use the one from OCA
+# https://github.com/OCA/multi-company/pull/225
+# We already use PR255, and so, back to use OCA will cause more problem.
 partner-contact:
   - base_location
   - base_location_geonames_import
