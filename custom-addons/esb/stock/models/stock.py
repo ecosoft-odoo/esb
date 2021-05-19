@@ -20,3 +20,6 @@ class StockMoveLine(models.Model):
         comodel_name="account.analytic.account",
         string="Department",
     )
+    # Patch to fix problem -> https://github.com/ecosoft-odoo/esb/issues/161
+    # So, now the original compute function won't work, but user say they don't use it.
+    secondary_uom_qty = fields.Float(compute=False)
