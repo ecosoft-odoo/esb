@@ -5,10 +5,10 @@
 
 .o_report_check_scb_bank {
     font-family: THSarabunNew;
-    font-size: 16px;
+    font-size: 20px;
     .payee_only {
         position: fixed;
-        left: 20mm;
+        left: 25mm;
         box-sizing: content-box;
         width: 60mm;
         height: 5mm;
@@ -16,12 +16,13 @@
     }
     .check_date {
         position: fixed;
-        right: 27mm;
+        right: 30mm;
+        font-size: 22px;
     }
     .pay_to {
         position: fixed;
-        top: 11mm;
-        left: 25mm;
+        top: 14mm;
+        left: 31mm;
         box-sizing: content-box;
         width: 120mm;
         height: 10mm;
@@ -29,13 +30,14 @@
     }
     .bearer {
         position: fixed;
-        top: 11mm;
-        right: 17mm;
+        top: 14mm;
+        right: 21mm;
+        font-size: 22px;
     }
     .amount_word {
         position: fixed;
-        top: 21mm;
-        left: 45mm;
+        top: 26mm;
+        left: 56mm;
         box-sizing: content-box;
         width: 110mm;
         height: 10mm;
@@ -43,12 +45,13 @@
     }
     .amount {
         position: fixed;
-        top: 30mm;
-        right: 27mm;
+        top: 37mm;
+        right: 33mm;
         box-sizing: content-box;
         width: 60mm;
         height: 5mm;
         padding-right: 1px;
         text-align: right;
+        font-size: 22px;
     }
 }
