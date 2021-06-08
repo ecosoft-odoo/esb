@@ -129,9 +129,6 @@ class PurchaseOrder(models.Model):
                 "partner_id": partner.id,
                 "date_order": self.date_order,
                 "auto_purchase_order_id": self.id,
-                # from https://github.com/OCA/multi-company/pull/276
-                "display_type": purchase_line.display_type,
-                # --
             }
         )
         for onchange_method in new_order._onchange_methods["partner_id"]:
