@@ -156,6 +156,9 @@ class PurchaseOrder(models.Model):
                 "order_id": sale_order.id,
                 "name": purchase_line.name,
                 "product_id": purchase_line.product_id.id,
+                "product_uom": purchase_line.product_uom.id,
+                "product_uom_qty": purchase_line.product_qty,
+                "auto_purchase_line_id": purchase_line.id,
             }
         else:
             return {
