@@ -33,6 +33,11 @@
         "stock/views/stock_move_views.xml",
         "stock/views/stock_picking_views.xml",
         "stock/views/stock_inventory_views.xml",
+<<<<<<< Updated upstream
+=======
+        "stock/views/stock_scrap_views.xml",
+        "stock/views/stock_quant_views.xml",
+>>>>>>> Stashed changes
         "fonts/style_report.xml",
         # Packing List
         "packing_list/datas/paper_format.xml",
