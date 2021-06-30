@@ -25,6 +25,8 @@
         "mrp/reports/mrp_report_bom_structure.xml",
         "mrp/views/mrp_production_views.xml",
         "mrp/views/mrp_bom_views.xml",
+        "mrp/views/res_config_settings_views.xml",
+        "mrp/wizards/mrp_product_produce_views.xml",
         "product/views/product_views.xml",
         "purchase/views/purchase_views.xml",
         "sale/views/sale_views.xml",
